@@ -9,29 +9,12 @@ def seed_answers():
         user_id=2,
         question_id=1
     )
-    a2 = Answer(
-        answer='''
-                Start with a list of veggies you like, then check to make sure you have the correct soil conditions, planting zone, and rainfall.
-                Next, read up on the requirements of each plant. Can they be grown together in the same bed? Under one another, or do they need full sun? Are there good companion plants?
-                Last, plan out your beds, and then track their progress with a good journal. Of course I recommend my book, (see link under my name) since I put so much work and years of experience into its development. I compared all the others out there for 15 years, and then designed the 28 different logs to include all the most logical information, in the easiest way to record.
-                ''', 
-        user_id=2,
-        question_id=2
-    )
     a3 = Answer(
         answer='''A compiler is a program that translates source code written in a high-level programming language into machine code that can be executed by a computer. The machine code is usually in the form of assembly code or object code, which can be executed directly by the computer's central processing unit (CPU). Compilers are used to create executable programs, libraries and other software components from source code.''', 
         user_id=2,
         question_id=3
     )
-    a4 = Answer(
-        answer='''Protein source always come with either carbs or fat or both. So you should select protein sources depending you want low carb protein food or low fat protein food or protein food with both carb and dietary fat.
 
-The first one low carb is generally animal source protein - meat, egg, chicken, fish, cheese, Panneer, milk and yogurt/curd. Second one low fat is plant source - legumes, pulses, potato skin, apricot, guava and few green vegetables. The Third one medium carb and medium fat is also plant source - Nuts and seeds like Almonds, Pista, Walnuts and even peanuts. The plant source proteins are also good source of fibre.
-
-Plant source food is of very low density of protein compared to animal source. You need to eat plenty of carbs to get enough protein as desired by you. For most people who are not into body building, plant sources are sufficient. If you desire to have more than 30–50gm of protein, animal source is the way to to go or supplements such as whey protein.''', 
-        user_id=2,
-        question_id=4
-    )
     a5 = Answer(
         answer='There are many herbs that are easy to grow at home, but some of the most popular and easiest to care for include basil, cilantro, mint, parsley, chives, and thyme. These herbs can be grown in pots or in a small garden bed, and they require little maintenance. They also add flavor and nutrition to your cooking. If you are new to gardening, I recommend starting with one of these herbs and then expanding your collection as you gain more experience.', 
         user_id=3,
@@ -53,9 +36,8 @@ Plant source food is of very low density of protein compared to animal source. Y
         question_id=8
     )      
     db.session.add(a1)
-    db.session.add(a2)
     db.session.add(a3)
-    db.session.add(a4)
+
     db.session.add(a5)
     db.session.add(a6)
     db.session.add(a7)
