@@ -5,3 +5,18 @@
 .hidden {
   display: none;
 }
+
+.title {
+  color: #A14442;
+}
+
+.nav-container {
+  background: #212223;
+  height: 3em;
+  
+}
+
+.nav-container ul {
+  height: 100%;
+  align-items: center;
+}
