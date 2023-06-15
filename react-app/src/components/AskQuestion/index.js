@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { addNewQuestionThunk, getAllQuestionsThunk } from "../../store/question"
 import "./AskQuestion.css"
@@ -7,6 +7,10 @@ function AskQuestion() {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
 
+    useEffect(() => {
+        dispatch(getAllQuestionsThunk())
+    }, [dispatch])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -14,13 +18,9 @@ function AskQuestion() {
             title
         }
 
-        console.log("✍🏻 new question: ",questionDetails)
-        console.log("👰🏼‍♀️ type of title in frontend ",typeof(questionDetails.title))
-
         const newQuestionDispatch = await dispatch(addNewQuestionThunk(questionDetails))
-        console.log("👩🏻‍💻 dispatch of new question in component", newQuestionDispatch)
-
-        // dispatch(getAllQuestionsThunk())
+        await dispatch(getAllQuestionsThunk())
+        setTitle("")
     }
 
     return (

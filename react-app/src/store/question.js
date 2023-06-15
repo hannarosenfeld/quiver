@@ -26,15 +26,13 @@ export const getAllQuestionsThunk = () => async (dispatch) => {
 }
 
 export const addNewQuestionThunk = (question) => async (dispatch) => {
-    console.log("🤵🏻 type of title in thunk:", typeof(question.title))
-        const res = await fetch("/api/questions", {
+        const res = await fetch("/api/questions/", {
             method: "POST",
             headers: { "Content-Type" : "application/json" },
             body: JSON.stringify(question)
         })
         if (res.ok) {
             const newQuestion = await res.json()
-            console.log("💋 new question: ", newQuestion)
             dispatch(addNewQuestionAction(newQuestion))
             return newQuestion
         } else {
