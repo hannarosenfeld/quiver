@@ -17,12 +17,14 @@ function QuestionsList() {
 
     return (
         <div className="wrapper">
-                <div className="question-list-wrapper">
-                    <ul>
-                        {questions.map(question => (
-                            <li key={question.id}>{question.title}</li>
-                        ))}
-                    </ul>
+                <div className="homepage-wrapper">
+                    <div className="question-list-wrapper">
+                        <ul>
+                            {questions.map(question => (
+                                <li key={question.id}>{question.title}</li>
+                            ))}
+                        </ul>
+                    </div>
             </div>
         </div>
     )

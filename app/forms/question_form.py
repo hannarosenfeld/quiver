@@ -6,5 +6,4 @@ from flask_wtf.file import FileField
 
 
 class QuestionForm(FlaskForm):
-    title = StringField('SERVER NAME', validators=[DataRequired()])
-
+    title = StringField('Start your question with "What", "How", "Why", etc.', validators=[DataRequired()])
