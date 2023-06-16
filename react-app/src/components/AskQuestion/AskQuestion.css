@@ -19,7 +19,7 @@
     align-items: center;
 }
 .ask-question-wrapper input {
-    width: 550px;
+    width: 555px;
     margin: 0 auto;
     height: 3em;
     border: 1px solid var(--qwhite);
@@ -28,7 +28,7 @@
 }
 
 .ask-question-wrapper .profile-pic {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
 }
