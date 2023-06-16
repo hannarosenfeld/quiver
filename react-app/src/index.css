@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap');
 
 :root {
-    --qwhite: #dee0e1;
+    --qwhite: #a5a2a2;
+    --qred:  #b63533;
 }
 
 * {
@@ -11,9 +12,13 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-body {
+body, form {
     background-color: #212223;
     color: var(--qwhite)
+}
+
+button, input {
+    color: var(--qwhite);
 }
 
 a {
@@ -31,5 +36,14 @@ li {
 }
 
 .title {
-    color: #b91815;
+    color: var(--qred)
+}
+
+input {
+    background-color: #212223;
+}
+
+button {
+    background-color: transparent;
+    border: none;
 }

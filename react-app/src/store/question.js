@@ -1,6 +1,7 @@
 const GET_ALL_QUESTIONS = "question/GET_ALL_QUESTIONS"
 const ADD_NEW_QUESTION = "question/ADD_NEW_QUESTION"
 const UPDATE_QUESTION = "question/UPDATE_QUESTION"
+const DELETE_QUESTION = "question/DELETE_QUESTION"
 
 const getAllQuestionsAction = (questions) => ({
     type: GET_ALL_QUESTIONS,
@@ -15,6 +16,11 @@ const addNewQuestionAction = (question) => ({
 const updatedQuestionAction = (question) => ({
     type: UPDATE_QUESTION,
     question
+})
+
+const deleteQuestionAction = questionId => ({
+    type: DELETE_QUESTION,
+    questionId
 })
 
 export const getAllQuestionsThunk = () => async (dispatch) => {
@@ -67,7 +73,17 @@ export const updateQuestionThunk = (questionInfo, questionId) => async (dispatch
 
 }
 
-
+export const deleteQuestionThunk = (questionId) => async dispatch => {
+    const res = await fetch(`/api/questions/${questionId}`, {method: "DELETE"})
+    if (res.ok) {
+        const successMessage = await res.json();
+        dispatch(deleteQuestionAction(questionId))
+        return successMessage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 
 const initialState = { allQuestions: {}, question: { questions: [] }, currentQuestion: {}};
 

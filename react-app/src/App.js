@@ -26,7 +26,7 @@ function App() {
               {sessionUser ? (
                 <>
                 <Navigation isLoaded={isLoaded} />
-                <AskQuestion />
+                <AskQuestion user={sessionUser} />
                 <QuestionsList />
                 </>
                ) : (

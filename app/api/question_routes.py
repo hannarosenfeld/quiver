@@ -54,6 +54,14 @@ def edit_question(id):
     
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+@question_routes.route("/<int:id>", methods=["DELETE"])
+@login_required
+def delete_question(id):
+    question = Question.query.get(id)
+    db.session.delete(question)
+    db.session.commit()
+    return {"message": "successful"}
+
 # @question_routes.route('/<string:title>')
 # def question(id):
 #     """

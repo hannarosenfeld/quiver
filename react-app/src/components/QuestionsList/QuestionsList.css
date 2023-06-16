@@ -16,7 +16,7 @@
     width: 600px;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    flex-flow: column-reverse;
     gap: 0.5em;
 }
 

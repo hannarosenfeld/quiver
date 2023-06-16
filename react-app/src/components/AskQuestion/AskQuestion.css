@@ -1,24 +1,34 @@
 .homepage-wrapper {
-    width: 85%;
+
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 }
 
 .ask-question-wrapper {
-    width: 100%;
+    width: 600px;
     display: flex;
     align-items: center;
     margin-bottom: 1em;
+
+    justify-content: space-between;
 }
 
 .ask-question-wrapper form{
-    width: 100%;
     display: flex;
     align-items: center;
 }
 .ask-question-wrapper input {
-    width: 600px;
+    width: 550px;
     margin: 0 auto;
     height: 3em;
+    border: 1px solid var(--qwhite);
+    border-radius: 1000px;
+    padding-left: 1em;
+}
+
+.ask-question-wrapper .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }

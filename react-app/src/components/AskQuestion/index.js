@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addNewQuestionThunk, getAllQuestionsThunk } from "../../store/question"
 import "./AskQuestion.css"
 
-function AskQuestion() {
+function AskQuestion({ user }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
 
@@ -23,11 +23,19 @@ function AskQuestion() {
         setTitle("")
     }
 
+    console.log("$$$$$$$$$",user)
+
     return (
         <div className="wrapper">
             <div className="homepage-wrapper">
                 <div className="ask-question-wrapper">
-                    
+                    <div className="profile-pic"
+                        style={{
+                            backgroundImage: `url(${user.profile_pic})`, 
+                            backgroundSize: "50px", 
+                            backgroundPosition: "center"
+                        }}>
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
