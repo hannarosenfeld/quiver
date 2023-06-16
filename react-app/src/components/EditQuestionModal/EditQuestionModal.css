@@ -1,0 +1,13 @@
+.edit-question-wrapper input {
+    width: 550px;
+    margin: 0 auto;
+    height: 3em;
+    border: 1px solid var(--qwhite);
+    border-radius: 1000px;
+    padding-left: 1em;
+}
+
+.edit-question-wrapper button:hover {
+    color: var(--qred);
+    cursor: pointer;
+}

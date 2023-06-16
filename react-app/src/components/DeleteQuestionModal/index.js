@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { deleteQuestionThunk, getAllQuestionsThunk } from "../../store/question"
+import "./DeleteQuestionModal.css"
 
 function DeleteQuestionModal({ question }) {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function DeleteQuestionModal({ question }) {
     }
 
     return (
-        <div>
+        <div className="delete-question">
             <h3>Delete answer</h3>
             <p>Are you sure you want to permanetly delete this question?</p>
             <button type="submit" onClick={handleDelete }>Delete</button>

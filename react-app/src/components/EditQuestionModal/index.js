@@ -27,10 +27,10 @@ function EditQuestionModal({question}) {
     }
 
     return (
-        <div>
+        <div className="edit-question-wrapper">
             <form 
                 onSubmit={handleSubmit}
-                style={{height: "12em", width: "600px", display: "flex", flexDirection: "column", padding: "2em"}}>
+                style={{height: "10em", width: "600px", display: "flex", flexDirection: "column", padding: "2em"}}>
                 <input 
                     type="text"
                     value={title}
