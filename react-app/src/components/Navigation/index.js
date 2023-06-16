@@ -9,7 +9,7 @@ function Navigation({ isLoaded }){
 
 	return (
 		<div className="nav-container">
-			<div className="wrapper">
+			<div style={{width: "800px", margin: "0 auto"}}>
 				<ul style={{
 					display: "flex", 
 					justifyContent: "space-between",

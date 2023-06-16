@@ -5,6 +5,16 @@ from app.forms.question_form import QuestionForm
 
 question_routes = Blueprint('questions', __name__)
 
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
+
 @question_routes.route('/')
 def allQuestions():
     """
@@ -29,6 +39,20 @@ def add_question():
         dict_new_question = newQuestion.to_dict()
 
         return dict_new_question
+    
+@question_routes.route("/<int:id>", methods=["PUT"])
+def edit_question(id):
+    form = QuestionForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        question = Question.query.filter(Question.id == id).first()
+        question.title = form.data["title"]
+
+        db.session.commit()
+        return question.to_dict()
+    
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # @question_routes.route('/<string:title>')
 # def question(id):

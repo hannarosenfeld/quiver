@@ -27,6 +27,7 @@ function AskQuestion() {
         <div className="wrapper">
             <div className="homepage-wrapper">
                 <div className="ask-question-wrapper">
+                    
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"

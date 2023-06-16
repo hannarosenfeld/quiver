@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap');
+
+:root {
+    --qwhite: #dee0e1;
+}
 
 * {
     box-sizing: border-box;
@@ -8,7 +12,8 @@
 }
 
 body {
-
+    background-color: #212223;
+    color: var(--qwhite)
 }
 
 a {
@@ -27,4 +32,4 @@ li {
 
 .title {
     color: #b91815;
-  }
+}
