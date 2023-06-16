@@ -24,7 +24,11 @@ function App() {
         <Switch>
           <Route exact path="/">
               {sessionUser ? (
+                <>
                 <Navigation isLoaded={isLoaded} />
+                <AskQuestion />
+                <QuestionsList />
+                </>
                ) : (
                   <Redirect to="/login" />
                 )
@@ -35,10 +39,6 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
-          </Route>
-          <Route path="/">
-            <AskQuestion />
-            <QuestionsList />
           </Route>
         </Switch>
       )}
