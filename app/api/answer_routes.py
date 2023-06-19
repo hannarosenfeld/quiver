@@ -16,11 +16,11 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 @answer_routes.route('/')
-def allanswers():
+def all_answers(questionId):
     """
     Query for all answers and returns them in a list of answer dictionaries
     """
-    answers = Answer.query.all()
+    answers = Answer.query.filter(answers.id == questionId).all()
     return {'answers': [answer.to_dict() for answer in answers]}
 
 @answer_routes.route('/', methods=["POST"])

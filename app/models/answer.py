@@ -14,7 +14,7 @@ class Answer(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('questions.id')), nullable = False)
 
     user = db.relationship('User', back_populates='answer')
-    question = db.relationship('Question', back_populates='answer')
+    # question = db.relationship('Question', back_populates='answer')
 
     def to_dict(self):
         return {

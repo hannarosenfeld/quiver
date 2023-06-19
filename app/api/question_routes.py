@@ -40,13 +40,13 @@ def add_question():
 
         return dict_new_question
     
-@question_routes.route("/<int:id>", methods=["PUT"])
-def edit_question(id):
+@question_routes.route("/<string:title>", methods=["PUT"])
+def edit_question(title):
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        question = Question.query.filter(Question.id == id).first()
+        question = Question.query.filter(Question.title == title).first()
         question.title = form.data["title"]
 
         db.session.commit()
@@ -54,10 +54,10 @@ def edit_question(id):
     
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-@question_routes.route("/<int:id>", methods=["DELETE"])
+@question_routes.route("/<string:title>", methods=["DELETE"])
 @login_required
-def delete_question(id):
-    question = Question.query.get(id)
+def delete_question(title):
+    question = Question.query.get(title)
     db.session.delete(question)
     db.session.commit()
     return {"message": "successful"}

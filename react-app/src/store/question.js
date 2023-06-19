@@ -25,7 +25,6 @@ const deleteQuestionAction = questionId => ({
 
 export const getAllQuestionsThunk = () => async (dispatch) => {
     const res = await fetch("/api/questions/")
-    console.log("In Questions Thunk")
 
     if (res.ok) {
         const data = await res.json()
@@ -53,13 +52,13 @@ export const addNewQuestionThunk = (question) => async (dispatch) => {
         }
 }
 
-export const updateQuestionThunk = (questionInfo, questionId) => async (dispatch) => {
-    const {title} = questionInfo
+export const updateQuestionThunk = (questionTitle) => async (dispatch) => {
+    const {title} = questionTitle
 
-    const res = await fetch(`/api/questions/${questionId}`, {
+    const res = await fetch(`/api/questions/${questionTitle}`, {
         method: "PUT",
         headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify(questionInfo)
+        body: JSON.stringify(questionTitle)
     })
 
     if (res.ok) {
@@ -92,7 +91,6 @@ const questionReducer = (state = initialState, action) => {
         case GET_ALL_QUESTIONS:
             const questionState = {...state, allQuestions: {...state.allQuestions}}
             questionState.question = action.questions
-            console.log("👀 questionState.question",action)
             return questionState;
             case ADD_NEW_QUESTION:
                 const createState = {...state, allQuestions: {...state.allQuestions}, currentQuestion: {} }
