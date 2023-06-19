@@ -3,6 +3,7 @@ import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { useModal } from "../../context/Modal";
 import './LoginForm.css';
 
 function LoginFormPage() {
@@ -11,6 +12,7 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const { closeModal } = useModal();
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -21,6 +23,10 @@ function LoginFormPage() {
       setErrors(data);
     }
   };
+
+  const demoUserLogin = () => {
+    return dispatch(login('demo@aa.io', "password")).then(() => closeModal())
+  }
 
   return (
     <div className="login-form-wrapper">
@@ -56,10 +62,11 @@ function LoginFormPage() {
               />
             </label>
             <button type="submit">Log In</button>
-          </form>
-          <div className="signup-link">
+            <div className="signup-link">
             <NavLink to="/signup">Sign up here</NavLink>
-          </div>
+            </div>
+          <button onClick={() => demoUserLogin()}>Demo User</button>
+          </form>
       </div>
       </div>
     </div>

@@ -37,7 +37,6 @@ def seed_answers():
     )      
     db.session.add(a1)
     db.session.add(a3)
-
     db.session.add(a5)
     db.session.add(a6)
     db.session.add(a7)
