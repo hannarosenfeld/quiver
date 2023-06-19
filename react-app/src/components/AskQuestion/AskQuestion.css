@@ -22,7 +22,7 @@
     width: 555px;
     margin: 0 auto;
     height: 3em;
-    border: 1px solid var(--qwhite);
+    border: 1px solid var(--qborder);
     border-radius: 1000px;
     padding-left: 1em;
 }

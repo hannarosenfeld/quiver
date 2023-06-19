@@ -16,3 +16,7 @@
   height: 100%;
   align-items: center;
 }
+
+.nav-container .title {
+  font-size: 1.2em;
+}

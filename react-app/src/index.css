@@ -2,6 +2,7 @@
 
 :root {
     --qwhite: #a5a2a2;
+    --qborder: #4c5052;
     --qred:  #b63533;
 }
 
@@ -58,4 +59,8 @@ button {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+
+button {
+    cursor: pointer;
 }

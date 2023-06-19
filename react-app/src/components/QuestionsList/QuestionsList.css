@@ -21,13 +21,7 @@
 }
 
 .question-list-wrapper li {
-    border: 1px solid var(--qwhite);
-    background-color: #131414;
-    padding: 0.5em;
-}
-
-.question-list-wrapper li {
-    border: 1px solid var(--qwhite);
+    border: 0.5px solid var(--qborder);
     background-color: #131414;
     padding: 0.5em;
 }
