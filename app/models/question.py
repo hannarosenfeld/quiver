@@ -20,5 +20,6 @@ class Question(db.Model):
             'id': self.id,
             'title': self.title,
             'user': self.user.to_dict(),
+            # 'answer': self.answer.to_dict(),
             'created_at': self.created_at
         }

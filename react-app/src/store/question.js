@@ -24,7 +24,7 @@ const deleteQuestionAction = questionId => ({
 })
 
 export const getAllQuestionsThunk = () => async (dispatch) => {
-    const res = await fetch("/api/questions")
+    const res = await fetch("/api/questions/")
     console.log("In Questions Thunk")
 
     if (res.ok) {
