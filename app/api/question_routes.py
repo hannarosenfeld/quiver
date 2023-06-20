@@ -47,7 +47,7 @@ def add_question():
 
         return dict_new_question
     
-@question_routes.route("/<int:id>", methods=["PUT"])
+@question_routes.route("/<int:id>/", methods=["PUT"])
 def edit_question(id):
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']

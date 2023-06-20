@@ -58,12 +58,11 @@ export const addNewQuestionThunk = (question) => async (dispatch) => {
 export const updateQuestionThunk = (questionInfo, questionId) => async (dispatch) => {
     const { title } = questionInfo
 
-    console.log("TITLE", title)
 
     const res = await fetch(`/api/questions/${questionId}/`, {
         method: "PUT",
         headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify(title)
+        body: JSON.stringify(questionInfo)
     })
 
     console.log("RES:", res)
