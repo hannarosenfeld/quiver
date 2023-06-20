@@ -1,20 +1,27 @@
-import { getAllAnswersThunk } from "../../store/answer";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllQuestionsThunk } from "../../store/question";
+
 import OpenModalButton from "../OpenModalButton";
-import "./Question.css"
 import EditQuestionModal from "../EditQuestionModal"
 import DeleteQuestionModal from "../DeleteQuestionModal";
-import { NavLink } from "react-router-dom";
 
+import { getAllAnswersThunk } from "../../store/answer";
+
+import "./Question.css"
 
 function Question({ question }) {
-    const answersObj = useSelector(state => state.answer)
     const dispatch = useDispatch();
+    const answersObj = useSelector(state => state.answer.allAnswers)
 	const sessionUser = useSelector(state => state.session.user);
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
+
+    useEffect(() => {
+        dispatch(getAllAnswersThunk(question.id))
+    }, [dispatch])
+
+    console.log("💋", answersObj)
   
     const openMenu = () => {
       if (showMenu) return;
@@ -38,10 +45,6 @@ function Question({ question }) {
     const closeMenu = () => setShowMenu(false);
 
 
-    useEffect(() => {
-        dispatch(getAllAnswersThunk(question.title))
-    }, [dispatch])
-
     return(
         <div>
             <div className="question-user-info">
@@ -57,7 +60,7 @@ function Question({ question }) {
                     <span>{question.created_at.slice(0,-12)}</span>
                 </div>
             </div>
-            <h4><NavLink to={`/questions/${question.title.split(" "). join("-")}`}>{question.title}</NavLink></h4>
+            <h4><NavLink to={`/questions/${question.title.split(" ").join("-")}`}>{question.title}</NavLink></h4>
             <div className="edit-question-container">
             {sessionUser.id === question.user.id ? <OpenModalButton
                                             buttonText="Delete"

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Question, db
+from app.models import Question, Answer, db
 from app.forms.question_form import QuestionForm
 
 question_routes = Blueprint('questions', __name__)
@@ -14,6 +14,13 @@ def validation_errors_to_error_messages(validation_errors):
         for error in validation_errors[field]:
             errorMessages.append(f'{field} : {error}')
     return errorMessages
+
+
+@question_routes.route('/<int:id>/answers/')
+def allAnswers(id):
+    answers = Answer.query.filter(Answer.question_id == id).all()
+    print("🥹",answers)
+    return {'answers': [answer.to_dict() for answer in answers]}
 
 @question_routes.route('/')
 def allQuestions():
@@ -40,13 +47,13 @@ def add_question():
 
         return dict_new_question
     
-@question_routes.route("/<string:title>", methods=["PUT"])
-def edit_question(title):
+@question_routes.route("/<int:id>", methods=["PUT"])
+def edit_question(id):
     form = QuestionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        question = Question.query.filter(Question.title == title).first()
+        question = Question.query.filter(Question.id == id).first()
         question.title = form.data["title"]
 
         db.session.commit()

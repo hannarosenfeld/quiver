@@ -20,10 +20,9 @@ function EditQuestionModal({question}) {
             title
         }
 
-        const newQuestionDispatch = await dispatch(updateQuestionThunk(questionDetails))
+        const newQuestionDispatch = await dispatch(updateQuestionThunk(questionDetails, question.id))
         await dispatch(getAllQuestionsThunk())
         closeModal()
-
     }
 
     return (

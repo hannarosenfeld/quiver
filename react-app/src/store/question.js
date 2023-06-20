@@ -23,6 +23,7 @@ const deleteQuestionAction = questionId => ({
     questionId
 })
 
+
 export const getAllQuestionsThunk = () => async (dispatch) => {
     const res = await fetch("/api/questions/")
 
@@ -52,21 +53,29 @@ export const addNewQuestionThunk = (question) => async (dispatch) => {
         }
 }
 
-export const updateQuestionThunk = (questionTitle) => async (dispatch) => {
-    const {title} = questionTitle
 
-    const res = await fetch(`/api/questions/${questionTitle}`, {
+// TODO: change Title to Id? This is giving me an error when I try to submit
+export const updateQuestionThunk = (questionInfo, questionId) => async (dispatch) => {
+    const { title } = questionInfo
+
+    console.log("TITLE", title)
+
+    const res = await fetch(`/api/questions/${questionId}/`, {
         method: "PUT",
         headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify(questionTitle)
+        body: JSON.stringify(title)
     })
 
+    console.log("RES:", res)
+
     if (res.ok) {
+        console.log("🧚 in res.ok")
         const updatedQuestion = await res.json()
         await dispatch(updatedQuestionAction(updatedQuestion))
         return updatedQuestion
     } else {
         const err = await res.json()
+        console.log("🧚 err:", err)
         return err
     }
 
