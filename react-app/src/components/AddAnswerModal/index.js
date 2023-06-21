@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import answerReducer, { addNewAnswerThunk, getAllAnswersThunk } from "../../store/answer"
+import { getAllQuestionsThunk } from "../../store/question";
 import "./AddAnswerModal.css"
 
 function AddAnswerModal({ question }) {
@@ -10,6 +11,8 @@ function AddAnswerModal({ question }) {
     const [answer, setAnswer] = useState("")
     const { closeModal } = useModal();
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const answerDetails = {
@@ -17,9 +20,13 @@ function AddAnswerModal({ question }) {
         }
         const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
         console.log(addAnswerDispatch)
-        await dispatch(getAllAnswersThunk())
+        await dispatch(getAllAnswersThunk(question.id))
+        await dispatch(getAllQuestionsThunk())
+
         closeModal()
     }
+
+    console.log("🥎 question:", question)
 
     return (
         <div className="add-answer-modal">

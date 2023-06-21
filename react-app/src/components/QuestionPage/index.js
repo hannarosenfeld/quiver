@@ -48,11 +48,12 @@ function QuestionPage() {
                     gap: "0.5em"
                 }}>
                     <p style={{fontWeight: "600"}}>{currentQ.title}</p>
-                    <div>
+                    <div style={{display: "flex", gap: "0.3em", alignItems: "baseline"}}>
+                        <span><i class="fa-regular fa-pen-to-square"></i></span>
                         <OpenModalButton 
                             buttonText="Answer"
                             modalComponent={<AddAnswerModal question={currentQ}/>}
-                        />
+                        ></OpenModalButton>
                     </div>
                 </div>
 

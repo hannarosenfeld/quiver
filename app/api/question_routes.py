@@ -95,6 +95,7 @@ def add_answer(id):
         newAnswer = Answer(
             answer=form.data['answer'],
             user_id=current_user.id,
+            question_id=id
         )
 
         db.session.add(newAnswer)
