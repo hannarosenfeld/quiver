@@ -47,7 +47,7 @@ function QuestionPage() {
                     flexDirection: "column",
                     gap: "0.5em"
                 }}>
-                    <p>{currentQ.title}</p>
+                    <p style={{fontWeight: "600"}}>{currentQ.title}</p>
                     <div>
                         <OpenModalButton 
                             buttonText="Answer"

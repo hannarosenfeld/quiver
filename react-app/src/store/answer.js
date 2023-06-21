@@ -12,7 +12,9 @@ const addNewAnswerAction = (answer) => ({
 })
 
 export const addNewAnswerThunk = (questionId, answer) => async (dispatch) => {
+    console.log("🚍 in add answers thunk Q ID and answer", questionId, answer)
     console.log("🚚 in add new answer thunk")
+
     const res = await fetch(`/api/questions/${questionId}/answers/`, {
         method: "POST",
         headers: { "Content-Type" : "application/json" },
@@ -26,6 +28,7 @@ export const addNewAnswerThunk = (questionId, answer) => async (dispatch) => {
         return data
     } else {
         const err = await res.json()
+        console.log(err)
         return err        
     }
 }
@@ -33,9 +36,6 @@ export const addNewAnswerThunk = (questionId, answer) => async (dispatch) => {
 
 export const getAllAnswersThunk = (questionId) => async (dispatch) => {
     const res = await fetch(`/api/questions/${questionId}/answers`)
-
-    console.log("🚍 in get all answers thunk", res)
-
 
     if (res.ok) {
         const data = await res.json()

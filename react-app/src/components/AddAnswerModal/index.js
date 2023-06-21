@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { addNewAnswerThunk, getAllAnswersThunk } from "../../store/answer"
+import answerReducer, { addNewAnswerThunk, getAllAnswersThunk } from "../../store/answer"
 import "./AddAnswerModal.css"
 
 function AddAnswerModal({ question }) {
@@ -17,7 +17,7 @@ function AddAnswerModal({ question }) {
         }
         const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
         console.log(addAnswerDispatch)
-        // await dispatch(getAllAnswersThunk())
+        await dispatch(getAllAnswersThunk())
         closeModal()
     }
 
@@ -34,15 +34,16 @@ function AddAnswerModal({ question }) {
                 </div>
                 <span>{user.username}</span>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>{question.title}</label>
                 <textarea
-                    rows="25"
+                    rows="15"
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
+                    placeholder="Write your answer"
                     required
                 />
-                <button type="submit" onSubmit={() => {handleSubmit()}}>Post</button>
+                <button type="submit">Post</button>
             </form>
         </div>
     )

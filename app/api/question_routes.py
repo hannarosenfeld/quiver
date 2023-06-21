@@ -86,11 +86,10 @@ def allAnswers(id):
     return answer_dict
 
 @question_routes.route('/<int:id>/answers/', methods=["POST"])
-def add_answer():
+def add_answer(id):
+    print("🚛 in add answer route")
     form = AnswerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
-    print("🚛 in add answer route")
 
     if form.validate_on_submit():
         newAnswer = Answer(
@@ -102,4 +101,4 @@ def add_answer():
         db.session.commit()
         dict_new_answer = newAnswer.to_dict()
 
-        return dict_new_answer
+    return dict_new_answer

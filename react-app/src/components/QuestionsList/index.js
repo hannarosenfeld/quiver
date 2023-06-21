@@ -28,6 +28,22 @@ function QuestionsList() {
                         <ul>
                             {questions.map(question => (
                                 <li key={question.id}>
+                                {question.answer.length ? (
+                                <div style={{display: "flex", gap:"0.5em", marginBottom: "1em"}}>
+                                    <div className="profile-pic"
+                                        style={{
+                                            backgroundImage: `url(${question.answer[0].user.profile_pic})`, 
+                                            backgroundSize: "40px", 
+                                            backgroundPosition: "center",
+                                        }}>
+                                    </div>
+                                    <div style={{fontSize: "0.8em", fontWeight: "600"}}>
+                                        {console.log("⚾️",question)}
+                                        <span>{question.answer[0].user.username}</span>
+                                        <span>{question.answer[0].created_at}</span>
+                                    </div>
+                                </div>
+                                ) : ''}
                                     <h4><NavLink to={`/questions/${question.id}`}>{question.title}</NavLink></h4>
                                     {question.answer.length ? (
                                         <div style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
