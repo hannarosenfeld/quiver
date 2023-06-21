@@ -103,3 +103,17 @@ def add_answer(id):
         dict_new_answer = newAnswer.to_dict()
 
     return dict_new_answer
+
+@question_routes.route("/<int:id>/answers/", methods=["PUT"])
+def edit_answer(id):
+    form = AnswerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        answer = Answer.query.filter(Answer.id == id).first()
+        answer.answer = form.data["answer"]
+
+        db.session.commit()
+        return answer.to_dict()
+    
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401

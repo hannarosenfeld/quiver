@@ -5,10 +5,12 @@ import { getAllQuestionsThunk } from "../../store/question";
 import { addNewAnswerThunk,  getAllAnswersThunk  } from '../../store/answer';
 import OpenModalButton from "../OpenModalButton";
 import AddAnswerModal from '../AddAnswerModal';
+import EditAnswerModal from '../EditAnswerModal';
 
 function QuestionPage() {
     const dispatch = useDispatch();
     let id = useParams();
+    const sessionUser = useSelector(state => state.session.user);
     const questionsObj = useSelector(state => state.question.question.questions)
     const questions = Object.values(questionsObj)
     const [showMenu, setShowMenu] = useState(false);    
@@ -58,7 +60,7 @@ function QuestionPage() {
                 </div>
 
                 <div>
-                    <ul>
+                    <ul style={{display: "flex", flexDirection: "column-reverse"}}>
                         {currentQ.answer.map(a => (
                             <li key={a.id} style={{
                                 marginTop: "1em",
@@ -79,6 +81,14 @@ function QuestionPage() {
                                     </div>
                                 </div>
                                 <div style={{marginTop: "0.5em",fontSize: "0.9em"}}>{a.answer}</div>
+                                {a.user.id === sessionUser.id && (
+                                    <div style={{float: "right", marginRight: "1em"}}>
+                                        <OpenModalButton 
+                                            buttonText="Edit"
+                                            modalComponent={<EditAnswerModal answerToEdit={a} question={currentQ}/>}
+                                        ></OpenModalButton>
+                                    </div>
+                                )}
                             </li>
                         ))}
                     </ul>   

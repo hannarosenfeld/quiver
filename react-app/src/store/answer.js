@@ -1,5 +1,7 @@
 const GET_ALL_ANSWERS = "answer/GET_ALL_ANSWERS"
 const ADD_NEW_ANSWER = "answer/ADD_NEW_ANSWER"
+const UPDATE_ANSWER = "answer/UPDATE_ANSWER"
+
 
 const getAllAnswersAction = (answers) => ({
     type: GET_ALL_ANSWERS,
@@ -10,6 +12,28 @@ const addNewAnswerAction = (answer) => ({
     type: ADD_NEW_ANSWER,
     answer
 })
+
+const updateAnswerAction = (answer) => ({
+    type: UPDATE_ANSWER,
+    answer
+})
+
+export const updateAnswerThunk = (answerInfo, questionId) => async (dispatch) => {
+     const res = await fetch(`/api/questions/${questionId}/answers/`, {
+        method: "PUT",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify(answerInfo)
+    })
+
+    if (res.ok) {
+        const updatedAnswer = await res.json()
+        await dispatch(updateAnswerAction(updatedAnswer))
+        return updatedAnswer
+    } else {
+        const err = await res.json()
+        return err
+    }
+}
 
 export const addNewAnswerThunk = (questionId, answer) => async (dispatch) => {
     console.log("🚍 in add answers thunk Q ID and answer", questionId, answer)
