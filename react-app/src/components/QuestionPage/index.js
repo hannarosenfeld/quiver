@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllQuestionsThunk } from "../../store/question";
-import { addNewAnswerThunk } from '../../store/answer';
+import { addNewAnswerThunk,  getAllAnswersThunk  } from '../../store/answer';
 import OpenModalButton from "../OpenModalButton";
 import AddAnswerModal from '../AddAnswerModal';
 
@@ -16,6 +16,11 @@ function QuestionPage() {
 
     useEffect(() => {
         dispatch(getAllQuestionsThunk())
+    }, [dispatch])
+
+    useEffect(() => {
+        const t = dispatch(getAllAnswersThunk(+id.questionId))
+        console.log("🛟", t)
     }, [dispatch])
 
     if (!questions) return null

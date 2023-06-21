@@ -23,8 +23,6 @@ function AskQuestion({ user }) {
         setTitle("")
     }
 
-    console.log("$$$$$$$$$",user)
-
     return (
         <div className="wrapper">
             <div className="homepage-wrapper">

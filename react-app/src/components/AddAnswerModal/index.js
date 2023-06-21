@@ -1,26 +1,24 @@
 import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { addNewAnswerThunk } from "../../store/answer"
+import { addNewAnswerThunk, getAllAnswersThunk } from "../../store/answer"
 import "./AddAnswerModal.css"
 
 function AddAnswerModal({ question }) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const [answer, setAnswer] = useState("")
+    const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const answerDetails = {
             answer
         }
-
         const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
         console.log(addAnswerDispatch)
         // await dispatch(getAllAnswersThunk())
-        setAnswer("")
-        // closeModal()
+        closeModal()
     }
 
     return (
@@ -44,7 +42,7 @@ function AddAnswerModal({ question }) {
                     onChange={(e) => setAnswer(e.target.value)}
                     required
                 />
-                <button type="submit" onClick={() => {handleSubmit()}}>Post</button>
+                <button type="submit" onSubmit={() => {handleSubmit()}}>Post</button>
             </form>
         </div>
     )

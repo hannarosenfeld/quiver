@@ -2,7 +2,7 @@ const GET_ALL_QUESTIONS = "question/GET_ALL_QUESTIONS"
 const ADD_NEW_QUESTION = "question/ADD_NEW_QUESTION"
 const UPDATE_QUESTION = "question/UPDATE_QUESTION"
 const DELETE_QUESTION = "question/DELETE_QUESTION"
-const GET_ONE_QUESTION = "questions/GET_ONE_QUESTION"
+const GET_ONE_QUESTION = "question/GET_ONE_QUESTION"
 
 const getAllQuestionsAction = (questions) => ({
     type: GET_ALL_QUESTIONS,

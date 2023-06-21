@@ -72,7 +72,7 @@ def delete_question(title):
     db.session.commit()
     return {"message": "successful"}
 
-@question_routes.route('/<int:id>/answers')
+@question_routes.route('/<int:id>/answers/')
 def allAnswers(id):
     answers = Answer.query.filter(Answer.question_id == id).all()
 
@@ -85,10 +85,12 @@ def allAnswers(id):
 
     return answer_dict
 
-@question_routes.route('/', methods=["POST"])
+@question_routes.route('/<int:id>/answers/', methods=["POST"])
 def add_answer():
     form = AnswerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
+    print("🚛 in add answer route")
 
     if form.validate_on_submit():
         newAnswer = Answer(
