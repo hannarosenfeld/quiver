@@ -1,0 +1,26 @@
+.add-answer-modal {
+    width: 656px;
+    padding: 1em;
+    background: #191A1B;
+}
+
+.add-answer-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.add-answer-modal form textarea{
+    background: #171819;
+    color: var(--qwhite);
+    padding: 0.3em;
+}
+
+.add-answer-modal .profile-pic-user-account-link {
+    width: 40px;
+    height: 40px;
+}
+
+.add-answer-modal button:hover {
+    color: var(--qred)
+}

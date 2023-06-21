@@ -1,13 +1,17 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllQuestionsThunk } from "../../store/question";
+import { addNewAnswerThunk } from '../../store/answer';
+import OpenModalButton from "../OpenModalButton";
+import AddAnswerModal from '../AddAnswerModal';
 
 function QuestionPage() {
     const dispatch = useDispatch();
     let id = useParams();
     const questionsObj = useSelector(state => state.question.question.questions)
     const questions = Object.values(questionsObj)
+    const [showMenu, setShowMenu] = useState(false);    
     let currentQ;
 
     useEffect(() => {
@@ -19,22 +23,15 @@ function QuestionPage() {
     for (let question of questions) {
         console.log("🥎",question)
 
-        console.log("🏸 question.id", question.id, "id:", id)
-
         if (question.id === +id.questionId) {
-
             currentQ = question
-            console.log("🪀 currentQ: ", currentQ)
         } 
     }
-
-    console.log("🎱 questionsObj",questionsObj)
-
 
     if (currentQ) {
         return (
             <div style={{
-                width: "800px", 
+                width: "656px", 
                 margin: "0 auto",
                 }}>
                 <div style={{
@@ -47,7 +44,10 @@ function QuestionPage() {
                 }}>
                     <p>{currentQ.title}</p>
                     <div>
-                        <span>answer</span>
+                        <OpenModalButton 
+                            buttonText="Answer"
+                            modalComponent={<AddAnswerModal question={currentQ}/>}
+                        />
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ function QuestionPage() {
                                         <span>{a.created_at}</span>
                                     </div>
                                 </div>
-                                <div style={{marginTop: "0.5em",fontSize: "0.8em"}}>{a.answer}</div>
+                                <div style={{marginTop: "0.5em",fontSize: "0.9em"}}>{a.answer}</div>
                             </li>
                         ))}
                     </ul>   

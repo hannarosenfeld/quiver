@@ -83,16 +83,12 @@ export const updateQuestionThunk = (questionInfo, questionId) => async (dispatch
         body: JSON.stringify(questionInfo)
     })
 
-    console.log("RES:", res)
-
     if (res.ok) {
-        console.log("🧚 in res.ok")
         const updatedQuestion = await res.json()
         await dispatch(updatedQuestionAction(updatedQuestion))
         return updatedQuestion
     } else {
         const err = await res.json()
-        console.log("🧚 err:", err)
         return err
     }
 

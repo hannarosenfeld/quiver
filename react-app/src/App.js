@@ -21,12 +21,12 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route exact path="/">
               {sessionUser ? (
                 <>
+                <Navigation isLoaded={isLoaded} />
                 <AskQuestion user={sessionUser} />
                 <QuestionsList />
                 </>
@@ -36,7 +36,8 @@ function App() {
               }
           </Route>
           <Route path="/questions/:questionId">
-            <QuestionPage />
+              <Navigation isLoaded={isLoaded} />
+              <QuestionPage />
           </Route>
           <Route path="/login" >
             <LoginFormPage />

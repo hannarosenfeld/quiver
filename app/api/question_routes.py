@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Question, Answer, db
 from app.forms.question_form import QuestionForm
+from app.forms.answer_form import AnswerForm
 
 question_routes = Blueprint('questions', __name__)
 
@@ -83,3 +84,20 @@ def allAnswers(id):
     print("😎", answer_dict)
 
     return answer_dict
+
+@question_routes.route('/', methods=["POST"])
+def add_answer():
+    form = AnswerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        newAnswer = Answer(
+            answer=form.data['answer'],
+            user_id=current_user.id,
+        )
+
+        db.session.add(newAnswer)
+        db.session.commit()
+        dict_new_answer = newAnswer.to_dict()
+
+        return dict_new_answer

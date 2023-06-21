@@ -20,24 +20,6 @@ function QuestionsList() {
         dispatch(getAllQuestionsThunk())
     }, [dispatch])
 
-    // Modal:
-    const ulRef = useRef();
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
-    useEffect(() => {
-        if (!showMenu) return;
-        const closeMenu = (e) => {
-        if (!ulRef.current.contains(e.target)) {
-            setShowMenu(false);
-        }
-        };
-        document.addEventListener("click", closeMenu);
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu]);
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-    const closeMenu = () => setShowMenu(false);
 
     return (
         <div className="wrapper">
@@ -48,20 +30,18 @@ function QuestionsList() {
                                 <li key={question.id}>
                                     <h4><NavLink to={`/questions/${question.id}`}>{question.title}</NavLink></h4>
                                     {question.answer.length ? (
-                                        <div>
+                                        <div style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
                                             {question.answer[0].answer}
                                         </div>
                                     ) : ''}
                                     <div className="edit-question-container">
                                             {sessionUser.id === question.user.id ? <OpenModalButton
                                             buttonText="Delete"
-                                            onItemClick={closeMenu}
                                             modalComponent={<DeleteQuestionModal question={question}
                                             />}
                                         /> : ''}                                        
                                             {sessionUser.id === question.user.id ? <OpenModalButton
                                             buttonText="Edit"
-                                            onItemClick={closeMenu}
                                             modalComponent={<EditQuestionModal question={question}
                                             />}
                                         /> : ''}
