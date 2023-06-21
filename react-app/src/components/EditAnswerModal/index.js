@@ -8,14 +8,21 @@ function EditAnswerModal({ answerToEdit, question }) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const [answer, setAnswer] = useState(answerToEdit.answer)
-    const { closeModal } = useModal();    
+    const { closeModal } = useModal();   
 
+    console.log("🏎️", answerToEdit)
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const answerDetails = {
-            answer
+            answer,
+            id : answerToEdit.id
         }
-        const editAnswerDispatch = await dispatch(updateAnswerThunk(question.id, answerDetails))
+
+        console.log("ANSWERDETAILS: ",answerDetails)
+
+        const editAnswerDispatch = await dispatch(updateAnswerThunk(answerDetails, answerDetails.id, question.id))
 
         await dispatch(getAllAnswersThunk(question.id))
         await dispatch(getAllQuestionsThunk())

@@ -18,8 +18,8 @@ const updateAnswerAction = (answer) => ({
     answer
 })
 
-export const updateAnswerThunk = (answerInfo, questionId) => async (dispatch) => {
-     const res = await fetch(`/api/questions/${questionId}/answers/`, {
+export const updateAnswerThunk = (answerInfo, answerId, questionId) => async (dispatch) => {
+     const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/`, {
         method: "PUT",
         headers: { "Content-Type" : "application/json" },
         body: JSON.stringify(answerInfo)

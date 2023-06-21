@@ -104,13 +104,13 @@ def add_answer(id):
 
     return dict_new_answer
 
-@question_routes.route("/<int:id>/answers/", methods=["PUT"])
-def edit_answer(id):
+@question_routes.route("/<int:id>/answers/<int:answer_id>/", methods=["PUT"])
+def edit_answer(id, answer_id):
     form = AnswerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        answer = Answer.query.filter(Answer.id == id).first()
+        answer = Answer.query.filter(Answer.id == answer_id).first()
         answer.answer = form.data["answer"]
 
         db.session.commit()
