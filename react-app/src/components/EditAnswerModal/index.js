@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import answerReducer, { updateAnswerThunk, getAllAnswersThunk } from "../../store/answer"
 import { getAllQuestionsThunk } from "../../store/question";
+import "./EditAnswerModal.css"
 
 function EditAnswerModal({ answerToEdit, question }) {
     const dispatch = useDispatch();

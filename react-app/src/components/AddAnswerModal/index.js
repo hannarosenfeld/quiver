@@ -11,14 +11,13 @@ function AddAnswerModal({ question }) {
     const [answer, setAnswer] = useState("")
     const { closeModal } = useModal();
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const answerDetails = {
             answer
         }
-        const addAnswerDispatch = await dispatch(addNewAnswerThunk(answerDetails, question.id))
+
+        const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
         console.log(addAnswerDispatch)
         await dispatch(getAllAnswersThunk(question.id))
         await dispatch(getAllQuestionsThunk())
