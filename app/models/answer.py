@@ -13,13 +13,14 @@ class Answer(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable = False)
     question_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('questions.id')), nullable = False)
 
-    user = db.relationship('User', back_populates='answer')
-    # question = db.relationship('Question', back_populates='answer')
+    user = db.relationship('User', back_populates='answers')
+    question = db.relationship('Question', back_populates='answers')
 
     def to_dict(self):
         return {
             'id': self.id,
             'answer': self.answer,
             'user': self.user.to_dict(),
-            'question': self.question.to_dict()
+            'question': self.question.to_dict(),
+            'question_id': self.question_id
         }

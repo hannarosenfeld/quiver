@@ -12,14 +12,14 @@ class Question(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable = False)
 
-    user = db.relationship('User', back_populates='question')
-    # answer = db.relationship('Answer', back_populates='question')
+    user = db.relationship('User', back_populates='questions')
+    answers = db.relationship('Answer', back_populates='question', cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
             'user': self.user.to_dict(),
-            # 'answers': [a.to_dict() for a in self.answer],
+            'answer': [{'id': answer.id, 'answer': answer.answer, 'user': answer.user.to_dict()} for answer in self.answers],
             'created_at': self.created_at
         }

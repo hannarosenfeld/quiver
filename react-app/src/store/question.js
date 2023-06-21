@@ -2,6 +2,7 @@ const GET_ALL_QUESTIONS = "question/GET_ALL_QUESTIONS"
 const ADD_NEW_QUESTION = "question/ADD_NEW_QUESTION"
 const UPDATE_QUESTION = "question/UPDATE_QUESTION"
 const DELETE_QUESTION = "question/DELETE_QUESTION"
+const GET_ONE_QUESTION = "questions/GET_ONE_QUESTION"
 
 const getAllQuestionsAction = (questions) => ({
     type: GET_ALL_QUESTIONS,
@@ -22,6 +23,24 @@ const deleteQuestionAction = questionId => ({
     type: DELETE_QUESTION,
     questionId
 })
+
+const getOneQuestionAction = question => ({
+    type: GET_ONE_QUESTION,
+    question
+})
+
+export const getOneQuestionThunk = (questionTitle) => async (dispatch) => {
+    const res = await fetch(`/api/questions/${questionTitle}`)
+
+    if (res.ok) {
+        const data = await res.json()
+        await dispatch(getOneQuestionAction(data))
+        return data
+    } else {
+        const err = await res.json()
+        return err
+    }
+}
 
 
 export const getAllQuestionsThunk = () => async (dispatch) => {
@@ -57,7 +76,6 @@ export const addNewQuestionThunk = (question) => async (dispatch) => {
 // TODO: change Title to Id? This is giving me an error when I try to submit
 export const updateQuestionThunk = (questionInfo, questionId) => async (dispatch) => {
     const { title } = questionInfo
-
 
     const res = await fetch(`/api/questions/${questionId}/`, {
         method: "PUT",
@@ -100,10 +118,13 @@ const questionReducer = (state = initialState, action) => {
             const questionState = {...state, allQuestions: {...state.allQuestions}}
             questionState.question = action.questions
             return questionState;
-            case ADD_NEW_QUESTION:
-                const createState = {...state, allQuestions: {...state.allQuestions}, currentQuestion: {} }
-                createState.currentQuestion = action.question
-                return createState
+        case GET_ONE_QUESTION:
+            const oneQuestionState = {...state, currentQuestion: {}, allQuestions: {...state.allQuestions}}
+            oneQuestionState.question = action.currentQuestion
+        case ADD_NEW_QUESTION:
+            const createState = {...state, allQuestions: {...state.allQuestions}, currentQuestion: {} }
+            createState.currentQuestion = action.question
+            return createState
         default:
             return state;
     }

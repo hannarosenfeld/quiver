@@ -4,7 +4,7 @@ import { useModal } from "../../context/Modal";
 import "./EditQuestionModal.css"
 import { updateQuestionThunk, getAllQuestionsThunk } from "../../store/question"
 
-function EditQuestionModal({question}) {
+function EditQuestionModal({ question }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState(question.title);
     const { closeModal } = useModal();

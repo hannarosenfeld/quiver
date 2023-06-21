@@ -7,10 +7,12 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import QuestionsList from "./components/QuestionsList";
 import AskQuestion from "./components/AskQuestion"
+import QuestionPage from "./components/QuestionPage"
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -19,13 +21,12 @@ function App() {
 
   return (
     <>
-      {/* <Navigation isLoaded={isLoaded} /> */}
+      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route exact path="/">
               {sessionUser ? (
                 <>
-                <Navigation isLoaded={isLoaded} />
                 <AskQuestion user={sessionUser} />
                 <QuestionsList />
                 </>
@@ -33,6 +34,9 @@ function App() {
                   <Redirect to="/login" />
                 )
               }
+          </Route>
+          <Route path="/questions/:questionId">
+            <QuestionPage />
           </Route>
           <Route path="/login" >
             <LoginFormPage />

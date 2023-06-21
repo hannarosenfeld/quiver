@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import EditQuestionModal from "../EditQuestionModal"
 import DeleteQuestionModal from "../DeleteQuestionModal";
+import AnswerList from "./AnswerList";
 
 import { getAllAnswersThunk } from "../../store/answer";
 
@@ -12,26 +13,31 @@ import "./Question.css"
 
 function Question({ question }) {
     const dispatch = useDispatch();
-    const answersObj = useSelector(state => state.answer.allAnswers)
+    const answersObj = useSelector(state => state.answer.answers)
 	const sessionUser = useSelector(state => state.session.user);
     const [showMenu, setShowMenu] = useState(false);
+    let answers
+
+    if (answersObj) {
+        answers = Object.values(answersObj)
+    }
+
+    // console.log("🥎 answers: ",answers)
+
+    // useEffect(() => {
+    //     dispatch(getAllAnswersThunk(question.id))
+    // }, [dispatch])
+
+
+    // Modal:
     const ulRef = useRef();
-
-    useEffect(() => {
-        dispatch(getAllAnswersThunk(question.id))
-    }, [dispatch])
-
-    console.log("💋", answersObj)
-  
     const openMenu = () => {
       if (showMenu) return;
       setShowMenu(true);
     };
-  
     useEffect(() => {
       if (!showMenu) return;
-  
-      const closeMenu = (e) => {
+        const closeMenu = (e) => {
         if (!ulRef.current.contains(e.target)) {
           setShowMenu(false);
         }
@@ -39,15 +45,13 @@ function Question({ question }) {
       document.addEventListener("click", closeMenu);
       return () => document.removeEventListener("click", closeMenu);
     }, [showMenu]);
-
-  
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
     const closeMenu = () => setShowMenu(false);
 
 
     return(
         <div>
-            <div className="question-user-info">
+            {/* <div className="question-user-info">
                 <div className="profile-pic"
                     style={{
                         backgroundImage: `url(${question.user.profile_pic})`, 
@@ -59,9 +63,9 @@ function Question({ question }) {
                     <span className="username">{question.user.username}</span>
                     <span>{question.created_at.slice(0,-12)}</span>
                 </div>
-            </div>
-            <h4><NavLink to={`/questions/${question.title.split(" ").join("-")}`}>{question.title}</NavLink></h4>
-            <div className="edit-question-container">
+            </div> */}
+            {/* <h4><NavLink to={`/questions/${question.title.split(" ").join("-")}`}>{question.title}</NavLink></h4> */}
+            {/* <div className="edit-question-container">
             {sessionUser.id === question.user.id ? <OpenModalButton
                                             buttonText="Delete"
                                             onItemClick={closeMenu}
@@ -74,7 +78,7 @@ function Question({ question }) {
                                             modalComponent={<EditQuestionModal question={question}
                                             />}
                                         /> : ''}
-            </div>
+            </div> */}
         </div>
     )
 }

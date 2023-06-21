@@ -40,13 +40,14 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu}>
+      {user && (
       <div className="profile-pic-user-account-link"
                         style={{
                             backgroundImage: `url(${user.profile_pic})`, 
                             backgroundSize: "40px", 
                             backgroundPosition: "center"
                         }}>
-                    </div>
+      </div> )}
         {/* <i className="fas fa-user-circle" /> */}
       </button>
       <ul className={ulClassName} ref={ulRef}>

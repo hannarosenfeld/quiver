@@ -15,8 +15,8 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     profile_pic = db.Column(db.String(255), default='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png')
 
-    answer = db.relationship('Answer', back_populates='user')
-    question = db.relationship('Question', back_populates='user')
+    answers = db.relationship('Answer', back_populates='user')
+    questions = db.relationship('Question', back_populates='user')
 
     @property
     def password(self):
