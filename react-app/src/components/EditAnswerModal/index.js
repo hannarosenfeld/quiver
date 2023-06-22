@@ -21,8 +21,6 @@ function EditAnswerModal({ answerToEdit, question }) {
             id : answerToEdit.id
         }
 
-        console.log("ANSWERDETAILS: ",answerDetails)
-
         const editAnswerDispatch = await dispatch(updateAnswerThunk(answerDetails, answerDetails.id, question.id))
 
         await dispatch(getAllAnswersThunk(question.id))

@@ -1,6 +1,7 @@
 const GET_ALL_ANSWERS = "answer/GET_ALL_ANSWERS"
 const ADD_NEW_ANSWER = "answer/ADD_NEW_ANSWER"
 const UPDATE_ANSWER = "answer/UPDATE_ANSWER"
+const DELETE_ANSWER = "answer/DELETE_ANSWER"
 
 
 const getAllAnswersAction = (answers) => ({
@@ -17,6 +18,24 @@ const updateAnswerAction = (answer) => ({
     type: UPDATE_ANSWER,
     answer
 })
+
+const deleteAnswerAction = (answerId) => ({
+    type: DELETE_ANSWER,
+    answerId
+})
+
+export const deleteAnswerThunk = (questionId, answerId) => async (dispatch) => {
+    const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/`, { method: "DELETE" })
+
+    if (res.ok) {
+        const successMessage = await res.json();
+        dispatch(deleteAnswerAction(answerId))
+        return successMessage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 
 export const updateAnswerThunk = (answerInfo, answerId, questionId) => async (dispatch) => {
      const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/`, {
@@ -74,7 +93,6 @@ export const getAllAnswersThunk = (questionId) => async (dispatch) => {
 const initialState = { answers: {}, currentAnswer: {} };
 
 const answerReducer = (state = initialState, action) => {
-    console.log("🛵 in answer reducer")
     switch (action.type) {
         case GET_ALL_ANSWERS:
             const answerState = {...state, answers: {}}

@@ -6,6 +6,7 @@ import { addNewAnswerThunk,  getAllAnswersThunk  } from '../../store/answer';
 import OpenModalButton from "../OpenModalButton";
 import AddAnswerModal from '../AddAnswerModal';
 import EditAnswerModal from '../EditAnswerModal';
+import DeleteAnswerModal from '../DeleteAnswerModal';
 
 function QuestionPage() {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function QuestionPage() {
     const sessionUser = useSelector(state => state.session.user);
     const questionsObj = useSelector(state => state.question.question.questions)
     const questions = Object.values(questionsObj)
+    const answers = useSelector(state => state.answer.answers)
     const [showMenu, setShowMenu] = useState(false);    
     let currentQ;
 
@@ -22,7 +24,6 @@ function QuestionPage() {
 
     useEffect(() => {
         const t = dispatch(getAllAnswersThunk(+id.questionId))
-        console.log("🛟", t)
     }, [dispatch])
 
     if (!questions) return null
@@ -82,10 +83,14 @@ function QuestionPage() {
                                 </div>
                                 <div style={{marginTop: "0.5em",fontSize: "0.9em"}}>{a.answer}</div>
                                 {a.user.id === sessionUser.id && (
-                                    <div style={{float: "right", marginRight: "1em"}}>
+                                    <div style={{display: "flex", gap: "0.5em",float: "right", marginRight: "1em"}}>
                                         <OpenModalButton 
                                             buttonText="Edit"
                                             modalComponent={<EditAnswerModal answerToEdit={a} question={currentQ}/>}
+                                        ></OpenModalButton>
+                                        <OpenModalButton 
+                                            buttonText="Delete"
+                                            modalComponent={<DeleteAnswerModal answerId={a.id} questionId={currentQ.id}/>}
                                         ></OpenModalButton>
                                     </div>
                                 )}

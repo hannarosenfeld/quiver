@@ -117,3 +117,11 @@ def edit_answer(id, answer_id):
         return answer.to_dict()
     
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@question_routes.route("/<int:id>/answers/<int:answer_id>/", methods=["DELETE"])
+@login_required
+def delete_answer(id, answer_id):
+    answer = Answer.query.get(answer_id)
+    db.session.delete(answer)
+    db.session.commit()
+    return {"message": "successful"}
