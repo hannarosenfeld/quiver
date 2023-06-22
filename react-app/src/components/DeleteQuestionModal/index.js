@@ -20,7 +20,7 @@ function DeleteQuestionModal({ question }) {
 
     return (
         <div className="delete-question">
-            <h3>Delete answer</h3>
+            <h3>Delete Question</h3>
             <p>Are you sure you want to permanetly delete this question?</p>
             <button type="submit" onClick={handleDelete }>Delete</button>
         </div>
