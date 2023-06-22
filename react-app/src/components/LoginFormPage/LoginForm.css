@@ -1,0 +1,85 @@
+.login-form-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-image: url(https://qsf.fs.quoracdn.net/-4-ans_frontend_assets.images.home_page_bg_desktop.png-26-4770753d59b970e1.png);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.login-form-box {
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+    background-color: #191A1B;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+}
+
+.login-form-box .title {
+    margin: 0 auto;
+    align-self: center;
+    width: fit-content;
+    font-size: 3em;
+    margin-bottom: 0.2em;
+}
+
+.login-form-box p{
+    margin: 0 auto;
+    align-self: center;
+    width: fit-content;
+}
+
+.login-form {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.login-form form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form form label{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.login-form h4 {
+    border-bottom: 1px solid #dee0e1;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    padding-bottom: 0.75em;
+}
+
+
+.login-form form input{
+    margin-top: 0.2em;
+}
+
+.login-form form input, button{
+    height: 3em;
+    margin-top: 0.5em;
+}
+
+.signup-link {
+    height: 100%;
+    align-self: center;
+    margin: 0 auto;
+    display: flex;
+}
+
+.signup-link a {
+    align-self: center;
+    margin: 0 auto;
+}
+
+

@@ -1,0 +1,19 @@
+.delete-question {
+    background-color: #212223;
+    color: var(--qwhite);
+    padding: 2em;
+    height: 10em;
+}
+
+.delete-question h3 {
+    margin-bottom: 0.5em;
+}
+
+.delete-question button {
+    float: right;
+}
+
+.delete-question button:hover {
+    color: var(--qred);
+    cursor: pointer;
+}

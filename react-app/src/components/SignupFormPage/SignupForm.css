@@ -1,0 +1,10 @@
+.signup-form-box {
+    width: 600px;
+    height: 700px;
+    margin: 0 auto;
+    background-color: #191A1B;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+}
+
