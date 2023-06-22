@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { getAllQuestionsThunk } from "../../store/question"
 import { deleteAnswerThunk, getAllAnswersThunk } from "../../store/answer"
 import "./DeleteAnswerModal.css"
 
@@ -16,6 +17,7 @@ function DeleteAnswerModal({ answerId, questionId }) {
 
     const handleDelete = async () => {
         const deleteQuestionDispatch = await dispatch(deleteAnswerThunk(questionId, answerId))
+        await dispatch(getAllQuestionsThunk())
         await dispatch(getAllAnswersThunk(questionId))
         closeModal()
     }
