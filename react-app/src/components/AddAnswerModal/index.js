@@ -42,7 +42,7 @@ function AddAnswerModal({ question }) {
             </div>
             <form onSubmit={handleSubmit}>
                 <label>{question.title}</label>
-                <textarea
+                <textarea className="answer-text"
                     rows="15"
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}

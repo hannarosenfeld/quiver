@@ -5,7 +5,38 @@ import "./AskQuestion.css"
 
 function AskQuestion({ user }) {
     const dispatch = useDispatch();
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState([]);
+    const [errors, setErrors] = useState([]);
+    const [hasErrors, setHasErrors] = useState(false);
+
+    useEffect(() => {
+		const errors = {}
+        let splitTitle
+
+        if (title.length) {
+            splitTitle = title.toLowerCase().split(" ")
+            if (
+                splitTitle[0] !== "who" && 
+                splitTitle[0] !== "how" && 
+                splitTitle[0] !== "why" && 
+                splitTitle[0] !== "what" && 
+                splitTitle[0] !== "where" &&
+                splitTitle[0] !== "when" &&
+                splitTitle[0] !== "which" &&
+                splitTitle[0] !== "is"
+                ) {
+                    errors.questionWord = "Please start your question with a question word."
+                    setErrors(errors)
+                } if (title[title.length -1] !== '?') {
+                    errors.questionMark = "Please end your question with a questionmark."
+                    setHasErrors(true)
+                    setErrors(errors)
+            } else {
+                setHasErrors(false)
+            }
+        }
+		setErrors(errors)
+	}, [title])
 
     useEffect(() => {
         dispatch(getAllQuestionsThunk())
@@ -14,13 +45,19 @@ function AskQuestion({ user }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const questionDetails = {
-            title
-        }
+        console.log("in handle submit")
 
-        const newQuestionDispatch = await dispatch(addNewQuestionThunk(questionDetails))
-        await dispatch(getAllQuestionsThunk())
-        setTitle("")
+            if (!errors.questionMark && !errors.questionWord) {
+                console.log("worked")
+                const questionDetails = {
+                    title
+                }
+                const newQuestionDispatch = await dispatch(addNewQuestionThunk(questionDetails))
+                await dispatch(getAllQuestionsThunk())
+                setTitle("")
+            } else {
+                setHasErrors(true)
+            }
     }
 
     return (
@@ -35,14 +72,18 @@ function AskQuestion({ user }) {
                         }}>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder='Start your question with "What", "How", "Why", etc.'
-                            required
-                        />
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder='Start your question with "What", "How", "Why", etc.'
+                                required
+                            />
                     </form>
+                </div>
+                <div style={{display: "flex", flexDirection: "column", color: "red", marginBottom: "1em", fontSize: "0.8em"}}>
+                    {hasErrors && errors.questionWord ? <span>{errors.questionWord}</span> : ''}
+                    {hasErrors && errors.questionMark ? <span>{errors.questionMark}</span> : ''}
                 </div>
             </div>
         </div>

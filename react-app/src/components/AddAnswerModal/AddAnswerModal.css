@@ -25,3 +25,10 @@
 .add-answer-modal button:hover {
     color: var(--qred)
 }
+
+.answer-text {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-line;
+    white-space: pre-wrap;
+  }
