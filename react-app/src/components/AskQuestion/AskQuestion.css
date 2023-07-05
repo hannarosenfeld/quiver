@@ -1,5 +1,4 @@
 .homepage-wrapper {
-
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -31,4 +30,12 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
+}
+
+.post-button {
+    margin: -1em 0.5em 1em 0;
+}
+
+.post-button:hover, .post-button button:hover {
+    color: var(--qred)
 }

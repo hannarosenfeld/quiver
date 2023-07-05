@@ -1,30 +1,25 @@
 import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import answerReducer, { addNewAnswerThunk, getAllAnswersThunk } from "../../store/answer"
-import { getAllQuestionsThunk } from "../../store/question";
-import "./AddAnswerModal.css"
 
-function AddAnswerModal({ question }) {
+function PostModal() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
-    const [answer, setAnswer] = useState("")
+    const [content, setContent] = useState("")
     const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const answerDetails = {
-            answer
+        const postDetails = {
+            content
         }
 
-        const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
-        console.log(addAnswerDispatch)
-        await dispatch(getAllAnswersThunk(question.id))
-        await dispatch(getAllQuestionsThunk())
+        // const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
+        // await dispatch(getAllAnswersThunk(question.id))
+        // await dispatch(getAllQuestionsThunk())
 
         closeModal()
     }
-
     return (
         <div className="add-answer-modal">
             <div style={{display: "flex", gap: "0.5em", fontSize: "0.9em"}}>
@@ -39,18 +34,17 @@ function AddAnswerModal({ question }) {
                 <span>{user.username}</span>
             </div>
             <form onSubmit={handleSubmit}>
-                <label>{question.title}</label>
                 <textarea className="answer-text"
                     rows="15"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder="Write your answer"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Write your post"
                     required
                 />
-                <button type="submit">Post</button>
+                <button type="submit">Submit</button>
             </form>
         </div>
     )
 }
 
-export default AddAnswerModal;
+export default PostModal;
