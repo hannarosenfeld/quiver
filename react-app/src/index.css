@@ -65,3 +65,7 @@ button {
 button {
     cursor: pointer;
 }
+
+.edit-question-container button:hover {
+    color: var(--qred)
+}

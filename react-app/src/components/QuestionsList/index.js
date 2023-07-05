@@ -27,16 +27,18 @@ function QuestionsList() {
         dispatch(getAllPostsThunk())
     }, [dispatch])
 
-    console.log("🏸 questions:", questions)
-    console.log("💄 posts:", postsObj)
-
-    console.log("👛 posts and questions: ", [...posts, ...questions])
-
     const sortedPostsAndQuestions = postsAndQuestions.sort(function(a,b){
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
         return new Date(b.created_at) - new Date(a.created_at);
     });
+
+    for (let i = 0; i < sortedPostsAndQuestions.length; i++) {
+        console.log("🧶", i)
+        sortedPostsAndQuestions[i].unique_id = i
+    }
+
+    console.log("👗", sortedPostsAndQuestions)
 
     return (
         <div className="wrapper">
@@ -44,8 +46,8 @@ function QuestionsList() {
                     <div className="question-list-wrapper">
                         <ul>
                         {sortedPostsAndQuestions.map(e => {
-                            if (e.title) return (<li key={e.id}><Question question={e} /></li>)
-                            else return (<li key={e.id}><Post post={e}/></li>)
+                            if (e.title) return (<li key={e.unique_id}><Question question={e} /></li>)
+                            else return (<li key={e.unique_id}><Post post={e}/></li>)
                         })}
                         </ul>
                     </div>

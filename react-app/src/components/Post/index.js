@@ -1,9 +1,23 @@
+import { useState, useEffect, useRef } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { useModal } from "../../context/Modal";
+
+import { deletePostThunk, getAllPostsThunk } from "../../store/post"
+
+import OpenModalButton from "../OpenModalButton";
+import DeletePostModal from "../DeletePostModal";
 
 
 function Post({ post }) {
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
     const sessionUser = useSelector(state => state.session.user);
+
+    useEffect(() => {
+        dispatch(getAllPostsThunk())
+    }, [dispatch])
 
     return(
         <div>
@@ -28,13 +42,12 @@ function Post({ post }) {
                         {post.content}
                     </div>
                 ) : ''}
-                {/* <div className="edit-post-container">
+                <div className="edit-question-container">
                     {sessionUser.id === post.user.id ? <OpenModalButton
                         buttonText="Delete"
-                        modalComponent={<DeletepostModal post={post}
-                        />}
+                        modalComponent={<DeletePostModal post={post}/>}
                     /> : ''}                                        
-                </div> */}
+                </div>
         </div>
     )
 }

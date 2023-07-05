@@ -21,7 +21,14 @@ def allPosts():
     """
     Query for all posts and returns them in a list of post dictionaries
     """
-    print("⛑️ halloooooooo")
     posts = Post.query.all()
-    print("👁️posts:", posts)
     return {'posts': [post.to_dict() for post in posts]}
+
+@post_routes.route("/<int:id>", methods=["DELETE"])
+@login_required
+def delete_post(id):
+    print("🥼 in delete post route")
+    post = Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+    return {"message": "successful"}
