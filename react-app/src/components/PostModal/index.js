@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { addNewPostThunk, getAllPostsThunk} from "../../store/post";
 
 function PostModal() {
     const dispatch = useDispatch();
@@ -14,9 +15,8 @@ function PostModal() {
             content
         }
 
-        // const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
-        // await dispatch(getAllAnswersThunk(question.id))
-        // await dispatch(getAllQuestionsThunk())
+        const addAnswerDispatch = await dispatch(addNewPostThunk(postDetails))
+        await dispatch(getAllPostsThunk())
 
         closeModal()
     }

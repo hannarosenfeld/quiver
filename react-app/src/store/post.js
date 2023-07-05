@@ -1,5 +1,6 @@
 const GET_ALL_POSTS = "post/GET_ALL_POSTS"
 const DELETE_POST = "post/DELETE_POST"
+const ADD_NEW_POST = "post/ADD_NEW_POST"
 
 const getAllPostsAction = (posts) => ({
     type: GET_ALL_POSTS,
@@ -11,8 +12,32 @@ const deletePostAction = postId => ({
     postId
 })
 
+const addNewPostAction = (post) => ({
+    type: ADD_NEW_POST,
+    post
+})
+
+export const addNewPostThunk = (post) => async (dispatch) => {
+    console.log("💍 in add new post thunk")
+    const res = await fetch("/api/posts/", {
+        method: "POST",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify(post)
+    })
+    if (res.ok) {
+        console.log("🪢 res ok")
+        const newPost = await res.json()
+        dispatch(addNewPostAction(newPost))
+        return newPost
+    } else {
+        const err = await res.json()
+        console.log("🪢 res not ok", err)
+
+        return err
+    }
+}
+
 export const deletePostThunk = (postId) => async dispatch => {
-    console.log("🧣 in delete post thunk")
     const res = await fetch(`/api/posts/${postId}`, {method: "DELETE"})
     if (res.ok) {
         const successMessage = await res.json();
@@ -45,6 +70,10 @@ const postReducer = (state = initialState, action) => {
             const postState = {...state, allPosts: {...state.allPosts}}
             postState.post = action.posts
             return postState;
+        case ADD_NEW_POST:
+            const createState = {...state, allPosts: {...state.allPosts}, currentPost: {} }
+            createState.currentPost = action.post
+            return createState            
         default:
             return state;
     }

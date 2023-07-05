@@ -82,13 +82,10 @@ def allAnswers(id):
     for answer in answers:
         answer_dict.append(answer.to_dict())
 
-    print("😎", answer_dict)
-
     return answer_dict
 
 @question_routes.route('/<int:id>/answers/', methods=["POST"])
 def add_answer(id):
-    print("🚛 in add answer route")
     form = AnswerForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
