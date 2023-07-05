@@ -37,8 +37,6 @@ function QuestionsList() {
         sortedPostsAndQuestions[i].unique_id = i
     }
 
-    console.log("👗", sortedPostsAndQuestions)
-
     return (
         <div className="wrapper">
                 <div className="homepage-wrapper">

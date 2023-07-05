@@ -7,8 +7,6 @@ function DeletePostModal({ post }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    console.log("🧦",post)
-
     useEffect(() => {
         dispatch(getAllPostsThunk())
     }, [dispatch])

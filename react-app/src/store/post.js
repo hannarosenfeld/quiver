@@ -18,20 +18,17 @@ const addNewPostAction = (post) => ({
 })
 
 export const addNewPostThunk = (post) => async (dispatch) => {
-    console.log("💍 in add new post thunk")
     const res = await fetch("/api/posts/", {
         method: "POST",
         headers: { "Content-Type" : "application/json" },
         body: JSON.stringify(post)
     })
     if (res.ok) {
-        console.log("🪢 res ok")
         const newPost = await res.json()
         dispatch(addNewPostAction(newPost))
         return newPost
     } else {
         const err = await res.json()
-        console.log("🪢 res not ok", err)
 
         return err
     }

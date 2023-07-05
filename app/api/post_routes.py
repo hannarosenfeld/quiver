@@ -45,7 +45,6 @@ def add_post():
             user_id=current_user.id,
         )
 
-        print("👛", newPost)
         db.session.add(newPost)
         db.session.commit()
         dict_new_post = newPost.to_dict()
