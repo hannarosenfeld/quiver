@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import QuestionsList from "./components/QuestionsList";
 import AskQuestion from "./components/AskQuestion"
 import QuestionPage from "./components/QuestionPage"
+import Footer from "./components/Footer"
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
                 <Navigation isLoaded={isLoaded} />
                 <AskQuestion user={sessionUser} />
                 <QuestionsList />
+                <Footer/>
                 </>
                ) : (
                   <Redirect to="/login" />
