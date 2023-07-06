@@ -20,6 +20,6 @@ class Post(db.Model):
             'id': self.id,
             'user': self.user.to_dict(),
             'content': self.content,
-            'comment': [{'id': comment.id, 'comment': comment.comment, 'user': comment.user.to_dict()} for comment in self.comments],
+            'comment': [{'id': comment.id, 'comment': comment.comment, 'user': comment.user.to_dict(), 'post_id': comment.post_id} for comment in self.comments],
             'created_at': self.created_at
         }

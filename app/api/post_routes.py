@@ -55,7 +55,6 @@ def add_post():
     
 @post_routes.route('/<int:id>/comments/', methods=["POST"])
 def add_comment(id):
-    print("👡 in comment route")
     form = CommentForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -66,10 +65,16 @@ def add_comment(id):
             post_id=id
         )
 
-        print("👛 new comment:", newComment)
-
         db.session.add(newComment)
         db.session.commit()
         dict_new_comment = newComment.to_dict()
 
     return dict_new_comment
+
+@post_routes.route("/<int:id>/comments/<int:comment_id>/", methods=["DELETE"])
+@login_required
+def delete_answer(id, comment_id):
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return {"message": "successful"}

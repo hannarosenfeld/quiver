@@ -99,7 +99,6 @@ const answerReducer = (state = initialState, action) => {
                 const createState = {...state, answers: {...state.answers}, currentAnswer: {}}
                 createState.currentAnswer = action.answers
                 return createState
-        
         default:
             return state;
     }

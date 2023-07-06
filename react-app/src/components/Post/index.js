@@ -9,6 +9,7 @@ import { addNewCommentThunk } from "../../store/comment";
 
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
+import DeleteCommentModal from "../DeleteCommentModal";
 
 import "./Post.css"
 
@@ -99,6 +100,7 @@ function Post({ post }) {
                                             backgroundImage: `url(${e.user.profile_pic})`, 
                                             backgroundSize: "40px", 
                                             backgroundPosition: "center",
+                                            marginRight: "1em"
                                         }}>
                                     </div>
                                     <div style={{marginTop: "-0.25em", width: "100%"}}>
@@ -106,10 +108,10 @@ function Post({ post }) {
                                         <div>{e.comment}</div>
                                     </div>
                                 </div>
-                                <div className="edit-question-container">
+                                <div className="edit-question-container" style={{marginBottom: "0.1em"}}>
                                     {sessionUser.id === e.user.id ? <OpenModalButton
                                        buttonText="Delete"
-                                       // modalComponent={<DeleteQuestionModal question={question}/>}
+                                       modalComponent={<DeleteCommentModal commentId={e.id} postId={e.post_id}/>}
                                     /> : ''}
                                 </div> 
                             </li>

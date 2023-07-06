@@ -1,9 +1,28 @@
 const ADD_COMMENT = "comment/ADD_COMMENT"
+const DELETE_COMMENT = "comment/DELETE_COMMENT"
 
 const addNewCommentAction = (comment) => ({
     type: ADD_COMMENT,
     comment
 })
+
+const deleteCommentAction = (commentId) => ({
+    type: DELETE_COMMENT,
+    commentId
+})
+
+export const deleteCommentThunk = (postId, commentId) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${postId}/comments/${commentId}/`, { method: "DELETE" })
+
+    if (res.ok) {
+        const successMessage = await res.json();
+        dispatch(deleteCommentAction(commentId))
+        return successMessage;
+    } else {
+        const err = await res.json();
+        return err;
+    }
+}
 
 export const addNewCommentThunk = (postId, comment) => async (dispatch) => {
     const res = await fetch(`/api/posts/${postId}/comments/`, {
