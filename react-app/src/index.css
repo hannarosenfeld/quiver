@@ -69,3 +69,18 @@ button {
 .edit-question-container button:hover {
     color: var(--qred)
 }
+
+.fa-comment {
+
+}
+.fa-comment:hover {
+    color: var(--qred);
+}
+
+.question-list-wrapper li {
+    padding: 1em;
+}
+
+.edit-question-container {
+    margin-bottom: -0.5em;
+}

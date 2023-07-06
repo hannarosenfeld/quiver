@@ -42,11 +42,12 @@ function Post({ post }) {
                         {post.content}
                     </div>
                 ) : ''}
-                <div className="edit-question-container">
+                <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
+                    <i className="fa-regular fa-comment" style={{cursor: "pointer"}}></i>
                     {sessionUser.id === post.user.id ? <OpenModalButton
                         buttonText="Delete"
                         modalComponent={<DeletePostModal post={post}/>}
-                    /> : ''}                                        
+                    /> : ''}     
                 </div>
         </div>
     )
