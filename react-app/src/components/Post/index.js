@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 
 import { deletePostThunk, getAllPostsThunk } from "../../store/post"
+import { addNewCommentThunk } from "../../store/comment";
 
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
@@ -15,7 +16,8 @@ import "./Post.css"
 function Post({ post }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const [toggle, setToggle] = useState(false)
+    const [toggle, setToggle] = useState(false);
+    const [comment, setComment] = useState("");
     const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
@@ -23,6 +25,18 @@ function Post({ post }) {
     }, [dispatch])
 
     console.log("🧵 post", post)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const commentDetails = {
+            comment
+        }
+        
+        const newCommentDispatch = await dispatch(addNewCommentThunk(post.id, commentDetails))
+        await dispatch(getAllPostsThunk())
+        setComment("")
+    }
 
     return(
         <div className="outer-post-wrapper">
@@ -58,7 +72,7 @@ function Post({ post }) {
             </div>
             { toggle && (
                 <div className="comment-section">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="profile-pic"
                             style={{
                                 backgroundImage: `url(${sessionUser.profile_pic})`, 
@@ -68,8 +82,8 @@ function Post({ post }) {
                         </div>
                         <input
                             type="text"
-                            // value={title}
-                            // onChange={(e) => setTitle(e.target.value)}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
                             placeholder='Add a comment...'
                             required
                         />
