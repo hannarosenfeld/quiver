@@ -12,7 +12,7 @@ function Question({ question }) {
     const sessionUser = useSelector(state => state.session.user);
 
     return(
-        <div>
+        <div className="question-wrapper">
         {question.answer.length ? (
             <div style={{display: "flex", gap:"0.5em", marginBottom: "1em"}}>
                 <div className="profile-pic"

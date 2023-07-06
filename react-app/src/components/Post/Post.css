@@ -1,0 +1,23 @@
+.post-wrapper {
+    padding: 1em;
+}
+
+.comment-form {
+    background: grey;
+}
+
+.outer-post-wrapper form {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    align-items: center;
+}
+
+.outer-post-wrapper input {
+    width: 70%;
+    height: 3em;
+    border: 1px solid var(--qborder);
+    border-radius: 1000px;
+    padding-left: 1em;
+}
+

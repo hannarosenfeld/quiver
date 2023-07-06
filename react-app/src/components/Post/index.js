@@ -9,6 +9,8 @@ import { deletePostThunk, getAllPostsThunk } from "../../store/post"
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
 
+import "./Post.css"
+
 
 function Post({ post }) {
     const dispatch = useDispatch();
@@ -19,37 +21,60 @@ function Post({ post }) {
         dispatch(getAllPostsThunk())
     }, [dispatch])
 
+    console.log("🧵 post", post)
+
     return(
-        <div>
-            {post.content.length ? (
-                <div style={{display: "flex", gap:"0.5em", marginBottom: "1em"}}>
-                    <div className="profile-pic"
-                        style={{
-                            backgroundImage: `url(${post.user.profile_pic})`, 
-                            backgroundSize: "40px", 
-                            backgroundPosition: "center",
-                        }}>
-                    </div>
-                    <div style={{fontSize: "0.8em", fontWeight: "600"}}>
-                        <span>{post.user.username}</span>
-                        {/* <span>{post.created_at}</span> */}
-                    </div>
-                </div>
-                ) : ''}
-                <h4><NavLink to={`/posts/${post.id}`}>{post.title}</NavLink></h4>
+        <div className="outer-post-wrapper">
+            <div className="post-wrapper">
                 {post.content.length ? (
-                    <div style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
-                        {post.content}
+                    <div style={{display: "flex", gap:"0.5em", marginBottom: "1em"}}>
+                        <div className="profile-pic"
+                            style={{
+                                backgroundImage: `url(${post.user.profile_pic})`, 
+                                backgroundSize: "40px", 
+                                backgroundPosition: "center",
+                            }}>
+                        </div>
+                        <div style={{fontSize: "0.8em", fontWeight: "600"}}>
+                            <span>{post.user.username}</span>
+                            {/* <span>{post.created_at}</span> */}
+                        </div>
                     </div>
-                ) : ''}
-                <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
-                    <i className="fa-regular fa-comment" style={{cursor: "pointer"}}></i>
-                    {sessionUser.id === post.user.id ? <OpenModalButton
-                        buttonText="Delete"
-                        modalComponent={<DeletePostModal post={post}/>}
-                    /> : ''}     
-                </div>
-        </div>
+                    ) : ''}
+                    <h4><NavLink to={`/posts/${post.id}`}>{post.title}</NavLink></h4>
+                    {post.content.length ? (
+                        <div style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
+                            {post.content}
+                        </div>
+                    ) : ''}
+                    <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
+                        <i className="fa-regular fa-comment" style={{cursor: "pointer"}}></i>
+                        {sessionUser.id === post.user.id ? <OpenModalButton
+                            buttonText="Delete"
+                            modalComponent={<DeletePostModal post={post}/>}
+                        /> : ''}     
+                    </div>
+            </div>
+            <div className="comment-form">
+                        <form>
+                            <div className="profile-pic"
+                                style={{
+                                    backgroundImage: `url(${sessionUser.profile_pic})`, 
+                                    backgroundSize: "40px", 
+                                    backgroundPosition: "center",
+                                }}>
+                            </div>
+                            <input
+                                type="text"
+                                // value={title}
+                                // onChange={(e) => setTitle(e.target.value)}
+                                placeholder='Add a comment...'
+                                required
+                            />
+                            <button>Add Comment</button>
+                        </form>
+            </div>
+         </div>
     )
 }
 
