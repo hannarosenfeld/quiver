@@ -92,18 +92,26 @@ function Post({ post }) {
                     {post.comment.length > 0 && (
                     <ul className="comments">
                         {post.comment.map(e => (
-                            <li key={e.comment.id}>
-                                <div className="profile-pic"
-                                    style={{
-                                        backgroundImage: `url(${e.user.profile_pic})`, 
-                                        backgroundSize: "40px", 
-                                        backgroundPosition: "center",
-                                    }}>
+                            <li key={e.comment.id} style={{display: "flex", flexDirection: "column"}}>
+                                <div style={{display: "flex", justifyContent: "space-between"}}>
+                                    <div className="profile-pic"
+                                        style={{
+                                            backgroundImage: `url(${e.user.profile_pic})`, 
+                                            backgroundSize: "40px", 
+                                            backgroundPosition: "center",
+                                        }}>
+                                    </div>
+                                    <div style={{marginTop: "-0.25em", width: "100%"}}>
+                                        <p style={{fontWeight: "bold", marginBottom: "0.2em"}}>{e.user.username}</p>
+                                        <div>{e.comment}</div>
+                                    </div>
                                 </div>
-                                <div style={{marginTop: "-0.25em"}}>
-                                    <p style={{fontWeight: "bold", marginBottom: "0.2em"}}>{e.user.username}</p>
-                                    <div>{e.comment}</div>
-                                </div>
+                                <div className="edit-question-container">
+                                    {sessionUser.id === e.user.id ? <OpenModalButton
+                                       buttonText="Delete"
+                                       // modalComponent={<DeleteQuestionModal question={question}/>}
+                                    /> : ''}
+                                </div> 
                             </li>
                         ))}
                     </ul>

@@ -37,13 +37,11 @@ function Question({ question }) {
                 <div className="edit-question-container">
                         {sessionUser.id === question.user.id ? <OpenModalButton
                         buttonText="Delete"
-                        modalComponent={<DeleteQuestionModal question={question}
-                        />}
+                        modalComponent={<DeleteQuestionModal question={question}/>}
                     /> : ''}                                        
                         {sessionUser.id === question.user.id ? <OpenModalButton
                         buttonText="Edit"
-                        modalComponent={<EditQuestionModal question={question}
-                        />}
+                        modalComponent={<EditQuestionModal question={question}/>}
                     /> : ''}
                 </div>
         </div>
