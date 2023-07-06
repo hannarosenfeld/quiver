@@ -2,7 +2,7 @@
     padding: 1em;
 }
 
-.comment-form {
+.comment-section {
     background: grey;
 }
 
@@ -21,3 +21,15 @@
     padding-left: 1em;
 }
 
+.outer-post-wrapper .comments li {
+    background-color: #131414;
+    font-size: 0.9em;
+    padding: 1em;
+    border-bottom: 1px solid var(--qborder);
+    gap: 0;
+}
+
+
+.outer-post-wrapper .comments ul {
+    gap: 0;
+}

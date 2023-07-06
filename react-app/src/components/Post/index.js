@@ -57,7 +57,7 @@ function Post({ post }) {
                     </div>
             </div>
             { toggle && (
-                <div className="comment-form">
+                <div className="comment-section">
                     <form>
                         <div className="profile-pic"
                             style={{
@@ -75,6 +75,16 @@ function Post({ post }) {
                         />
                         <button>Add Comment</button>
                     </form>
+                    {post.comment.length > 0 && (
+                    <ul className="comments">
+                        {post.comment.map(e => (
+                            <li key={e.comment.id}>
+                                {e.comment}
+                                {console.log("💍 comment: ",e.comment)}
+                            </li>
+                        ))}
+                    </ul>
+                    )}
                 </div>
             )}
          </div>

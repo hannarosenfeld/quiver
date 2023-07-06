@@ -33,6 +33,12 @@ def seed_comments():
         post_id=2,
         created_at=day3.date()
     )
+    c4 = Comment(
+        comment="Wittgenstein's philosophical brilliance revealed the profound interplay of language and thought, challenging our understanding of meaning, logic, and the limits of human expression.",
+        user_id=3,
+        post_id=1,
+        created_at=day1.date()
+    )
     db.session.add(c1)
     db.session.add(c2)
     db.session.add(c3)
