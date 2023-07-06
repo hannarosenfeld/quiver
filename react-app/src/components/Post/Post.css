@@ -25,11 +25,13 @@
     background-color: #131414;
     font-size: 0.9em;
     padding: 1em;
-    border-bottom: 1px solid var(--qborder);
-    gap: 0;
+    /* border-bottom: 1px solid var(--qborder); */
+    margin-top: -0.6em;
 }
 
 
 .outer-post-wrapper .comments ul {
-    gap: 0;
+    gap: 0 !important;
+    margin: 0;
+    grid-gap: 0 !important;
 }
