@@ -55,9 +55,6 @@ export const updateAnswerThunk = (answerInfo, answerId, questionId) => async (di
 }
 
 export const addNewAnswerThunk = (questionId, answer) => async (dispatch) => {
-    console.log("🚍 in add answers thunk Q ID and answer", questionId, answer)
-    console.log("🚚 in add new answer thunk")
-
     const res = await fetch(`/api/questions/${questionId}/answers/`, {
         method: "POST",
         headers: { "Content-Type" : "application/json" },
@@ -102,7 +99,6 @@ const answerReducer = (state = initialState, action) => {
                 const createState = {...state, answers: {...state.answers}, currentAnswer: {}}
                 createState.currentAnswer = action.answers
                 return createState
-        
         default:
             return state;
     }

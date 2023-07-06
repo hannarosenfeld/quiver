@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { addNewQuestionThunk, getAllQuestionsThunk } from "../../store/question"
+import OpenModalButton from "../OpenModalButton";
+import PostModal from "../PostModal";
+
 import "./AskQuestion.css"
 
 function AskQuestion({ user }) {
@@ -81,9 +84,20 @@ function AskQuestion({ user }) {
                             />
                     </form>
                 </div>
-                <div style={{display: "flex", flexDirection: "column", color: "red", marginBottom: "1em", fontSize: "0.8em"}}>
-                    {hasErrors && errors.questionWord ? <span>{errors.questionWord}</span> : ''}
-                    {hasErrors && errors.questionMark ? <span>{errors.questionMark}</span> : ''}
+                <div style={{display: "flex", justifyContent: "space-between", width: "600px", alignItems: "center"}}>
+                    <div style={{display: "flex", flexDirection: "column", color: "red", marginBottom: "1em", fontSize: "0.8em"}}>
+                        {hasErrors && errors.questionWord ? <span>{errors.questionWord}</span> : ''}
+                        {hasErrors && errors.questionMark ? <span>{errors.questionMark}</span> : ''}
+                    </div>
+                    <div className="post-button">
+                        {/* {sessionUser.id === question.user.id ?  */}
+                        <span> </span>
+                        <OpenModalButton
+                            buttonText={"Write a Post instead"}
+                            modalComponent={<PostModal />}
+                        />
+                        {/* : ''}                                         */}
+                    </div>
                 </div>
             </div>
         </div>
