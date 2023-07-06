@@ -79,7 +79,17 @@ function Post({ post }) {
                     <ul className="comments">
                         {post.comment.map(e => (
                             <li key={e.comment.id}>
-                                {e.comment}
+                                <div className="profile-pic"
+                                    style={{
+                                        backgroundImage: `url(${e.user.profile_pic})`, 
+                                        backgroundSize: "40px", 
+                                        backgroundPosition: "center",
+                                    }}>
+                                </div>
+                                <div style={{marginTop: "-0.25em"}}>
+                                    <p style={{fontWeight: "bold", marginBottom: "0.2em"}}>{e.user.username}</p>
+                                    <div>{e.comment}</div>
+                                </div>
                                 {console.log("💍 comment: ",e.comment)}
                             </li>
                         ))}

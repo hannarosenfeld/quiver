@@ -27,11 +27,16 @@
     padding: 1em;
     /* border-bottom: 1px solid var(--qborder); */
     margin-top: -0.6em;
-}
+    display: flex;
 
+}
 
 .outer-post-wrapper .comments ul {
     gap: 0 !important;
     margin: 0;
     grid-gap: 0 !important;
+}
+
+.comments .profile-pic {
+    margin-right: 0.5em;
 }
