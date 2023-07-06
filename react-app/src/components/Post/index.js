@@ -15,6 +15,7 @@ import "./Post.css"
 function Post({ post }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const [toggle, setToggle] = useState(false)
     const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
@@ -48,32 +49,34 @@ function Post({ post }) {
                         </div>
                     ) : ''}
                     <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
-                        <i className="fa-regular fa-comment" style={{cursor: "pointer"}}></i>
+                        <i onClick={() => setToggle(!toggle)}className="fa-regular fa-comment" style={{cursor: "pointer"}}></i>
                         {sessionUser.id === post.user.id ? <OpenModalButton
                             buttonText="Delete"
                             modalComponent={<DeletePostModal post={post}/>}
                         /> : ''}     
                     </div>
             </div>
-            <div className="comment-form">
-                        <form>
-                            <div className="profile-pic"
-                                style={{
-                                    backgroundImage: `url(${sessionUser.profile_pic})`, 
-                                    backgroundSize: "40px", 
-                                    backgroundPosition: "center",
-                                }}>
-                            </div>
-                            <input
-                                type="text"
-                                // value={title}
-                                // onChange={(e) => setTitle(e.target.value)}
-                                placeholder='Add a comment...'
-                                required
-                            />
-                            <button>Add Comment</button>
-                        </form>
-            </div>
+            { toggle && (
+                <div className="comment-form">
+                    <form>
+                        <div className="profile-pic"
+                            style={{
+                                backgroundImage: `url(${sessionUser.profile_pic})`, 
+                                backgroundSize: "40px", 
+                                backgroundPosition: "center",
+                            }}>
+                        </div>
+                        <input
+                            type="text"
+                            // value={title}
+                            // onChange={(e) => setTitle(e.target.value)}
+                            placeholder='Add a comment...'
+                            required
+                        />
+                        <button>Add Comment</button>
+                    </form>
+                </div>
+            )}
          </div>
     )
 }
