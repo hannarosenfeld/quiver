@@ -49,7 +49,7 @@ function Post({ post }) {
                         </div>
                     ) : ''}
                     <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
-                        <i onClick={() => setToggle(!toggle)}className="fa-regular fa-comment" style={{cursor: "pointer"}}></i>
+                        <i onClick={() => setToggle(!toggle)}className="fa-regular fa-comment" style={{cursor: "pointer", marginTop: "0.5em"}}></i>
                         {sessionUser.id === post.user.id ? <OpenModalButton
                             buttonText="Delete"
                             modalComponent={<DeletePostModal post={post}/>}
@@ -90,7 +90,6 @@ function Post({ post }) {
                                     <p style={{fontWeight: "bold", marginBottom: "0.2em"}}>{e.user.username}</p>
                                     <div>{e.comment}</div>
                                 </div>
-                                {console.log("💍 comment: ",e.comment)}
                             </li>
                         ))}
                     </ul>
