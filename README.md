@@ -1,6 +1,10 @@
 # Quiver
 
-A simplified quora clone with global dark mode. Featuring questions/answers and posts/comments. In the future I want to feature profile picture upload and user section, and "spaces".
+A simplified quora clone with global dark mode. Featuring questions/answers and posts/comments. In the future I want to add 
+- feature profile picture upload
+- user section
+- "spaces"
+- pagination
 
 [live site](https://quiver.onrender.com)
 
