@@ -1,7 +1,8 @@
 # Quiver
 
 A simplified quora clone with global dark mode. Featuring questions/answers and posts/comments. In the future I want to add 
-- feature profile picture upload
+- profile picture upload (AWS)
+- adding pictures to questions and posts (AWS)
 - user section
 - "spaces"
 - pagination
