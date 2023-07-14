@@ -10,7 +10,7 @@ function SignupFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [profilePic, setProfilePic] = useState("");
+  const [profilePic, setProfilePic] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
