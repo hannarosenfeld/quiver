@@ -29,7 +29,6 @@ function SignupFormPage() {
         formData.append("password", password)
         const data = await dispatch(signUp(formData))
 
-        // const data = await dispatch(signUp(username, email, profilePic, password));
         if (data) {
           setErrors(data)
         }
@@ -74,6 +73,7 @@ function SignupFormPage() {
               Profile Picture
               <input
                 type="file"
+                accept="image/*"
                 onChange={(e) => setProfilePic(e.target.files[0])}
               />
             </label>

@@ -66,10 +66,6 @@ def sign_up():
 
         profile_pic = form.data["profile_pic"]
 
-        print("🐧 form: ", form.data)
-        print("⛑️ profile_pic: ", profile_pic)
-        print("👒 profile_pic.filename: ", profile_pic.filename)
-
         profile_pic.filename = get_unique_filename(profile_pic.filename)
         upload = upload_file_to_s3(profile_pic)
 
