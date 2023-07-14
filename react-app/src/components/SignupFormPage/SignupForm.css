@@ -1,6 +1,6 @@
 .signup-form-box {
     width: 600px;
-    height: 700px;
+    height: 100%;
     margin: 0 auto;
     background-color: #191A1B;
     display: flex;
@@ -8,3 +8,6 @@
     padding: 2em;
 }
 
+.login-form-wrapper {
+    font-size: 0.8em;
+}
