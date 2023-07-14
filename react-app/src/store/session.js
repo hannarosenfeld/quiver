@@ -67,21 +67,16 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
+export const signUp = (formData) => async (dispatch) => {
+	console.log("🎒profile pic in thunk", formData)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			username,
-			email,
-			password,
-		}),
+		body: formData,
 	});
 
 	if (response.ok) {
 		const data = await response.json();
+		console.log("🪿 data after res ok in thunk", data)
 		dispatch(setUser(data));
 		return null;
 	} else if (response.status < 500) {
@@ -90,6 +85,8 @@ export const signUp = (username, email, password) => async (dispatch) => {
 			return data.errors;
 		}
 	} else {
+		console.log("error", response)
+
 		return ["An error occurred. Please try again."];
 	}
 };
