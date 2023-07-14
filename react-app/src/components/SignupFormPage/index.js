@@ -10,6 +10,7 @@ function SignupFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [profilePic, setProfilePic] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -19,7 +20,16 @@ function SignupFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-        const data = await dispatch(signUp(username, email, password));
+
+        const formData = new FormData()
+
+        formData.append("username", username)
+        formData.append("email", email)
+        formData.append("profile_pic", profilePic)
+        formData.append("password", password)
+        const data = await dispatch(signUp(formData))
+
+        // const data = await dispatch(signUp(username, email, profilePic, password));
         if (data) {
           setErrors(data)
         }
@@ -37,7 +47,7 @@ function SignupFormPage() {
         </div>
         <div className="login-form">
           <h4>Sign up</h4>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
             <ul>
               {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
@@ -58,6 +68,13 @@ function SignupFormPage() {
                 minlength="4"                
                 onChange={(e) => setUsername(e.target.value)}
                 required
+              />
+            </label>
+            <label>
+              Profile Picture
+              <input
+                type="file"
+                onChange={(e) => setProfilePic(e.target.files[0])}
               />
             </label>
             <label>
