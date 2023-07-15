@@ -53,9 +53,18 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
+            <li className="dropdown-user-section" style={{fontWeight: "bold"}}>
+              <div
+                src={user.profile_pic} 
+                className="dropdown-user-section-img" 
+                style={{
+                  backgroundImage: `url(${user.profile_pic})`, 
+                  backgroundSize: "60px", 
+                  backgroundPosition: "center"
+            }}></div>
+              <span>{user.username}</span>
+            </li>
+            <li className="dropdown-logout">
               <button onClick={handleLogout}>Log Out</button>
             </li>
           </>

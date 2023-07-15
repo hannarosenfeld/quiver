@@ -29,8 +29,6 @@ function QuestionPage() {
     if (!questions) return null
 
     for (let question of questions) {
-        console.log("🥎",question)
-
         if (question.id === +id.questionId) {
             currentQ = question
         } 

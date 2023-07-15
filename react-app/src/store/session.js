@@ -68,7 +68,6 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signUp = (formData) => async (dispatch) => {
-	console.log("🎒profile pic in thunk", formData)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		body: formData,
@@ -76,7 +75,6 @@ export const signUp = (formData) => async (dispatch) => {
 
 	if (response.ok) {
 		const data = await response.json();
-		console.log("🪿 data after res ok in thunk", data)
 		dispatch(setUser(data));
 		return null;
 	} else if (response.status < 500) {
@@ -85,8 +83,6 @@ export const signUp = (formData) => async (dispatch) => {
 			return data.errors;
 		}
 	} else {
-		console.log("error", response)
-
 		return ["An error occurred. Please try again."];
 	}
 };

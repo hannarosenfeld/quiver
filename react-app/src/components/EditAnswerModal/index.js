@@ -11,8 +11,6 @@ function EditAnswerModal({ answerToEdit, question }) {
     const [answer, setAnswer] = useState(answerToEdit.answer)
     const { closeModal } = useModal();   
 
-    console.log("🏎️", answerToEdit)
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
 

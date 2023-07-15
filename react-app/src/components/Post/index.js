@@ -25,7 +25,7 @@ function Post({ post }) {
         dispatch(getAllPostsThunk())
     }, [dispatch])
 
-    console.log("🧵 post", post)
+    console.log("🧵 sessionuser: ", sessionUser)
 
     const handleSubmit = async (e) => {
         e.preventDefault();

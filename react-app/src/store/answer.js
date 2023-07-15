@@ -63,12 +63,10 @@ export const addNewAnswerThunk = (questionId, answer) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json()
-        console.log("🏐 data",data)
         await dispatch(addNewAnswerAction(data))
         return data
     } else {
         const err = await res.json()
-        console.log(err)
         return err        
     }
 }
