@@ -37,7 +37,6 @@ export const addNewCommentThunk = (postId, comment) => async (dispatch) => {
         return data
     } else {
         const err = await res.json()
-        console.log(err)
         return err        
     }
 }

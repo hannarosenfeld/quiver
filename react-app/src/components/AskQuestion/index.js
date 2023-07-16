@@ -48,10 +48,7 @@ function AskQuestion({ user }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("in handle submit")
-
             if (!errors.questionMark && !errors.questionWord) {
-                console.log("worked")
                 const questionDetails = {
                     title
                 }

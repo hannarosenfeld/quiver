@@ -18,7 +18,6 @@ function AddAnswerModal({ question }) {
         }
 
         const addAnswerDispatch = await dispatch(addNewAnswerThunk(question.id, answerDetails))
-        console.log(addAnswerDispatch)
         await dispatch(getAllAnswersThunk(question.id))
         await dispatch(getAllQuestionsThunk())
 

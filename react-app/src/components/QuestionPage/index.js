@@ -29,8 +29,6 @@ function QuestionPage() {
     if (!questions) return null
 
     for (let question of questions) {
-        console.log("🥎",question)
-
         if (question.id === +id.questionId) {
             currentQ = question
         } 
@@ -81,7 +79,7 @@ function QuestionPage() {
                                         <span>{a.created_at}</span>
                                     </div>
                                 </div>
-                                <div style={{marginTop: "0.5em",fontSize: "0.9em"}}>{a.answer}</div>
+                                <div style={{marginTop: "0.5em",fontSize: "0.9em", whiteSpace: "pre-wrap"}}>{a.answer}</div>
                                 {a.user.id === sessionUser.id && (
                                     <div style={{display: "flex", gap: "0.5em",float: "right", marginRight: "1em"}}>
                                         <OpenModalButton 

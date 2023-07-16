@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
@@ -48,14 +49,25 @@ function ProfileButton({ user }) {
                             backgroundPosition: "center"
                         }}>
       </div> )}
-        {/* <i className="fas fa-user-circle" /> */}
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
+            <li className="dropdown-user-section" style={{fontWeight: "bold"}}>
+              <div
+                src={user.profile_pic} 
+                className="dropdown-user-section-img" 
+                style={{
+                  backgroundImage: `url(${user.profile_pic})`, 
+                  backgroundSize: "60px", 
+                  backgroundPosition: "center"
+            }}></div>
+              <NavLink to={`/profile/${user.username}`} style={{display: "flex", justifyContent: "space-between", alignContent: "center"}}>
+                <span>{user.username}</span>
+                <i style={{fontSize: "0.8em", margin: "auto 0"}} class="fa-solid fa-chevron-right"></i>
+              </NavLink>
+            </li>
+            <li className="dropdown-logout">
               <button onClick={handleLogout}>Log Out</button>
             </li>
           </>
