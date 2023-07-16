@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import QuestionsList from "./components/QuestionsList";
 import AskQuestion from "./components/AskQuestion"
 import QuestionPage from "./components/QuestionPage"
+import ProfilePage from "./components/ProfilePage";
 import Footer from "./components/Footer"
 
 function App() {
@@ -40,6 +41,10 @@ function App() {
           <Route path="/questions/:questionId">
               <Navigation isLoaded={isLoaded} />
               <QuestionPage />
+          </Route>
+          <Route path="/profile/:userName">
+              <Navigation isLoaded={isLoaded} />
+              <ProfilePage />
           </Route>
           <Route path="/login" >
             <LoginFormPage />
