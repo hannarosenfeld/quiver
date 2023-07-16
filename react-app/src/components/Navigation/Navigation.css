@@ -1,6 +1,6 @@
 .profile-dropdown {
   position: absolute;
-  border: 0.1px solid white;
+  border: 1px solid var(--qwhite);
   min-width: 10em;
   left: auto !important;
   right: auto !important;
@@ -38,7 +38,7 @@
 .dropdown-user-section {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--qwhite);
+  border-bottom: 0.1px solid var(--qwhite);
   text-align: left !important;
   padding-bottom: 1em;
   padding-top: 1em;
