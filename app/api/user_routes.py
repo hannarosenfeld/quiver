@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from flask_login import login_required
 from app.models import User, db
 from app.forms import ChangePicForm
@@ -28,10 +28,11 @@ def user(id):
 
 @user_routes.route('/<int:id>', methods=["PUT"])
 @login_required
-def profile_pic(id):
+def profile_pic(id, form_data):
     """
     Query for a user by id and returns that user in a dictionary
     """
+    print("🐳 in backend")
     user = User.query.get(id)
     form = ChangePicForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -43,10 +44,13 @@ def profile_pic(id):
         profile_pic.filename = get_unique_filename(profile_pic.filename)
         upload = upload_file_to_s3(profile_pic)
 
-        # if "url" not in upload:
-        #     return render_template("post_form.html", form=form, type="post", errors=[upload])
+        if "url" not in upload:
+            return render_template("post_form.html", form=form, type="post", errors=[upload])
         
         user.profile_pic=upload["url"]
+
+        print("🐕 user: ", user)
+        print("🦃 profile pic", user.profile_pic)
 
         db.session.commit()
         return user.to_dict()

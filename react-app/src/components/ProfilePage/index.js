@@ -22,6 +22,7 @@ function ProfilePage() {
         console.log("🦚 pic: ", profilePic)
         const formData = new FormData();
         formData.append("profile_pic", profilePic)
+
         dispatch(changeProfilePicThunk(sessionUser.id, formData))
     }, [profilePic])
 
