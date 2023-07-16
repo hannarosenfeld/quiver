@@ -1,0 +1,30 @@
+.back {
+    display: flex;
+}
+  
+.front {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    align-self: center;
+    background: transparent;
+    vertical-align: top;
+    margin: 0 auto;
+    border-radius: 50%;
+    display: flex;
+    background: #195aff;
+}
+
+.front form {
+    margin: 0 auto;
+    align-self: center;
+    background: transparent;
+    vertical-align: top;
+    margin: 0 auto;
+    font-size: 20px;
+    max-width: 100%;
+}
+
+.hidden {
+    visibility: hidden;
+}
