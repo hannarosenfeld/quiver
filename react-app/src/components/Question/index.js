@@ -30,7 +30,7 @@ function Question({ question }) {
             ) : ''}
                 <h4><NavLink to={`/questions/${question.id}`}>{question.title}</NavLink></h4>
                 {question.answer.length ? (
-                    <div style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
+                    <div style={{fontSize: "0.9em",paddingTop: "0.5em", whiteSpace: "pre-wrap"}}>
                         {question.answer[0].answer}
                     </div>
                 ) : ''}

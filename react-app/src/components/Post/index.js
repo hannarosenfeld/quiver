@@ -59,7 +59,7 @@ function Post({ post }) {
                     ) : ''}
                     <h4><NavLink to={`/posts/${post.id}`}>{post.title}</NavLink></h4>
                     {post.content.length ? (
-                        <div style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
+                        <div style={{fontSize: "0.9em",paddingTop: "0.5em", whiteSpace: "pre-wrap"}}>
                             {post.content}
                         </div>
                     ) : ''}

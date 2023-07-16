@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
@@ -48,7 +49,6 @@ function ProfileButton({ user }) {
                             backgroundPosition: "center"
                         }}>
       </div> )}
-        {/* <i className="fas fa-user-circle" /> */}
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -62,7 +62,10 @@ function ProfileButton({ user }) {
                   backgroundSize: "60px", 
                   backgroundPosition: "center"
             }}></div>
-              <span>{user.username}</span>
+              <NavLink to={`/profile/${user.username}`} style={{display: "flex", justifyContent: "space-between", alignContent: "center"}}>
+                <span>{user.username}</span>
+                <i style={{fontSize: "0.8em", margin: "auto 0"}} class="fa-solid fa-chevron-right"></i>
+              </NavLink>
             </li>
             <li className="dropdown-logout">
               <button onClick={handleLogout}>Log Out</button>
