@@ -8,6 +8,7 @@ function ProfilePage() {
 
     const handleMouseOver = (e) => {
         setActive(true);
+
       };
     
       const handleMouseOut = () => {
@@ -18,9 +19,8 @@ function ProfilePage() {
         <div className="wrapper">
             <div style={{display: "flex", gap: "30px"}}>
                 {/* TODO: align pen on top of pic with CSS grid */}
-                <div >
+                <div style={{display: "flex"}}>
                     <div 
-                        className="back"
                         onMouseOver={handleMouseOver}
                         onMouseOut ={handleMouseOut}
                         style={{
@@ -31,10 +31,36 @@ function ProfilePage() {
                             height: "120px",
                             borderRadius: "50%",
                             marginBottom: "0.5em",
-                            backgroundSize:"cover"
+                            backgroundSize:"cover",
+                            display: "flex"
+
                         }}>
-                        <div className="front">
-                            <form>
+                        <div 
+                            className={ active ? "visible" : "hidden"}
+                            style={{
+                                display: "flex",
+                                width: "40px",
+                                height: "40px",
+                                margin: "0 auto",
+                                alignSelf: "center",
+                                background: "transparent",
+                                verticalAlign: "top",
+                                margin: "0 auto",
+                                borderRadius: "50%",
+                                display: "flex",
+                                background: "#195aff"
+                            }}
+                        >
+                            <form
+                                style={{
+                                    margin: "0 auto",
+                                    alignSelf: "center",
+                                    background: "transparent",
+                                    verticalAlign: "top",
+                                    fontSize: "20px",
+                                    maxWidth: "100%"
+                                }}
+                            >
                                 <label>
                                     <i class="fa-solid fa-pen"></i>
                                 </label>
