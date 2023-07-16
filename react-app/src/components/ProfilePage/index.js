@@ -1,26 +1,37 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {changeProfilePicThunk} from "../../store/user"
+
 import "./ProfilePage.css"
 
 function ProfilePage() {
     const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const [active, setActive] = useState(false);
+    const [profilePic, setProfilePic] = useState(null);
 
     const handleMouseOver = (e) => {
         setActive(true);
       };
     
-      const handleMouseOut = () => {
-        setActive(false);
-      };
+    const handleMouseOut = () => {
+    setActive(false);
+    };
+
+    useEffect(() => {
+        console.log("🦚 pic: ", profilePic)
+        const formData = new FormData();
+        formData.append("profile_pic", profilePic)
+
+        dispatch(changeProfilePicThunk(sessionUser.id, formData))
+    }, [profilePic])
 
     return (
         <div className="wrapper">
             <div style={{display: "flex", gap: "30px"}}>
                 {/* TODO: align pen on top of pic with CSS grid */}
-                <div >
+                <div style={{display: "flex", cursor: "pointer"}}>
                     <div 
-                        className="back"
                         onMouseOver={handleMouseOver}
                         onMouseOut ={handleMouseOut}
                         style={{
@@ -31,12 +42,46 @@ function ProfilePage() {
                             height: "120px",
                             borderRadius: "50%",
                             marginBottom: "0.5em",
-                            backgroundSize:"cover"
+                            backgroundSize:"cover",
+                            display: "flex",
                         }}>
-                        <div className="front">
-                            <form>
-                                <label>
+                        <div 
+                            className={ active ? "visible" : "hidden"}
+                            style={{
+                                display: "flex",
+                                width: "40px",
+                                height: "40px",
+                                margin: "0 auto",
+                                alignSelf: "center",
+                                background: "transparent",
+                                verticalAlign: "top",
+                                margin: "0 auto",
+                                borderRadius: "50%",
+                                display: "flex",
+                                background: "#195aff",
+                            }}>
+                            <form
+                                style={{
+                                    margin: "0 auto",
+                                    alignSelf: "center",
+                                    background: "transparent",
+                                    verticalAlign: "top",
+                                    fontSize: "20px",
+                                    maxWidth: "100%",
+                                    cursor: "pointer"
+                                }}
+                            >
+                                <label style={{cursor: "pointer"}}>
                                     <i class="fa-solid fa-pen"></i>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        hidden
+                                        onChange={(e) => {
+                                            setProfilePic(e.target.files[0])
+                                        }
+                                        }
+                                    />
                                 </label>
                             </form>
                         </div>
