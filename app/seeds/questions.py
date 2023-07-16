@@ -32,7 +32,7 @@ def seed_questions():
         created_at=day3.date()
     )
     q4 = Question(
-        title='What are some of the most protein-rich foods?', 
+        title='What are your favorite horror games?', 
         user_id=1,
         created_at=day4.date()
     )

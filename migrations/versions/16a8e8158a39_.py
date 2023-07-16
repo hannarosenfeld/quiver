@@ -1,6 +1,6 @@
 """empty message
 
-Revision ID: 63a1c716de49
+Revision ID: 16a8e8158a39
 Revises: 
 Create Date: 2023-07-06 15:56:37.644388
 
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '63a1c716de49'
+revision = '16a8e8158a39'
 down_revision = None
 branch_labels = None
 depends_on = None
