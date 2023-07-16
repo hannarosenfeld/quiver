@@ -41,7 +41,9 @@ function SignupFormPage() {
     <div className="login-form-wrapper">
       <div className="signup-form-box">
         <div style={{ margin: "0 auto", display: "flex", flexDirection: "column", gap: "0.5em", alignItems:"center"}}>
-          <h1 className="title">Quiver</h1>
+          <NavLink to="/">
+            <h1 className="title">Quiver</h1>
+          </NavLink>
           <p>A place to share knowledge and better understand the world</p>
         </div>
         <div className="login-form">

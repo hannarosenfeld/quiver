@@ -32,7 +32,9 @@ function LoginFormPage() {
     <div className="login-form-wrapper">
       <div className="login-form-box">
         <div>
-          <h1 className="title">Quiver</h1>
+          <NavLink to="/">
+            <h1 className="title">Quiver</h1>
+          </NavLink>
           <p>A place to share knowledge and better understand the world</p>
         </div>
         <div className="login-form">
