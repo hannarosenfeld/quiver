@@ -5,13 +5,15 @@ import questionReducer from './question';
 import answerReducer from './answer';
 import postReducer from './post';
 import commentReducer from './comment';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
   session,
   question: questionReducer,
   answer: answerReducer,
   post: postReducer,
-  comment: commentReducer
+  comment: commentReducer,
+  user: userReducer
 });
 
 

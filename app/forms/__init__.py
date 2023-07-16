@@ -4,3 +4,4 @@ from .question_form import QuestionForm
 from .answer_form import AnswerForm
 from .post_form import PostForm
 from .comment_form import CommentForm
+from .profile_pic_form import ChangePicForm
