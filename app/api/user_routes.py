@@ -28,19 +28,21 @@ def user(id):
 
 @user_routes.route('/<int:id>', methods=["PUT"])
 @login_required
-def profile_pic(id, form_data):
+def profile_pic(id):
     """
     Query for a user by id and returns that user in a dictionary
     """
     print("🐳 in backend")
     user = User.query.get(id)
+    print("🐳 user", user)
     form = ChangePicForm()
+    print("🐳 form", form)
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
 
         profile_pic = form.data["profile_pic"]
-
+        print("🐳 pic", profile_pic)
         profile_pic.filename = get_unique_filename(profile_pic.filename)
         upload = upload_file_to_s3(profile_pic)
 

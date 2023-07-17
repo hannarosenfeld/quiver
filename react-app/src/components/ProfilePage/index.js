@@ -18,12 +18,18 @@ function ProfilePage() {
     setActive(false);
     };
 
-    useEffect(() => {
-        console.log("🦚 pic: ", profilePic)
-        const formData = new FormData();
-        formData.append("profile_pic", profilePic)
+    console.log("🦮 sessionuser", sessionUser)
 
-        dispatch(changeProfilePicThunk(sessionUser.id, formData))
+    useEffect(() => {
+        if (profilePic) {
+            console.log("🦚 pic: ", profilePic)
+            const formData = new FormData();            
+            formData.append("profile_pic", profilePic);
+
+            console.log("🐿️ formData: ", formData.get("profile_pic"));
+
+            const uploadPic = dispatch(changeProfilePicThunk(sessionUser.id, formData));
+        }
     }, [profilePic])
 
     return (
@@ -77,10 +83,7 @@ function ProfilePage() {
                                         type="file"
                                         accept="image/*"
                                         hidden
-                                        onChange={(e) => {
-                                            setProfilePic(e.target.files[0])
-                                        }
-                                        }
+                                        onChange={(e) => setProfilePic(e.target.files[0])}
                                     />
                                 </label>
                             </form>
