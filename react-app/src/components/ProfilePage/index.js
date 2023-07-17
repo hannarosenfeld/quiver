@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {changeProfilePicThunk} from "../../store/user"
+import {changeProfilePicThunk, getUserThunk} from "../../store/user"
 
 import "./ProfilePage.css"
+
 
 function ProfilePage() {
     const sessionUser = useSelector(state => state.session.user);
@@ -18,19 +19,14 @@ function ProfilePage() {
     setActive(false);
     };
 
-    console.log("🦮 sessionuser", sessionUser)
-
     useEffect(() => {
         if (profilePic) {
-            console.log("🦚 pic: ", profilePic)
             const formData = new FormData();            
             formData.append("profile_pic", profilePic);
-
-            console.log("🐿️ formData: ", formData.get("profile_pic"));
-
             const uploadPic = dispatch(changeProfilePicThunk(sessionUser.id, formData));
+            dispatch(getUserThunk(sessionUser.id))
         }
-    }, [profilePic])
+    }, [profilePic, dispatch])
 
     return (
         <div className="wrapper">
