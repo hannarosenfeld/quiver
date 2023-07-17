@@ -21,6 +21,7 @@ export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
         await dispatch(changeProfilePicAction(updatedProfilePic))
         return updatedProfilePic
     } else {
+        console.log("🐿️ else in thunk")
         const err = await res.json()
         console.log(err)
         return err

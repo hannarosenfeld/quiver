@@ -34,13 +34,13 @@ def profile_pic(id):
     """
     print("🐳 in backend")
     user = User.query.get(id)
-    print("🐳 user", user)
+    print("🐳 form", ChangePicForm())
+    print("🐡 user", user)
     form = ChangePicForm()
     print("🐳 form", form)
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-
         profile_pic = form.data["profile_pic"]
         print("🐳 pic", profile_pic)
         profile_pic.filename = get_unique_filename(profile_pic.filename)
@@ -56,3 +56,5 @@ def profile_pic(id):
 
         db.session.commit()
         return user.to_dict()
+    
+    return {"Test": "Test"}
