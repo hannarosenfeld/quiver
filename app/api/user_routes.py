@@ -34,8 +34,9 @@ def profile_pic(id):
     """
     print("🐳 in backend")
     user = User.query.get(id)
-    print("🐳 form", ChangePicForm())
     print("🐡 user", user)
+    print("🐳 form", ChangePicForm())
+
     form = ChangePicForm()
     print("🐳 form", form)
     form['csrf_token'].data = request.cookies['csrf_token']

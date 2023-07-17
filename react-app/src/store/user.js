@@ -6,13 +6,8 @@ const changeProfilePicAction = (pictureUrl) => ({
 })
 
 export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
-    console.log("🐬 in thunk")
-    console.log("🐬 userId:", userId)
-    console.log("🐬 file:", file.get("profile_pic"))
-
     const res = await fetch(`/api/users/${userId}`, {
         method: "PUT",
-        headers: { "Content-Type" : "application/json" },
         body: file
     })
 
