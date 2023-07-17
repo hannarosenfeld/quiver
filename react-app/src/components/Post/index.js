@@ -64,6 +64,11 @@ function Post({ post }) {
                         </div>
                     ) : ''}
                     <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
+                        {/* UP AND DOWN VOTE */}
+                        <div className="updown-vote">
+                            <div className="upvote"><i class="fa-solid fa-arrow-up"></i><span>Upvote</span></div>
+                            <div><i class="fa-solid fa-arrow-down"></i></div>
+                        </div>
                         <i onClick={() => setToggle(!toggle)}className="fa-regular fa-comment" style={{cursor: "pointer", marginTop: "0.5em"}}></i>
                         {sessionUser.id === post.user.id ? <OpenModalButton
                             buttonText="Delete"

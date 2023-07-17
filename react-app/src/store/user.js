@@ -8,9 +8,9 @@ const changeProfilePicAction = (pictureUrl) => ({
 export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
     console.log("🐬 in thunk")
     console.log("🐬 userId:", userId)
-    console.log("🐬 file:", file)
+    console.log("🐬 file:", file.get("profile_pic"))
 
-    const res = await fetch(`/api/users/${userId}/`, {
+    const res = await fetch(`/api/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type" : "application/json" },
         body: file
@@ -22,13 +22,14 @@ export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
         return updatedProfilePic
     } else {
         const err = await res.json()
+        console.log(err)
         return err
     }
 }
 
 const initialState = {
     userProfile: {
-      userId: '',
+      userId: null,
       profilePicture: '',
     },
   };

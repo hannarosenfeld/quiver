@@ -80,6 +80,7 @@ export const signUp = (formData) => async (dispatch) => {
 	} else if (response.status < 500) {
 		const data = await response.json();
 		if (data.errors) {
+			console.log("🐀 errors in thunk",data.errors)
 			return data.errors;
 		}
 	} else {
