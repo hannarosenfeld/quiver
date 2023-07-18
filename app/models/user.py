@@ -38,8 +38,5 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'profile_pic': self.profile_pic,
             'answers': [answer.answer for answer in self.answers],
-            'questions': [ {'id': question.id, 'title' : question.title} for question in self.questions],
-            # 'questions' : {
-            #     'title' : self.questions['title']
-            # }
+            'questions': [ {'id': question.id, 'title' : question.title, 'answers': [answer.answer for answer in question.answers]} for question in self.questions],
         }
