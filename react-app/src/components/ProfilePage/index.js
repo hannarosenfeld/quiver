@@ -5,6 +5,7 @@ import { changeProfilePicThunk, getUserThunk } from "../../store/user";
 import "./ProfilePage.css";
 import UserQuestions from "./UserQuestions";
 import UserAnswers from "./UserAnswers"
+import UserPosts from "./UserPosts"
 
 function ProfilePage() {
     const dispatch = useDispatch();
@@ -49,7 +50,7 @@ function ProfilePage() {
     return (
         
     <div className="wrapper">
-        <div style={{ display: "flex", gap: "30px" }}>
+        <div style={{ display: "flex", gap: "30px"}}>
         <div style={{ display: "flex", cursor: "pointer" }}>
             <div
             onMouseOver={handleMouseOver}
@@ -147,7 +148,7 @@ function ProfilePage() {
                     setPostsActive(true)
                     }
                 }
-            >Posts</li>
+            ><span>{user?.posts.length}</span> Posts</li>
         </ul>
         </div>
         <div>
@@ -165,6 +166,15 @@ function ProfilePage() {
                 <ul>
                     {user.answers.map(answer => (
                         <li key={answer.id}><UserAnswers answer={answer}/></li>
+                    ))}
+                </ul>
+            )}
+        </div>
+        <div>
+            {user?.posts.length && postsActive && (
+                <ul>
+                    {user.posts.map(post => (
+                        <li key={post.id}><UserPosts post={post} user={user} /></li>
                     ))}
                 </ul>
             )}

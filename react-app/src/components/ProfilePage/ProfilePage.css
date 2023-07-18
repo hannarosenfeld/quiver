@@ -42,7 +42,7 @@
 }
 
 
-.user-question, .user-answer {
+.user-question, .user-answer, .user-post {
     margin-top: 10px;
     border-bottom: 1px solid var(--qwhite)
 }
@@ -57,33 +57,6 @@
 
 }
 
-.user-answer {
+.user-answer, .user-post {
     padding-bottom: 10px;
-}
-
-.updown-vote {
-    border: 1px solid var(--qwhite);
-    display: flex;
-    gap: 5px;
-    width: 113px;
-    border-radius: 1000px;
-    padding: 3px 10px;
-    align-items: center;
-    justify-content: space-between;
-    height: 30px;
-}
-
-.updown-vote span {
-    font-size: 13px;
-    border-right: 1px solid var(--qwhite);
-    padding-right: 9px;
-}
-
-.updown-vote div {
-    display: flex;
-    align-items: center;
-}
-
-.upvote {
-    width: 80%;
 }
