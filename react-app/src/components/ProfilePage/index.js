@@ -7,68 +7,69 @@ import "./ProfilePage.css";
 import UserQuestion from "./UserQuestion";
 
 function ProfilePage() {
-  const sessionUser = useSelector((state) => state.session.user);
-  const user = useSelector((state) => state.user.users.undefined);
+    const dispatch = useDispatch();
+    const sessionUser = useSelector((state) => state.session.user);
+    const user = useSelector((state) => state.user.users.undefined);
+    const [questionsActive, setQuestionsActive] = useState(false)
+    const [answersActive, setAnswersActive] = useState(false)
+    const [postsActive, setPostsActive] = useState(false)
+    const [profilePic, setProfilePic] = useState(null);
+    const [active, setActive] = useState(false);
 
-  console.log("🐖",user)
 
-  const dispatch = useDispatch();
-  const [active, setActive] = useState(false);
-  const [profilePic, setProfilePic] = useState(null);
-
-  const handleMouseOver = (e) => {
+    const handleMouseOver = (e) => {
     setActive(true);
-  };
+    };
 
-  const handleMouseOut = () => {
+    const handleMouseOut = () => {
     setActive(false);
-  };
+    };
 
-  useEffect(() => {
+    useEffect(() => {
     dispatch(getUserThunk(sessionUser.id));
-  }, [dispatch, sessionUser.id]);
+    }, [dispatch, sessionUser.id]);
 
-  useEffect(() => {
+    useEffect(() => {
     if (profilePic) {
-      const formData = new FormData();
-      formData.append("profile_pic", profilePic);
+        const formData = new FormData();
+        formData.append("profile_pic", profilePic);
 
-      dispatch(changeProfilePicThunk(sessionUser.id, formData))
+        dispatch(changeProfilePicThunk(sessionUser.id, formData))
         .then((updatedProfilePic) => {
-          setProfilePic(null);
-          dispatch(getUserThunk(sessionUser.id)); // Re-fetch user data to get updated profile picture
+            setProfilePic(null);
+            dispatch(getUserThunk(sessionUser.id)); // Re-fetch user data to get updated profile picture
         })
         .catch((error) => {
-          // Handle any error from the API call if needed
-          console.error("Error updating profile picture:", error);
+            // Handle any error from the API call if needed
+            console.error("Error updating profile picture:", error);
         });
     }
-  }, [dispatch, profilePic, sessionUser.id]);
+    }, [dispatch, profilePic, sessionUser.id]);
 
-  return (
+    return (
     <div className="wrapper">
-      <div style={{ display: "flex", gap: "30px" }}>
+        <div style={{ display: "flex", gap: "30px" }}>
         <div style={{ display: "flex", cursor: "pointer" }}>
-          <div
+            <div
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
             style={{
-              backgroundImage: user?.profile_pic
+                backgroundImage: user?.profile_pic
                 ? `url(${user.profile_pic})`
                 : "initial",
-              backgroundSize: "150px",
-              backgroundPosition: "center",
-              width: "120px",
-              height: "120px",
-              borderRadius: "50%",
-              marginBottom: "0.5em",
-              backgroundSize: "cover",
-              display: "flex",
+                backgroundSize: "150px",
+                backgroundPosition: "center",
+                width: "120px",
+                height: "120px",
+                borderRadius: "50%",
+                marginBottom: "0.5em",
+                backgroundSize: "cover",
+                display: "flex",
             }}
-          >
+            >
             <div
-              className={active ? "visible" : "hidden"}
-              style={{
+                className={active ? "visible" : "hidden"}
+                style={{
                 display: "flex",
                 width: "40px",
                 height: "40px",
@@ -80,55 +81,77 @@ function ProfilePage() {
                 borderRadius: "50%",
                 display: "flex",
                 background: "#195aff",
-              }}
-            >
-              <form
-                style={{
-                  margin: "0 auto",
-                  alignSelf: "center",
-                  background: "transparent",
-                  verticalAlign: "top",
-                  fontSize: "20px",
-                  maxWidth: "100%",
-                  cursor: "pointer",
                 }}
-              >
+            >
+                <form
+                style={{
+                    margin: "0 auto",
+                    alignSelf: "center",
+                    background: "transparent",
+                    verticalAlign: "top",
+                    fontSize: "20px",
+                    maxWidth: "100%",
+                    cursor: "pointer",
+                }}
+                >
                 <label style={{ cursor: "pointer" }}>
-                  <i class="fa-solid fa-pen"></i>
-                  <input
+                    <i class="fa-solid fa-pen"></i>
+                    <input
                     type="file"
                     accept="image/*"
                     hidden
                     onChange={(e) => setProfilePic(e.target.files[0])}
-                  />
+                    />
                 </label>
-              </form>
+                </form>
             </div>
-          </div>
+            </div>
         </div>
         <div>
-          <h2>{user ? <div>{user.username}</div> : ""}</h2>
+            <h2>{user ? <div>{user.username}</div> : ""}</h2>
         </div>
-      </div>
-      <div className="profile-panel">
+        </div>
+        <div className="profile-panel">
         <ul
-          style={{
+            style={{
             display: "flex",
             gap: "15px",
             fontSize: "13px",
             fontWeight: "bold",
             marginTop: "12px",
-          }}
+            }}
         >
-          <li>Profile</li>
-          <li><span>{user?.answers.length}</span> Answers</li>
-          <li><span>{user?.questions.length}</span> Questions</li>
-          <li>Posts</li>
+            <li>Profile</li>
+            <li 
+                className={answersActive ? "panel-item-active" : ''}
+                onClick={() => {
+                    setQuestionsActive(false)
+                    setPostsActive(false)
+                    setAnswersActive(true)}
+                }
+            ><span>{user?.answers.length}</span> Answers</li>
+            <li 
+                className={questionsActive ? "panel-item-active" : ''}
+                onClick={() => {
+                    setAnswersActive(false)
+                    setPostsActive(false)
+                    setQuestionsActive(true)}
+                }
+            ><span>{user?.questions.length}</span> Questions</li>
+            <li 
+                className={postsActive ? "panel-item-active" : ''}
+                onClick={() => {
+                    setAnswersActive(false)
+                    setQuestionsActive(false)
+                    setPostsActive(true)
+                    }
+                }
+            >Posts</li>
         </ul>
-      </div>
-      <div>
+        </div>
         <div>
-            {user?.questions.length && (
+        <div>
+            {user?.questions.length && questionsActive && (
                 <ul>
                     {user.questions.map(question => (
                         <li key={question.id}><UserQuestion question={question}/></li>
@@ -136,7 +159,7 @@ function ProfilePage() {
                 </ul>
             )}
         </div>
-      </div>
+        </div>
     </div>
   );
 }
