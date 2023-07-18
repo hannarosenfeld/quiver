@@ -33,3 +33,14 @@
     visibility: visible;
     
 }
+
+.profile-panel {
+    border-bottom: 1px solid var(--qwhite);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.user-question {
+    margin-top: 10px;
+    border-bottom: 1px solid var(--qwhite)
+}

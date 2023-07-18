@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfilePicThunk, getUserThunk } from "../../store/user";
+import Question from "../Question"
 
 import "./ProfilePage.css";
+import UserQuestion from "./UserQuestion";
 
 function ProfilePage() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -123,6 +125,17 @@ function ProfilePage() {
           <li><span>{user?.questions.length}</span> Questions</li>
           <li>Posts</li>
         </ul>
+      </div>
+      <div>
+        <div>
+            {user?.questions.length && (
+                <ul>
+                    {user.questions.map(question => (
+                        <li key={question.id}><UserQuestion question={question}/></li>
+                    ))}
+                </ul>
+            )}
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
-import QuestionsList from "./components/QuestionsList";
+import IndexPage from "./components/IndexPage";
 import AskQuestion from "./components/AskQuestion"
 import QuestionPage from "./components/QuestionPage"
 import ProfilePage from "./components/ProfilePage";
@@ -30,7 +30,7 @@ function App() {
                 <>
                 <Navigation isLoaded={isLoaded} />
                 <AskQuestion user={sessionUser} />
-                <QuestionsList />
+                <IndexPage />
                 <Footer/>
                 </>
                ) : (
