@@ -18,7 +18,7 @@ function UserPosts({ post, user }) {
                 </div>
             </div>
             <div className="linebreaks-on">{post.content}</div>
-            <div className="updown-vote" style={{marginTop: "10px"}}>
+            <div className="updown-vote" style={{marginTop: "10px", height: "30px"}}>
                 <div className="upvote"><i class="fa-solid fa-arrow-up"></i><span style={{marginLeft: "5px"}}>Upvote</span></div>
             <div><i class="fa-solid fa-arrow-down"></i></div>
            </div>

@@ -165,7 +165,7 @@ function ProfilePage() {
             {user?.answers.length && answersActive && (
                 <ul>
                     {user.answers.map(answer => (
-                        <li key={answer.id}><UserAnswers answer={answer}/></li>
+                        <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
                     ))}
                 </ul>
             )}
