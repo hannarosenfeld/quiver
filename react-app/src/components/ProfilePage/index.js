@@ -8,6 +8,8 @@ function ProfilePage() {
   const sessionUser = useSelector((state) => state.session.user);
   const user = useSelector((state) => state.user.users.undefined);
 
+  console.log("🐖",user)
+
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
