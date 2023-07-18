@@ -25,7 +25,7 @@ function DeleteAnswerModal({ answerId, questionId }) {
     return (
         <div className="delete-question">
             <h3>Delete answer</h3>
-            <p>Are you sure you want to permanetly delete this question?</p>
+            <p>Are you sure you want to permanetly delete this answer?</p>
             <button type="submit" onClick={handleDelete}>Delete</button>
         </div>
     )

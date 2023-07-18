@@ -60,3 +60,11 @@
 .user-answer, .user-post {
     padding-bottom: 10px;
 }
+
+.user-question .hover-red button:hover {
+    color: var(--qred);
+}
+
+.user-answer button:hover {
+    color: var(--qred);
+}
