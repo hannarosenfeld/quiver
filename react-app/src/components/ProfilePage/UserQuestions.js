@@ -18,7 +18,7 @@ function UserQuestions({ question }) {
                         modalComponent={<AddAnswerModal question={question}/>}
                     ></OpenModalButton>
                 </div>
-                <div style={{display: "flex", gap: "10px"}}>
+                <div className="hover-red" style={{display: "flex", gap: "10px"}}>
                     <OpenModalButton 
                         buttonText="Edit"
                         modalComponent={<EditQuestionModal question={question}/>}
