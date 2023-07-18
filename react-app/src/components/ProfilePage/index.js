@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfilePicThunk, getUserThunk } from "../../store/user";
-import Question from "../Question"
 
 import "./ProfilePage.css";
-import UserQuestion from "./UserQuestion";
+import UserQuestions from "./UserQuestions";
+import UserAnswers from "./UserAnswers"
 
 function ProfilePage() {
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function ProfilePage() {
     };
 
     useEffect(() => {
-    dispatch(getUserThunk(sessionUser.id));
+    dispatch(getUserThunk(sessionUser?.id));
     }, [dispatch, sessionUser.id]);
 
     useEffect(() => {
@@ -47,6 +47,7 @@ function ProfilePage() {
     }, [dispatch, profilePic, sessionUser.id]);
 
     return (
+        
     <div className="wrapper">
         <div style={{ display: "flex", gap: "30px" }}>
         <div style={{ display: "flex", cursor: "pointer" }}>
@@ -154,7 +155,16 @@ function ProfilePage() {
             {user?.questions.length && questionsActive && (
                 <ul>
                     {user.questions.map(question => (
-                        <li key={question.id}><UserQuestion question={question}/></li>
+                        <li key={question.id}><UserQuestions question={question}/></li>
+                    ))}
+                </ul>
+            )}
+        </div>
+        <div>
+            {user?.answers.length && answersActive && (
+                <ul>
+                    {user.answers.map(answer => (
+                        <li key={answer.id}><UserAnswers answer={answer}/></li>
                     ))}
                 </ul>
             )}

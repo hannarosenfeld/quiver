@@ -3,13 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllQuestionsThunk } from "../../store/question";
 import { getAllPostsThunk } from "../../store/post";
 
-import { NavLink } from "react-router-dom";
-
 import Question from "../Question"
 import Post from "../Post";
-import OpenModalButton from "../OpenModalButton";
-import EditQuestionModal from "../EditQuestionModal"
-import DeleteQuestionModal from "../DeleteQuestionModal";
 import "./IndexPage.css"
 
 function IndexPage() {

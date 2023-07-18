@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import AddAnswerModal from '../AddAnswerModal';
 
-function UserQuestion({ question }) {
+function UserQuestions({ question }) {
     console.log("question",question)
     return (
         <div className="user-question">
@@ -19,4 +19,4 @@ function UserQuestion({ question }) {
     )
 }
 
-export default UserQuestion;
+export default UserQuestions;
