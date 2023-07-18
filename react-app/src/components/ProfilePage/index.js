@@ -119,8 +119,8 @@ function ProfilePage() {
           }}
         >
           <li>Profile</li>
-          <li>Answers</li>
-          <li>Questions</li>
+          <li><span>{user?.answers.length}</span> Answers</li>
+          <li><span>{user?.questions.length}</span> Questions</li>
           <li>Posts</li>
         </ul>
       </div>
