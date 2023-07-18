@@ -40,6 +40,7 @@ export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
 }
 
 const initialState = {
+    users: {},
     userProfile: {
       userId: null,
       profilePicture: '',
