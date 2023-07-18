@@ -65,3 +65,7 @@
 .upvote {
     width: 80%;
 }
+
+.linebreaks-on {
+    white-space: pre-wrap;
+}

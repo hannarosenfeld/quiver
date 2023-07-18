@@ -59,7 +59,7 @@ function Post({ post }) {
                     ) : ''}
                     <h4><NavLink to={`/posts/${post.id}`}>{post.title}</NavLink></h4>
                     {post.content.length ? (
-                        <div style={{fontSize: "0.9em",paddingTop: "0.5em", whiteSpace: "pre-wrap"}}>
+                        <div className="linebreaks-on" style={{fontSize: "0.9em",paddingTop: "0.5em"}}>
                             {post.content}
                         </div>
                     ) : ''}
@@ -95,9 +95,9 @@ function Post({ post }) {
                         />
                         <button>Add Comment</button>
                     </form>
-                    {post.comment.length > 0 && (
+                    {post.comments.length > 0 && (
                     <ul className="comments">
-                        {post.comment.map(e => (
+                        {post.comments.map(e => (
                             <li key={e.comment.id} style={{display: "flex", flexDirection: "column"}}>
                                 <div style={{display: "flex", justifyContent: "space-between"}}>
                                     <div className="profile-pic"
