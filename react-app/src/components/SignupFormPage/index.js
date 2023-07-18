@@ -10,7 +10,7 @@ function SignupFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [profilePic, setProfilePic] = useState(null);
+  // const [profilePic, setProfilePic] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -25,7 +25,7 @@ function SignupFormPage() {
 
         formData.append("username", username)
         formData.append("email", email)
-        formData.append("profile_pic", profilePic)
+        // formData.append("profile_pic", profilePic)
         formData.append("password", password)
         const data = await dispatch(signUp(formData))
 
@@ -71,14 +71,14 @@ function SignupFormPage() {
                 required
               />
             </label>
-            <label>
+            {/* <label>
               Profile Picture
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setProfilePic(e.target.files[0])}
               />
-            </label>
+            </label> */}
             <label>
               Password
               <input
