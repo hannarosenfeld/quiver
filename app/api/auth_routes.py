@@ -64,13 +64,13 @@ def sign_up():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
 
-        # profile_pic = form.data["profile_pic"]
+    #     profile_pic = form.data["profile_pic"]
 
-        # profile_pic.filename = get_unique_filename(profile_pic.filename)
-        # upload = upload_file_to_s3(profile_pic)
+    #     profile_pic.filename = get_unique_filename(profile_pic.filename)
+    #     upload = upload_file_to_s3(profile_pic)
 
-        # if "url" not in upload:
-        #     return render_template("post_form.html", form=form, type="post", errors=[upload])
+    #     if "url" not in upload:
+    #         return render_template("post_form.html", form=form, type="post", errors=[upload])
         
         user = User(
             username=form.data['username'],

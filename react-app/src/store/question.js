@@ -42,7 +42,6 @@ export const getOneQuestionThunk = (questionTitle) => async (dispatch) => {
     }
 }
 
-
 export const getAllQuestionsThunk = () => async (dispatch) => {
     const res = await fetch("/api/questions/")
 

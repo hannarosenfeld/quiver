@@ -10,9 +10,9 @@ import Post from "../Post";
 import OpenModalButton from "../OpenModalButton";
 import EditQuestionModal from "../EditQuestionModal"
 import DeleteQuestionModal from "../DeleteQuestionModal";
-import "./QuestionsList.css"
+import "./IndexPage.css"
 
-function QuestionsList() {
+function IndexPage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const questionsObj = useSelector(state => state.question.question.questions)
@@ -53,4 +53,4 @@ function QuestionsList() {
     )
 }
 
-export default QuestionsList;
+export default IndexPage;

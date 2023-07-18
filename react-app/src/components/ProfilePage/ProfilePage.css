@@ -33,3 +33,26 @@
     visibility: visible;
     
 }
+
+.profile-panel {
+    border-bottom: 1px solid var(--qwhite);
+    padding: 10px 10px 0px 10px;
+    line-height: 40px;
+    /* margin-bottom: 10px; */
+}
+
+
+.user-question {
+    margin-top: 10px;
+    border-bottom: 1px solid var(--qwhite)
+}
+
+.profile-panel ul li{
+    cursor: pointer;
+}
+
+.panel-item-active {
+    color: var(--qred);
+    border-bottom: 2px solid var(--qred);
+
+}

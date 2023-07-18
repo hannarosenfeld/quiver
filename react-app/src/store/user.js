@@ -1,18 +1,31 @@
+const GET_USER = "user/GET_USER"
 const CHANGE_PROFILE_PIC = "user/CHANGE_PROFILE_PIC";
+
+const getUserAction = (user) => ({
+    type: GET_USER,
+    user
+})
 
 const changeProfilePicAction = (pictureUrl) => ({
     type: CHANGE_PROFILE_PIC,
     payload: pictureUrl,
 })
 
-export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
-    console.log("🐬 in thunk")
-    console.log("🐬 userId:", userId)
-    console.log("🐬 file:", file.get("profile_pic"))
+export const getUserThunk = (userId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}`)
+    if (res.ok) {
+        const data = await res.json()
+        await dispatch(getUserAction(data))
+        return data
+    } else {
+        const err = await res.json()
+        return err
+    }
+}
 
+export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}`, {
         method: "PUT",
-        headers: { "Content-Type" : "application/json" },
         body: file
     })
 
@@ -22,12 +35,12 @@ export const changeProfilePicThunk = (userId, file) => async (dispatch) => {
         return updatedProfilePic
     } else {
         const err = await res.json()
-        console.log(err)
         return err
     }
 }
 
 const initialState = {
+    users: {},
     userProfile: {
       userId: null,
       profilePicture: '',
@@ -36,6 +49,15 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
+        case GET_USER:
+        // Handle the GET_USER action to update the user profile in state
+            return {
+                ...state,
+                users: {
+                ...state.users,
+                [action.user.userId]: action.user, // Assuming the user object contains userId and other profile data
+            },
+        };
         case CHANGE_PROFILE_PIC:
             return {
               ...state,

@@ -31,12 +31,15 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
     
-    
     def to_dict(self):
         return {
             'id': self.id,
             'username': self.username,
             'email': self.email,
             'profile_pic': self.profile_pic,
-
+            'answers': [answer.answer for answer in self.answers],
+            'questions': [ {'id': question.id, 'title' : question.title} for question in self.questions],
+            # 'questions' : {
+            #     'title' : self.questions['title']
+            # }
         }
