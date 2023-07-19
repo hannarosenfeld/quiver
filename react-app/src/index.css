@@ -82,3 +82,34 @@ button {
 .edit-question-container {
     margin-bottom: -0.5em;
 }
+
+.updown-vote {
+    border: 1px solid var(--qwhite);
+    display: flex;
+    gap: 5px;
+    width: 113px;
+    border-radius: 1000px;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.updown-vote span {
+    font-size: 13px;
+    border-right: 1px solid var(--qwhite);
+    padding-right: 9px;
+}
+
+.updown-vote div {
+    display: flex;
+    align-items: center;
+}
+
+.upvote {
+    width: 80%;
+}
+
+.comment {
+    cursor: pointer;
+    margin: auto;
+}

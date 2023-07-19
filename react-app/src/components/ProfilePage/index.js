@@ -166,8 +166,7 @@ function ProfilePage() {
                 <ul>
                     {user.answers.map(answer => (
                         <div>
-                            hi
-                        <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
+                          <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
                         </div>
                     ))}
                 </ul>

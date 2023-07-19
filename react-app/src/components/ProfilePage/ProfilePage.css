@@ -54,11 +54,13 @@
 .panel-item-active {
     color: var(--qred);
     border-bottom: 2px solid var(--qred);
-
 }
 
-.user-answer, .user-post {
-    padding-bottom: 10px;
+.user-answer{
+    padding-bottom: 0px;
+}
+.user-post {
+    padding-bottom: 11px;
 }
 
 .user-question .hover-red button:hover {
