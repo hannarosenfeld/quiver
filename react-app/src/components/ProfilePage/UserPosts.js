@@ -27,12 +27,12 @@ function UserPosts({ post, user }) {
             
             <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
                 {/* UP AND DOWN VOTE */}
-                <div style={{display: "flex", gap: "20px", alignItems: "center"}}>
+                <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
                     <div className="updown-vote">
-                        <div className="upvote"><i class="fa-solid fa-arrow-up"></i><span>Upvote</span></div>
+                        <div className="upvote"><i class="comment fa-solid fa-arrow-up"></i><span>Upvote</span></div>
                         <div><i class="fa-solid fa-arrow-down"></i></div>
                 </div>
-                <i onClick={() => setToggle(!toggle)}className="fa-regular fa-comment" style={{cursor: "pointer", marginTop: "0.5em"}}></i>
+                <i onClick={() => setToggle(!toggle)} className="comment fa-regular fa-comment"></i>
                 </div> <OpenModalButton
                     buttonText="Delete"
                     modalComponent={<DeletePostModal post={post}/>}
