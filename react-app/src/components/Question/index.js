@@ -11,6 +11,8 @@ import "./Question.css"
 function Question({ question }) {
     const sessionUser = useSelector(state => state.session.user);
 
+    console.log("🐩 created at", question.answer[0]?.created_at)
+
     return(
         <div className="question-wrapper">
         {question.answer.length ? (
@@ -22,9 +24,9 @@ function Question({ question }) {
                         backgroundPosition: "center",
                     }}>
                 </div>
-                <div style={{fontSize: "0.8em", fontWeight: "600"}}>
-                    <span>{question.answer[0].user.username}</span>
-                    <span>{question.answer[0].created_at}</span>
+                <div style={{fontSize: "0.8em", display: "flex", flexDirection: "column"}}>
+                    <span style={{fontWeight: "bold"}}>{question.answer[0].user.username}</span>
+                    {question.answer[0].created_at ? <span>{question.answer[0]?.created_at.split(' ').slice(0,4).join(' ')}</span> : ''}
                 </div>
             </div>
             ) : ''}
