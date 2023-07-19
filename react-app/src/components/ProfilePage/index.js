@@ -11,7 +11,7 @@ function ProfilePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const user = useSelector((state) => state.user.users.undefined);
-    const [profileActive, setProfileActive] = useState(false);
+    const [profileActive, setProfileActive] = useState(true);
     const [questionsActive, setQuestionsActive] = useState(false);
     const [answersActive, setAnswersActive] = useState(false);
     const [postsActive, setPostsActive] = useState(false);

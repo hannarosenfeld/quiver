@@ -23,7 +23,7 @@ function UserPosts({ post, user }) {
                     <span>{postDate}</span>
                 </div>
             </div>
-            <div className="linebreaks-on">{post.content}</div>
+            <div style={{fontSize: "15px"}} className="linebreaks-on">{post.content}</div>
             
             <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
                 {/* UP AND DOWN VOTE */}
