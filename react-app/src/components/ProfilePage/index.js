@@ -11,9 +11,10 @@ function ProfilePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const user = useSelector((state) => state.user.users.undefined);
-    const [questionsActive, setQuestionsActive] = useState(false)
-    const [answersActive, setAnswersActive] = useState(false)
-    const [postsActive, setPostsActive] = useState(false)
+    const [profileActive, setProfileActive] = useState(false);
+    const [questionsActive, setQuestionsActive] = useState(false);
+    const [answersActive, setAnswersActive] = useState(false);
+    const [postsActive, setPostsActive] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [active, setActive] = useState(false);
 
@@ -123,18 +124,28 @@ function ProfilePage() {
             marginTop: "12px",
             }}
         >
-            <li>Profile</li>
-            <li 
-                className={answersActive ? "panel-item-active" : ''}
+            <li
+                className={profileActive ? "panel-item-active" : ''}
                 onClick={() => {
                     setQuestionsActive(false)
                     setPostsActive(false)
-                    setAnswersActive(true)}
-                }
+                    setAnswersActive(false)
+                    setProfileActive(true)
+                }}
+            >Profile</li>
+            <li 
+                className={answersActive ? "panel-item-active" : ''}
+                onClick={() => {
+                    setProfileActive(false)
+                    setQuestionsActive(false)
+                    setPostsActive(false)
+                    setAnswersActive(true)
+                }}
             ><span>{user?.answers.length}</span> Answers</li>
             <li 
                 className={questionsActive ? "panel-item-active" : ''}
                 onClick={() => {
+                    setProfileActive(false)
                     setAnswersActive(false)
                     setPostsActive(false)
                     setQuestionsActive(true)}
@@ -143,11 +154,11 @@ function ProfilePage() {
             <li 
                 className={postsActive ? "panel-item-active" : ''}
                 onClick={() => {
+                    setProfileActive(false)
                     setAnswersActive(false)
                     setQuestionsActive(false)
                     setPostsActive(true)
-                    }
-                }
+                    }}
             ><span>{user?.posts.length}</span> Posts</li>
         </ul>
         </div>
