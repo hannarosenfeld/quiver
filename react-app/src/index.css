@@ -16,7 +16,7 @@
 
 body, form {
     background-color: #191A1B;
-    color: var(--qwhite)
+    color: var(--qwhite);
 }
 
 button, input {
