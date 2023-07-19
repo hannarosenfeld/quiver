@@ -1,3 +1,25 @@
+.index-page-wrapper {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.index-page {
+
+    display: flex;
+
+}
+
+.index-page-feed {
+    width: 600px;
+    margin: 0 10px;
+
+}
+
+.spaces {
+    width: 200px;
+
+}
+/* 
 .homepage-wrapper {
     width: 100%;
     display: flex;
@@ -65,4 +87,4 @@
 a {
     color: var(--qwhite)
 }
-
+ */

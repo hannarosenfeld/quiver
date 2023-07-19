@@ -1,11 +1,5 @@
-.homepage-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-}
-
 .ask-question-wrapper {
-    width: 600px;
+    /* width: 600px; */
     display: flex;
     align-items: center;
     margin-bottom: 1em;
@@ -34,6 +28,7 @@
 
 .post-button {
     margin: -1em 0.5em 1em 0;
+    float: right;
 }
 
 .post-button:hover, .post-button button:hover {
