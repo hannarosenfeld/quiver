@@ -32,6 +32,12 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
+
+  const visitUserProfile = (user) => {
+    history.push(`/profile/${user?.username}`)
+    setShowMenu(false)
+  }
+
   const handleLogout = (e) => {
     e.preventDefault();
     history.push("/")
@@ -53,7 +59,7 @@ function ProfileButton({ user }) {
                         }}>
       </div> )}
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul className={ulClassName} ref={ulRef} style={{background: "#191A1B"}}>
         {user ? (
           <>
             <li className="dropdown-user-section" style={{fontWeight: "bold"}}>
@@ -65,10 +71,10 @@ function ProfileButton({ user }) {
                   backgroundSize: "60px", 
                   backgroundPosition: "center"
             }}></div>
-              <NavLink to={`/profile/${user.username}`} style={{display: "flex", justifyContent: "space-between", alignContent: "center"}}>
+              <div onClick={() => visitUserProfile()} style={{cursor: "pointer", display: "flex", justifyContent: "space-between", alignContent: "center"}}>
                 <span>{user.username}</span>
                 <i style={{fontSize: "0.8em", margin: "auto 0"}} class="fa-solid fa-chevron-right"></i>
-              </NavLink>
+              </div>
             </li>
             <li className="dropdown-logout">
               <button onClick={handleLogout}>Log Out</button>

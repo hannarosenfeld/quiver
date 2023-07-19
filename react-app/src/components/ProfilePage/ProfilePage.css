@@ -1,3 +1,23 @@
+.user-profile-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-activity-section {
+    width: 572px;
+}
+
+.credentials-and-highlights-box {
+    width: 350px;
+    height: auto;
+    margin: 0 10px;
+}
+
+.user-profile-header {
+    display: flex;
+    gap: 30px;
+}
+
 .back {
     display: flex;
 }
