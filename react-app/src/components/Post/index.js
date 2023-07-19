@@ -20,12 +20,11 @@ function Post({ post }) {
     const [toggle, setToggle] = useState(false);
     const [comment, setComment] = useState("");
     const sessionUser = useSelector(state => state.session.user);
+    const postDate = post.created_at.split(' ').slice(0,4).join(' ');
 
     useEffect(() => {
         dispatch(getAllPostsThunk())
     }, [dispatch])
-
-    console.log("🧵 sessionuser: ", sessionUser)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,9 +50,9 @@ function Post({ post }) {
                                 backgroundPosition: "center",
                             }}>
                         </div>
-                        <div style={{fontSize: "0.8em", fontWeight: "600"}}>
-                            <span>{post.user.username}</span>
-                            {/* <span>{post.created_at}</span> */}
+                        <div style={{fontSize: "0.8em", display: "flex", flexDirection: "column"}}>
+                            <span style={{fontWeight: "bold"}}>{post.user.username}</span>
+                            <span>{postDate}</span>
                         </div>
                     </div>
                     ) : ''}

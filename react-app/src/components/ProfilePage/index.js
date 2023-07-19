@@ -28,10 +28,6 @@ function ProfilePage() {
     };
 
     useEffect(() => {
-        console.log("🌸", user)
-    }, [user])
-
-    useEffect(() => {
         dispatch(getUserThunk(sessionUser?.id));
     }, [dispatch, sessionUser.id]);
 
