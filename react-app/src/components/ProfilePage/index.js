@@ -17,7 +17,7 @@ function ProfilePage() {
     const [postsActive, setPostsActive] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [active, setActive] = useState(false);
-
+    let activityArray = [];
 
     const handleMouseOver = (e) => {
     setActive(true);
@@ -28,7 +28,11 @@ function ProfilePage() {
     };
 
     useEffect(() => {
-    dispatch(getUserThunk(sessionUser?.id));
+        console.log("🌸", user)
+    }, [user])
+
+    useEffect(() => {
+        dispatch(getUserThunk(sessionUser?.id));
     }, [dispatch, sessionUser.id]);
 
     useEffect(() => {
@@ -162,36 +166,63 @@ function ProfilePage() {
             ><span>{user?.posts.length}</span> Posts</li>
         </ul>
         </div>
+
         <div>
-        <div>
-            {user?.questions.length > 0 && questionsActive && (
-                <ul>
-                    {user.questions.map(question => (
-                        <li key={question.id}><UserQuestions question={question}/></li>
-                    ))}
-                </ul>
-            )}
-        </div>
-        <div>
-            {user?.answers?.length > 0 && answersActive && (
-                <ul>
-                    {user.answers.map(answer => (
+            <div>
+                {user?.combined_array.length > 0 && profileActive && (
+                    <ul>
+                        {user?.combined_array?.map(element => (
                         <div>
-                          <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
+                        {element.type === "question" && (
+                            <li key={element.unique_id}>
+                              <UserQuestions question={element}/>
+                            </li>
+                        )}
+                        {element.type === "answer" && (
+                            <li key={element.unique_id}>
+                              <UserAnswers answer={element} user={user} />
+                            </li>
+                        )}
+                        {element.type === "post" && (
+                            <li key={element.unique_id}>
+                              <UserPosts post={element} user={user} />
+                            </li>
+                        )}
                         </div>
-                    ))}
-                </ul>
-            )}
-        </div>
-        <div>
-            {user?.posts.length > 0 && postsActive && (
-                <ul>
-                    {user.posts.map(post => (
-                        <li key={post.id}><UserPosts post={post} user={user} /></li>
-                    ))}
-                </ul>
-            )}
-        </div>
+                    
+                        ))}
+                    </ul>
+                )}
+            </div>
+            <div>
+                {user?.questions.length > 0 && questionsActive && (
+                    <ul>
+                        {user.questions.map(question => (
+                            <li key={question.id}><UserQuestions question={question}/></li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+            <div>
+                {user?.answers?.length > 0 && answersActive && (
+                    <ul>
+                        {user.answers.map(answer => (
+                            <div>
+                            <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
+                            </div>
+                        ))}
+                    </ul>
+                )}
+            </div>
+            <div>
+                {user?.posts.length > 0 && postsActive && (
+                    <ul>
+                        {user.posts.map(post => (
+                            <li key={post.id}><UserPosts post={post} user={user} /></li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     </div>
   );
