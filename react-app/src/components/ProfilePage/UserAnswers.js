@@ -35,8 +35,6 @@ function DeleteUserAnswerModal({ answerId, questionId }) {
 
 
 function UserAnswers({ answer, user }) {
-    console.log("🐀 answer date", answer.created_at)
-
     const answerDate = answer.created_at.split(' ').slice(0,4).join(' ');
 
     return (
