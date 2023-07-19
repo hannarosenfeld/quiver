@@ -153,7 +153,7 @@ function ProfilePage() {
         </div>
         <div>
         <div>
-            {user?.questions.length && questionsActive && (
+            {user?.questions.length > 0 && questionsActive && (
                 <ul>
                     {user.questions.map(question => (
                         <li key={question.id}><UserQuestions question={question}/></li>
@@ -162,16 +162,19 @@ function ProfilePage() {
             )}
         </div>
         <div>
-            {user?.answers.length && answersActive && (
+            {user?.answers?.length > 0 && answersActive && (
                 <ul>
                     {user.answers.map(answer => (
+                        <div>
+                            hi
                         <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
+                        </div>
                     ))}
                 </ul>
             )}
         </div>
         <div>
-            {user?.posts.length && postsActive && (
+            {user?.posts.length > 0 && postsActive && (
                 <ul>
                     {user.posts.map(post => (
                         <li key={post.id}><UserPosts post={post} user={user} /></li>
