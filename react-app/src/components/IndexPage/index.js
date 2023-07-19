@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllQuestionsThunk } from "../../store/question";
 import { getAllPostsThunk } from "../../store/post";
 
+import AskQuestion from "./AskQuestion";
 import Question from "../Question"
 import Post from "../Post";
 import "./IndexPage.css"
@@ -15,7 +16,6 @@ function IndexPage() {
     const postsObj = useSelector(state => state.post.post.posts)
     const posts = Object.values(postsObj)
     const postsAndQuestions = [...posts, ...questions]
-    const [showMenu, setShowMenu] = useState(false);
 
     useEffect(() => {
         dispatch(getAllQuestionsThunk())
@@ -33,8 +33,15 @@ function IndexPage() {
     }
 
     return (
-        <div className="wrapper">
-                <div className="homepage-wrapper">
+        <div className="index-page-wrapper">
+            <div className="index-page">
+                <div className="spaces">
+                    <div>   
+                        <span>+ Create Space</span>
+                    </div>
+                </div>
+                <div className="index-page-feed">
+                    <AskQuestion user={sessionUser}/>
                     <div className="question-list-wrapper">
                         <ul>
                         {sortedPostsAndQuestions.map(e => {
@@ -43,6 +50,7 @@ function IndexPage() {
                         })}
                         </ul>
                     </div>
+                </div>
             </div>
         </div>
     )

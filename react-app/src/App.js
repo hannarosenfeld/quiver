@@ -6,7 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import IndexPage from "./components/IndexPage";
-import AskQuestion from "./components/AskQuestion"
+// import AskQuestion from "./components/IndexPage/AskQuestion"
 import QuestionPage from "./components/QuestionPage"
 import ProfilePage from "./components/ProfilePage";
 import Footer from "./components/Footer"
@@ -29,7 +29,7 @@ function App() {
               {sessionUser ? (
                 <>
                 <Navigation isLoaded={isLoaded} />
-                <AskQuestion user={sessionUser} />
+                {/* <AskQuestion user={sessionUser} /> */}
                 <IndexPage />
                 <Footer/>
                 </>

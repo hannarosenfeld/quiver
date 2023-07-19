@@ -55,174 +55,193 @@ function ProfilePage() {
     return (
         
     <div className="wrapper">
-        <div style={{ display: "flex", gap: "30px"}}>
-        <div style={{ display: "flex", cursor: "pointer" }}>
-            <div
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-            style={{
-                backgroundImage: user?.profile_pic
-                ? `url(${user.profile_pic})`
-                : "initial",
-                backgroundSize: "150px",
-                backgroundPosition: "center",
-                width: "120px",
-                height: "120px",
-                borderRadius: "50%",
-                marginBottom: "0.5em",
-                backgroundSize: "cover",
-                display: "flex",
-            }}
-            >
-            <div
-                className={active ? "visible" : "hidden"}
-                style={{
-                display: "flex",
-                width: "40px",
-                height: "40px",
-                margin: "0 auto",
-                alignSelf: "center",
-                background: "transparent",
-                verticalAlign: "top",
-                margin: "0 auto",
-                borderRadius: "50%",
-                display: "flex",
-                background: "#195aff",
-                }}
-            >
-                <form
-                style={{
-                    margin: "0 auto",
-                    alignSelf: "center",
-                    background: "transparent",
-                    verticalAlign: "top",
-                    fontSize: "20px",
-                    maxWidth: "100%",
-                    cursor: "pointer",
-                }}
-                >
-                <label style={{ cursor: "pointer" }}>
-                    <i class="fa-solid fa-pen"></i>
-                    <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    onChange={(e) => setProfilePic(e.target.files[0])}
-                    />
-                </label>
-                </form>
-            </div>
-            </div>
-        </div>
-        <div>
-            <h2>{user ? <div>{user.username}</div> : ""}</h2>
-        </div>
-        </div>
-        <div className="profile-panel">
-        <ul
-            style={{
-            display: "flex",
-            gap: "15px",
-            fontSize: "13px",
-            fontWeight: "bold",
-            marginTop: "12px",
-            }}
-        >
-            <li
-                className={profileActive ? "panel-item-active" : ''}
-                onClick={() => {
-                    setQuestionsActive(false)
-                    setPostsActive(false)
-                    setAnswersActive(false)
-                    setProfileActive(true)
-                }}
-            >Profile</li>
-            <li 
-                className={answersActive ? "panel-item-active" : ''}
-                onClick={() => {
-                    setProfileActive(false)
-                    setQuestionsActive(false)
-                    setPostsActive(false)
-                    setAnswersActive(true)
-                }}
-            ><span>{user?.answers.length}</span> Answers</li>
-            <li 
-                className={questionsActive ? "panel-item-active" : ''}
-                onClick={() => {
-                    setProfileActive(false)
-                    setAnswersActive(false)
-                    setPostsActive(false)
-                    setQuestionsActive(true)}
-                }
-            ><span>{user?.questions.length}</span> Questions</li>
-            <li 
-                className={postsActive ? "panel-item-active" : ''}
-                onClick={() => {
-                    setProfileActive(false)
-                    setAnswersActive(false)
-                    setQuestionsActive(false)
-                    setPostsActive(true)
+        <div className="user-profile-container">
+        {/* left section */}
+            <div className="profile-activity-section">
+                {/* profile picture, user info */}
+                <div className="user-profile-header">
+                <div style={{ display: "flex", cursor: "pointer" }}>
+                    <div
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                    style={{
+                        backgroundImage: user?.profile_pic
+                        ? `url(${user.profile_pic})`
+                        : "initial",
+                        backgroundSize: "150px",
+                        backgroundPosition: "center",
+                        width: "120px",
+                        height: "120px",
+                        borderRadius: "50%",
+                        marginBottom: "0.5em",
+                        backgroundSize: "cover",
+                        display: "flex",
                     }}
-            ><span>{user?.posts.length}</span> Posts</li>
-        </ul>
-        </div>
+                    >
+                    <div
+                        className={active ? "visible" : "hidden"}
+                        style={{
+                        display: "flex",
+                        width: "40px",
+                        height: "40px",
+                        margin: "0 auto",
+                        alignSelf: "center",
+                        background: "transparent",
+                        verticalAlign: "top",
+                        margin: "0 auto",
+                        borderRadius: "50%",
+                        display: "flex",
+                        background: "#195aff",
+                        }}
+                    >
+                        <form
+                        style={{
+                            margin: "0 auto",
+                            alignSelf: "center",
+                            background: "transparent",
+                            verticalAlign: "top",
+                            fontSize: "20px",
+                            maxWidth: "100%",
+                            cursor: "pointer",
+                        }}
+                        >
+                        <label style={{ cursor: "pointer" }}>
+                            <i class="fa-solid fa-pen"></i>
+                            <input
+                            type="file"
+                            accept="image/*"
+                            hidden
+                            onChange={(e) => setProfilePic(e.target.files[0])}
+                            />
+                        </label>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                <div>
+                    <h2>{user ? <div>{user.username}</div> : ""}</h2>
+                </div>
+                </div>
+                <div className="profile-panel">
+                <ul
+                    style={{
+                    display: "flex",
+                    gap: "15px",
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                    marginTop: "12px",
+                    }}
+                >
+                    <li
+                        className={profileActive ? "panel-item-active" : ''}
+                        onClick={() => {
+                            setQuestionsActive(false)
+                            setPostsActive(false)
+                            setAnswersActive(false)
+                            setProfileActive(true)
+                        }}
+                    >Profile</li>
+                    <li 
+                        className={answersActive ? "panel-item-active" : ''}
+                        onClick={() => {
+                            setProfileActive(false)
+                            setQuestionsActive(false)
+                            setPostsActive(false)
+                            setAnswersActive(true)
+                        }}
+                    ><span>{user?.answers.length}</span> Answers</li>
+                    <li 
+                        className={questionsActive ? "panel-item-active" : ''}
+                        onClick={() => {
+                            setProfileActive(false)
+                            setAnswersActive(false)
+                            setPostsActive(false)
+                            setQuestionsActive(true)}
+                        }
+                    ><span>{user?.questions.length}</span> Questions</li>
+                    <li 
+                        className={postsActive ? "panel-item-active" : ''}
+                        onClick={() => {
+                            setProfileActive(false)
+                            setAnswersActive(false)
+                            setQuestionsActive(false)
+                            setPostsActive(true)
+                            }}
+                    ><span>{user?.posts.length}</span> Posts</li>
+                </ul>
+                </div>
 
-        <div>
-            <div>
-                {user?.combined_array.length > 0 && profileActive && (
-                    <ul>
-                        {user?.combined_array?.map(element => (
-                        <div>
-                        {element.type === "question" && (
-                            <li key={element.unique_id}>
-                              <UserQuestions question={element}/>
-                            </li>
+                <div>
+                    <div>
+                        {user?.combined_array.length > 0 && profileActive && (
+                            <ul>
+                                {user?.combined_array?.map(element => (
+                                <div>
+                                {element.type === "question" && (
+                                    <li key={element.unique_id}>
+                                    <UserQuestions question={element}/>
+                                    </li>
+                                )}
+                                {element.type === "answer" && (
+                                    <li key={element.unique_id}>
+                                    <UserAnswers answer={element} user={user} />
+                                    </li>
+                                )}
+                                {element.type === "post" && (
+                                    <li key={element.unique_id}>
+                                    <UserPosts post={element} user={user} />
+                                    </li>
+                                )}
+                                </div>
+                            
+                                ))}
+                            </ul>
                         )}
-                        {element.type === "answer" && (
-                            <li key={element.unique_id}>
-                              <UserAnswers answer={element} user={user} />
-                            </li>
+                    </div>
+                    <div>
+                        {user?.questions.length > 0 && questionsActive && (
+                            <ul>
+                                {user.questions.map(question => (
+                                    <li key={question.id}><UserQuestions question={question}/></li>
+                                ))}
+                            </ul>
                         )}
-                        {element.type === "post" && (
-                            <li key={element.unique_id}>
-                              <UserPosts post={element} user={user} />
-                            </li>
+                    </div>
+                    <div>
+                        {user?.answers?.length > 0 && answersActive && (
+                            <ul>
+                                {user.answers.map(answer => (
+                                    <div>
+                                    <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
+                                    </div>
+                                ))}
+                            </ul>
                         )}
-                        </div>
-                    
-                        ))}
-                    </ul>
-                )}
-            </div>
-            <div>
-                {user?.questions.length > 0 && questionsActive && (
-                    <ul>
-                        {user.questions.map(question => (
-                            <li key={question.id}><UserQuestions question={question}/></li>
-                        ))}
-                    </ul>
-                )}
-            </div>
-            <div>
-                {user?.answers?.length > 0 && answersActive && (
-                    <ul>
-                        {user.answers.map(answer => (
-                            <div>
-                            <li key={answer.id}><UserAnswers answer={answer} user={user}/></li>
-                            </div>
-                        ))}
-                    </ul>
-                )}
-            </div>
-            <div>
-                {user?.posts.length > 0 && postsActive && (
-                    <ul>
-                        {user.posts.map(post => (
-                            <li key={post.id}><UserPosts post={post} user={user} /></li>
-                        ))}
-                    </ul>
-                )}
-            </div>
+                    </div>
+                    <div>
+                        {user?.posts.length > 0 && postsActive && (
+                            <ul>
+                                {user.posts.map(post => (
+                                    <li key={post.id}><UserPosts post={post} user={user} /></li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
+            </div> 
+
+            {/* right box */}
+            <div className="credentials-and-highlights-box">
+                <div style={{margin: "20px", height: "230px"}}>
+                    <h4 style={{borderBottom: "0.2px solid var(--qwhite)", paddingBottom: "10px", marginBottom: "10px"}} >Credentials & Highlights</h4>
+                    <p>coming soon!</p>
+                </div>
+                <div style={{margin: "20px"}}>
+                    <h4 style={{borderBottom: "0.2px solid var(--qwhite)", paddingBottom: "10px", marginBottom: "10px"}} >Knows about</h4>
+                    <p>coming soon!</p>
+                </div>
+            </div>                                    
+
         </div>
     </div>
   );

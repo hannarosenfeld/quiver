@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
-import { addNewQuestionThunk, getAllQuestionsThunk } from "../../store/question"
-import OpenModalButton from "../OpenModalButton";
-import PostModal from "../PostModal";
+import { addNewQuestionThunk, getAllQuestionsThunk } from "../../../store/question"
+import OpenModalButton from "../../OpenModalButton";
+import PostModal from "../../PostModal";
 
 import "./AskQuestion.css"
 
@@ -61,8 +61,8 @@ function AskQuestion({ user }) {
     }
 
     return (
-        <div className="wrapper">
-            <div className="homepage-wrapper">
+        <div>
+            <div>
                 <div className="ask-question-wrapper">
                     <div className="profile-pic"
                         style={{
@@ -81,7 +81,7 @@ function AskQuestion({ user }) {
                             />
                     </form>
                 </div>
-                <div style={{display: "flex", justifyContent: "space-between", width: "600px", alignItems: "center"}}>
+                <div>
                     <div style={{display: "flex", flexDirection: "column", color: "red", marginBottom: "1em", fontSize: "0.8em"}}>
                         {hasErrors && errors.questionWord ? <span>{errors.questionWord}</span> : ''}
                         {hasErrors && errors.questionMark ? <span>{errors.questionMark}</span> : ''}
