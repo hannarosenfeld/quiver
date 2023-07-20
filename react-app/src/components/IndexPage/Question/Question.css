@@ -69,6 +69,31 @@ a {
     color: var(--qwhite)
 }
 
+.question-content {
+    font-size: 14px;
+    padding-top: 0.5em;
+    white-space: pre-wrap;
+    /* Set a fixed height for truncation (3 lines of text) */
+    max-height: 4.6em;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 5px;
+  }
+  
+  .question-content.truncated {
+    /* Use grid for positioning */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show before truncation (change this value to adjust the number of lines) */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 5px;
+  }
+  
+  .question-content.expanded {
+    max-height: none; /* Set to none to show entire content */
+  }
+  
 
   
   .question-content.truncated .more-link-question {
@@ -83,16 +108,6 @@ a {
     bottom: 0;
     right: 0;
     padding: 0.2em 0.4em;
-  }
-
-  .question-content {
-    font-size: 14px;
-    padding-top: 0.5em;
-    white-space: pre-wrap;
-    /* Set a fixed height for truncation (3 lines of text) */
-    max-height: 4.6em;
-    overflow: hidden;
-    position: relative;
   }
   
   /* Style for the "more" link */
@@ -110,14 +125,4 @@ a {
     /* padding: 0.2em 0.4em; */
     position: absolute;
     margin: -0.3em 0.3em;
-  }
-
-  .question-content.truncated {
-  /* Use grid for positioning */
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* Number of lines to show before truncation (change this value to adjust the number of lines) */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  position: relative;
-  padding-bottom: 5px; 
   }
