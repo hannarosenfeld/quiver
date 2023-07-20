@@ -1,46 +1,83 @@
 .post-wrapper {
     padding: 1em;
-}
-
-.comment-section {
+  }
+  
+  .comment-section {
     background: grey;
-}
-
-.outer-post-wrapper form {
+  }
+  
+  .outer-post-wrapper form {
     display: flex;
     justify-content: space-between;
     padding: 1em;
     align-items: center;
-}
-
-.outer-post-wrapper input {
+  }
+  
+  .outer-post-wrapper input {
     width: 70%;
     height: 3em;
     border: 1px solid var(--qborder);
     border-radius: 1000px;
     padding-left: 1em;
-}
-
-.outer-post-wrapper .comments li {
+  }
+  
+  .outer-post-wrapper .comments li {
     background-color: #131414;
     font-size: 0.9em;
     padding: 1em;
     /* border-bottom: 1px solid var(--qborder); */
     margin-top: -0.6em;
     display: flex;
-
-}
-
-.outer-post-wrapper .comments ul {
+  }
+  
+  .outer-post-wrapper .comments ul {
     gap: 0 !important;
     margin: 0;
     grid-gap: 0 !important;
-}
-
-.comments .profile-pic {
+  }
+  
+  .comments .profile-pic {
     margin-right: 0.5em;
-}
-
-.linebreaks-on {
+  }
+  
+  .linebreaks-on {
     white-space: pre-wrap;
-}
+  }
+  
+  .post-content {
+    font-size: 14px;
+    padding-top: 10px;
+    white-space: pre-wrap;
+  }
+  
+  .post-content.truncated {
+    display: grid; /* Use grid for positioning */
+    grid-template-rows: auto min-content; /* Two rows: auto for text, min-content for "more" span */
+    gap: 0.2em; /* Add some gap between the two rows */
+    max-height: 4.6em; /* Set the maximum height for truncation (3 lines of text) */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Style for the "more" link */
+  .more-link {
+    grid-row: 2; /* Position the "more" span in the second row of the grid */
+    grid-column: 1; /* Span the full width of the container */
+    background: var(--qblack);
+    color: rgb(86, 147, 214);
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: var(--qblack) -16px 0px 14px 6px !important;
+    position: absolute;
+    bottom: a;
+    right: 0;
+    /* padding: 0.2em 0.4em; */
+    position: absolute;
+    margin: -1.19em 0.3em 0 0;
+  }
+  
+  /* Add styles for the expanded state */
+  .post-content.expanded {
+    max-height: none;
+  }
+  

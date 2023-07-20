@@ -5,6 +5,8 @@
     --qgrey: #A39E96;
     --qborder: #4c5052;
     --qred:  #b63533;
+    --qblue: rgb(86, 147, 214);
+    --qblack: rgb(20, 21, 22);
 }
 
 * {
