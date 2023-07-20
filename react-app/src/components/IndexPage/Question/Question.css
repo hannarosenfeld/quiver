@@ -1,0 +1,123 @@
+.homepage-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question-wrapper {
+    padding: 1em;
+}
+.question-list-wrapper {
+    width: 100%;
+    margin: 0auto;
+    display: flex;
+    align-items: center;
+}
+
+.question-list-wrapper ul {
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column-reverse;
+    gap: 0.5em;
+}
+
+.question-list-wrapper li {
+    border: 0.5px solid var(--qborder);
+    background-color: #131414;
+}
+
+.question-user-info {
+    font-size: 0.8em;
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.question-user-info .username {
+    font-weight: bold;
+}
+
+
+.question-user-info .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.edit-question-container {
+    height: 2.5em;
+    width: 100%;
+}
+
+.edit-question-container span {
+    float: right;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.edit-question-container button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    float: right;
+    padding: 0.5em;
+}
+
+a {
+    color: var(--qwhite)
+}
+
+
+  
+  .question-content.truncated .more-link-question {
+    grid-row: 2; /* Position the "more" span in the second row of the grid */
+    grid-column: 1; /* Span the full width of the container */
+    background: var(--qblack);
+    color: rgb(86, 147, 214);
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: var(--qblack) -16px 0px 14px 6px !important;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.2em 0.4em;
+  }
+
+  .question-content {
+    font-size: 14px;
+    padding-top: 0.5em;
+    white-space: pre-wrap;
+    /* Set a fixed height for truncation (3 lines of text) */
+    max-height: 4.6em;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Style for the "more" link */
+  .more-link-question {
+    grid-row: 2; /* Position the "more" span in the second row of the grid */
+    grid-column: 1; /* Span the full width of the container */
+    background: var(--qblack);
+    color: rgb(86, 147, 214);
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: var(--qblack) -16px 0px 14px 6px !important;
+    position: absolute;
+    bottom: a;
+    right: 0;
+    /* padding: 0.2em 0.4em; */
+    position: absolute;
+    margin: -0.3em 0.3em;
+  }
+
+  .question-content.truncated {
+  /* Use grid for positioning */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show before truncation (change this value to adjust the number of lines) */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 5px; 
+  }

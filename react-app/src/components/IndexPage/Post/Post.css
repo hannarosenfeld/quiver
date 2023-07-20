@@ -51,12 +51,13 @@
   }
   
   .post-content.truncated {
-    display: grid; /* Use grid for positioning */
-    grid-template-rows: auto min-content; /* Two rows: auto for text, min-content for "more" span */
-    gap: 0.2em; /* Add some gap between the two rows */
-    max-height: 4.6em; /* Set the maximum height for truncation (3 lines of text) */
+    /* Use grid for positioning */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show before truncation */
+    -webkit-box-orient: vertical;
     overflow: hidden;
     position: relative;
+    padding-bottom: 4px; /* Add padding to the bottom of truncated content */
   }
   
   /* Style for the "more" link */
@@ -73,7 +74,7 @@
     right: 0;
     /* padding: 0.2em 0.4em; */
     position: absolute;
-    margin: -1.19em 0.3em 0 0;
+    margin: -1.6em 0.3em 0 0;
   }
   
   /* Add styles for the expanded state */

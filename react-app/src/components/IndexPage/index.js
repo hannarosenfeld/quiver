@@ -4,9 +4,10 @@ import { getAllQuestionsThunk } from "../../store/question";
 import { getAllPostsThunk } from "../../store/post";
 
 import AskQuestion from "./AskQuestion";
-import Question from "../Question"
-import Post from "../Post";
+import Question from "./Question"
+import Post from "./Post";
 import "./IndexPage.css"
+
 
 function IndexPage() {
     const dispatch = useDispatch();

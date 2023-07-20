@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useModal } from "../../context/Modal";
+import { useModal } from "../../../context/Modal";
 
-import { deletePostThunk, getAllPostsThunk } from "../../store/post";
-import { addNewCommentThunk } from "../../store/comment";
+import { deletePostThunk, getAllPostsThunk } from "../../../store/post";
+import { addNewCommentThunk } from "../../../store/comment";
 
-import OpenModalButton from "../OpenModalButton";
-import DeletePostModal from "../DeletePostModal";
-import DeleteCommentModal from "../DeleteCommentModal";
+import OpenModalButton from "../../OpenModalButton";
+import DeletePostModal from "../../DeletePostModal";
+import DeleteCommentModal from "../../DeleteCommentModal";
 
 import "./Post.css";
 
