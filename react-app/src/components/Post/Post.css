@@ -1,0 +1,84 @@
+.post-wrapper {
+    padding: 1em;
+  }
+  
+  .comment-section {
+    background: grey;
+  }
+  
+  .outer-post-wrapper form {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    align-items: center;
+  }
+  
+  .outer-post-wrapper input {
+    width: 70%;
+    height: 3em;
+    border: 1px solid var(--qborder);
+    border-radius: 1000px;
+    padding-left: 1em;
+  }
+  
+  .outer-post-wrapper .comments li {
+    background-color: #131414;
+    font-size: 0.9em;
+    padding: 1em;
+    /* border-bottom: 1px solid var(--qborder); */
+    margin-top: -0.6em;
+    display: flex;
+  }
+  
+  .outer-post-wrapper .comments ul {
+    gap: 0 !important;
+    margin: 0;
+    grid-gap: 0 !important;
+  }
+  
+  .comments .profile-pic {
+    margin-right: 0.5em;
+  }
+  
+  .linebreaks-on {
+    white-space: pre-wrap;
+  }
+  
+  .post-content {
+    font-size: 14px;
+    padding-top: 10px;
+    white-space: pre-wrap;
+  }
+  
+  .post-content.truncated {
+    /* Use grid for positioning */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show before truncation */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 4px; /* Add padding to the bottom of truncated content */
+  }
+  
+  /* Style for the "more" link */
+  .more-link {
+    grid-row: 2; /* Position the "more" span in the second row of the grid */
+    grid-column: 1; /* Span the full width of the container */
+    background: var(--qblack);
+    color: rgb(86, 147, 214);
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: var(--qblack) -16px 0px 14px 6px !important;
+    position: absolute;
+    bottom: a;
+    right: 0;
+    /* padding: 0.2em 0.4em; */
+    position: absolute;
+    margin: -1.6em 0.3em 0 0;
+  }
+  
+  /* Add styles for the expanded state */
+  .post-content.expanded {
+    max-height: none;
+  }
+  
