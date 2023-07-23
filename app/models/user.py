@@ -21,6 +21,8 @@ class User(db.Model, UserMixin):
     questions = db.relationship('Question', back_populates='user')
     posts = db.relationship('Post', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
+    upvotes = db.relationship('Upvote', back_populates='user')
+    downvotes = db.relationship('Downvote', back_populates='user')
 
     @property
     def password(self):
@@ -48,6 +50,8 @@ class User(db.Model, UserMixin):
         # Sort the combined array based on the 'created_at' value
         combined_array.sort(key=lambda item: item['created_at'])
 
+        # Retrieve the user's upvoted post IDs and add them to the dictionary
+        upvoted_posts = [upvote.post_id for upvote in self.upvotes]
         return {
             'id': self.id,
             'username': self.username,
@@ -56,5 +60,6 @@ class User(db.Model, UserMixin):
             'answers': [{'id': answer.id, 'created_at': answer.created_at, 'answer': answer.answer, 'question_title': answer.question.title, 'question_id': answer.question.id} for answer in self.answers],
             'questions': [ {'id': question.id, 'title' : question.title, 'answers': [answer.answer for answer in question.answers], 'question.created_at': question.created_at} for question in self.questions],
             'posts': [ {'id': post.id, 'content' : post.content, 'comments': [comment.comment for comment in post.comments], 'created_at': post.created_at} for post in self.posts],
+            'upvoted_posts': upvoted_posts,  # Add upvoted_posts to the dictionary
             'combined_array': combined_array
         }

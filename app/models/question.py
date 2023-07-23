@@ -11,7 +11,6 @@ class Question(db.Model):
     title = db.Column(db.String(250), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable = False)
-
     user = db.relationship('User', back_populates='questions')
     answers = db.relationship('Answer', back_populates='question', cascade="all, delete-orphan")
 

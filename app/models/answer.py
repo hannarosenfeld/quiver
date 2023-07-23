@@ -15,6 +15,8 @@ class Answer(db.Model):
 
     user = db.relationship('User', back_populates='answers')
     question = db.relationship('Question', back_populates='answers')
+    upvotes = db.relationship('Upvote', back_populates='answer', lazy=True)
+    downvotes = db.relationship('Downvote', back_populates='answer', lazy=True)
 
     def to_dict(self):
         return {

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Post, Comment, db
+from app.models import Post, Comment, db, Upvote
+
 from app.forms.post_form import PostForm
 from app.forms.comment_form import CommentForm
 
@@ -78,3 +79,30 @@ def delete_answer(id, comment_id):
     db.session.delete(comment)
     db.session.commit()
     return {"message": "successful"}
+
+
+@post_routes.route('/<int:id>/upvotes/', methods=["GET"])
+def get_upvotes_for_post(id):
+    post = Post.query.get(id)
+    if post:
+        return jsonify({'upvotes': [upvote.to_dict() for upvote in post.upvotes]})
+    return jsonify({'message': 'Post not found'}), 404
+
+@post_routes.route('/<int:id>/upvotes/', methods=["POST"])
+@login_required
+def add_upvote(id):
+    post = Post.query.get(id)
+    if post:
+        # Check if the user has already upvoted the post
+        if any(upvote.user_id == current_user.id for upvote in post.upvotes):
+            return jsonify({'message': 'You have already upvoted this post'}), 400
+
+        new_upvote = Upvote(user_id=current_user.id, post_id=post.id)
+        db.session.add(new_upvote)
+        
+        # Update the Post instance's upvotes count
+        post.upvotes.append(new_upvote)
+        db.session.commit()
+        
+        return jsonify({'message': 'Upvote added successfully'}), 201
+    return jsonify({'message': 'Post not found'}), 404
