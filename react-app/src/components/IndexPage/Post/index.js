@@ -102,7 +102,7 @@ function Post({ post }) {
           {/* UP AND DOWN VOTE */}
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div className="updown-vote">
-              <div className="upvote">
+              <div className="upvote" style={{cursor: "pointer"}}>
                 <i className="fa-solid fa-arrow-up"></i>
                 <span>Upvote</span>
               </div>
