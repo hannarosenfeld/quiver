@@ -106,7 +106,7 @@ function Post({ post }) {
                 <i className="fa-solid fa-arrow-up"></i>
                 <span>Upvote</span>
               </div>
-              <div>
+              <div  style={{cursor: "pointer"}}>
                 <i className="fa-solid fa-arrow-down"></i>
               </div>
             </div>
