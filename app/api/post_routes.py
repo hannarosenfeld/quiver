@@ -5,9 +5,7 @@ from app.models import Post, Comment, db, Upvote
 from app.forms.post_form import PostForm
 from app.forms.comment_form import CommentForm
 
-
 post_routes = Blueprint('posts', __name__)
-
 
 def validation_errors_to_error_messages(validation_errors):
     """
@@ -18,7 +16,6 @@ def validation_errors_to_error_messages(validation_errors):
         for error in validation_errors[field]:
             errorMessages.append(f'{field} : {error}')
     return errorMessages
-
 
 @post_routes.route('/')
 def allPosts():
@@ -32,10 +29,11 @@ def allPosts():
 @login_required
 def delete_post(id):
     post = Post.query.get(id)
-    db.session.delete(post)
-    db.session.commit()
-    return {"message": "successful"}
-
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        return {"message": "successful"}
+    return jsonify({'message': 'Post not found'}), 404
 
 @post_routes.route('/', methods=["POST"])
 def add_post():
@@ -53,7 +51,9 @@ def add_post():
         dict_new_post = newPost.to_dict()
 
         return dict_new_post
-    
+
+    return jsonify({'errors': validation_errors_to_error_messages(form.errors)}), 400
+
 @post_routes.route('/<int:id>/comments/', methods=["POST"])
 def add_comment(id):
     form = CommentForm()
@@ -70,16 +70,19 @@ def add_comment(id):
         db.session.commit()
         dict_new_comment = newComment.to_dict()
 
-    return dict_new_comment
+        return dict_new_comment
+
+    return jsonify({'errors': validation_errors_to_error_messages(form.errors)}), 400
 
 @post_routes.route("/<int:id>/comments/<int:comment_id>/", methods=["DELETE"])
 @login_required
-def delete_answer(id, comment_id):
+def delete_comment(id, comment_id):
     comment = Comment.query.get(comment_id)
-    db.session.delete(comment)
-    db.session.commit()
-    return {"message": "successful"}
-
+    if comment and comment.post_id == id:
+        db.session.delete(comment)
+        db.session.commit()
+        return {"message": "successful"}
+    return jsonify({'message': 'Comment not found'}), 404
 
 @post_routes.route('/<int:id>/upvotes/', methods=["GET"])
 def get_upvotes_for_post(id):
@@ -88,21 +91,30 @@ def get_upvotes_for_post(id):
         return jsonify({'upvotes': [upvote.to_dict() for upvote in post.upvotes]})
     return jsonify({'message': 'Post not found'}), 404
 
-@post_routes.route('/<int:id>/upvotes/', methods=["POST"])
+@post_routes.route('/<int:id>/upvotes/', methods=["PUT", "DELETE"])
 @login_required
-def add_upvote(id):
+def handle_upvote(id):
     post = Post.query.get(id)
     if post:
-        # Check if the user has already upvoted the post
-        if any(upvote.user_id == current_user.id for upvote in post.upvotes):
-            return jsonify({'message': 'You have already upvoted this post'}), 400
+        if request.method == "PUT":
+            # Check if the user has already upvoted the post
+            if any(upvote.user_id == current_user.id for upvote in post.upvotes):
+                return jsonify({'message': 'You have already upvoted this post'}), 400
 
-        new_upvote = Upvote(user_id=current_user.id, post_id=post.id)
-        db.session.add(new_upvote)
-        
-        # Update the Post instance's upvotes count
-        post.upvotes.append(new_upvote)
-        db.session.commit()
-        
-        return jsonify({'message': 'Upvote added successfully'}), 201
+            new_upvote = Upvote(user_id=current_user.id, post_id=post.id)
+            db.session.add(new_upvote)
+            db.session.commit()
+
+            return jsonify({'message': 'Upvote added successfully'}), 201
+
+        elif request.method == "DELETE":
+            # Find the upvote associated with the current user and remove it
+            upvote_to_remove = next((upvote for upvote in post.upvotes if upvote.user_id == current_user.id), None)
+            if upvote_to_remove:
+                db.session.delete(upvote_to_remove)
+                db.session.commit()
+                return jsonify({'message': 'Upvote removed successfully'}), 200
+            else:
+                return jsonify({'message': 'You have not upvoted this post'}), 400
+
     return jsonify({'message': 'Post not found'}), 404

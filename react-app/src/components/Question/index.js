@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import OpenModalButton from "../../OpenModalButton";
-import EditQuestionModal from "../../EditQuestionModal";
-import DeleteQuestionModal from "../../DeleteQuestionModal";
+import OpenModalButton from "../OpenModalButton";
+import EditQuestionModal from "../EditQuestionModal";
+import DeleteQuestionModal from "../DeleteQuestionModal";
 
 import "./Question.css";
 

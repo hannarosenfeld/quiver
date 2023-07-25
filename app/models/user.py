@@ -36,19 +36,19 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
     
     def to_dict(self):
-        posts = [{'type': 'post','id': post.id, 'content': post.content, 'created_at': post.created_at} for post in self.posts]
-        questions = [{'type': 'question','id': question.id, 'title': question.title, 'created_at': question.created_at} for question in self.questions]
-        answers = [{'type': 'answer','id': answer.id, 'answer': answer.answer, 'created_at': answer.created_at} for answer in self.answers]
+        # posts = [{'type': 'post','id': post.id, 'content': post.content, 'created_at': post.created_at} for post in self.posts]
+        # questions = [{'type': 'question','id': question.id, 'title': question.title, 'created_at': question.created_at} for question in self.questions]
+        # answers = [{'type': 'answer','id': answer.id, 'answer': answer.answer, 'created_at': answer.created_at} for answer in self.answers]
 
-        # Combine posts, questions, and answers into a single list
-        combined_array = list(chain(posts, questions, answers))
+        # # Combine posts, questions, and answers into a single list
+        # combined_array = list(chain(posts, questions, answers))
 
-        # Add a unique ID to each element in the combined array
-        for item in combined_array:
-            item['unique_id'] = str(uuid.uuid4())  # Generate a random UUID
+        # # Add a unique ID to each element in the combined array
+        # for item in combined_array:
+        #     item['unique_id'] = str(uuid.uuid4())  # Generate a random UUID
 
-        # Sort the combined array based on the 'created_at' value
-        combined_array.sort(key=lambda item: item['created_at'])
+        # # Sort the combined array based on the 'created_at' value
+        # combined_array.sort(key=lambda item: item['created_at'])
 
         # Retrieve the user's upvoted post IDs and add them to the dictionary
         upvoted_posts = [upvote.post_id for upvote in self.upvotes]
@@ -61,5 +61,5 @@ class User(db.Model, UserMixin):
             'questions': [ {'id': question.id, 'title' : question.title, 'answers': [answer.answer for answer in question.answers], 'question.created_at': question.created_at} for question in self.questions],
             'posts': [ {'id': post.id, 'content' : post.content, 'comments': [comment.comment for comment in post.comments], 'created_at': post.created_at} for post in self.posts],
             'upvoted_posts': upvoted_posts,  # Add upvoted_posts to the dictionary
-            'combined_array': combined_array
+            # 'combined_array': combined_array
         }

@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 
-import { deletePostThunk, getAllPostsThunk } from "../../../store/post";
+import { getAllPostsThunk, upvotePostThunk } from "../../../store/post";
 import { addNewCommentThunk } from "../../../store/comment";
 
 import OpenModalButton from "../../OpenModalButton";
@@ -12,14 +12,19 @@ import DeleteCommentModal from "../../DeleteCommentModal";
 
 import "./Post.css";
 
+
 function Post({ post }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+  const sessionUser = useSelector((state) => state.session.user);
+  const postDate = post.created_at ? post.created_at.split(" ").slice(0, 4).join(" ") : "";
   const [toggle, setToggle] = useState(false);
   const [comment, setComment] = useState("");
-  const sessionUser = useSelector((state) => state.session.user);
-  const postDate = post.created_at.split(" ").slice(0, 4).join(" ");
   const [isTruncated, setIsTruncated] = useState(true);
+
+  useEffect(() => {
+    console.log("🐡 post: ", post);
+  }, [post]);
 
   // Function to toggle the truncation state
   const toggleTruncation = () => {
@@ -37,39 +42,50 @@ function Post({ post }) {
       comment,
     };
 
-    const newCommentDispatch = await dispatch(
-      addNewCommentThunk(post.id, commentDetails)
-    );
+    const newCommentDispatch = await dispatch(addNewCommentThunk(post.id, commentDetails));
     await dispatch(getAllPostsThunk());
     setComment("");
+  };
+
+  const handleUpvote = async () => {
+    const hasUpvoted = post.upvotes.some((upvote) => upvote.user_id === sessionUser?.id);
+    // Toggle upvoting/undo upvoting by clicking on Upvote
+    if (hasUpvoted) {
+      // Remove upvote (undo upvoting)
+      const updatedPost = await dispatch(upvotePostThunk(post.id, false)); // Change the second argument to `false`
+    } else {
+      // Add upvote
+      const updatedPost = await dispatch(upvotePostThunk(post.id, true)); // Change the second argument to `true`
+    }
   };
 
   return (
     <div className="outer-post-wrapper">
       <div className="post-wrapper">
-        {post.content.length ? (
+        {post.content && post.content.length > 0 ? (
           <div style={{ display: "flex", gap: "0.5em", marginBottom: "1em" }}>
             <div
               className="profile-pic"
               style={{
-                backgroundImage: `url(${post.user.profile_pic})`,
+                backgroundImage: `url(${post.user?.profile_pic})`,
                 backgroundSize: "40px",
                 backgroundPosition: "center",
               }}
             ></div>
             <div style={{ fontSize: "0.8em", display: "flex", flexDirection: "column" }}>
-              <span style={{ fontWeight: "bold" }}>{post.user.username}</span>
+              <span style={{ fontWeight: "bold" }}>{post.user?.username}</span>
               <span>{postDate}</span>
             </div>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
 
-        <h4>
-          <NavLink to={`/posts/${post.id}`}>{post.title}</NavLink>
-        </h4>
-        {post.content.length ? (
+        {post.title ? (
+          <h4>
+            <NavLink to={`/posts/${post.id}`}>{post.title}</NavLink>
+          </h4>
+        ) : null}
+
+        {post.content && post.content.length > 0 ? (
           <div style={{ position: "relative" }}>
             <div
               className={`linebreaks-on post-content ${
@@ -79,17 +95,13 @@ function Post({ post }) {
               {post.content}
             </div>
             {isTruncated && (
-              <span
-                className="more-link"
-                onClick={toggleTruncation}
-              >
+              <span className="more-link" onClick={toggleTruncation}>
                 (more)
               </span>
             )}
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
+
         <div
           className="edit-question-container"
           style={{
@@ -102,21 +114,25 @@ function Post({ post }) {
           {/* UP AND DOWN VOTE */}
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div className="updown-vote">
-              <div className="upvote" style={{cursor: "pointer"}}>
+              <div onClick={handleUpvote} className="upvote" style={{ cursor: "pointer" }}>
                 <i className="fa-solid fa-arrow-up"></i>
                 <span>Upvote</span>
               </div>
-              <div  style={{cursor: "pointer"}}>
+              <div style={{ cursor: "pointer" }}>
                 <i className="fa-solid fa-arrow-down"></i>
               </div>
             </div>
-            <i onClick={() => setToggle(!toggle)} className="comment fa-regular fa-comment"></i>
+            <i
+              onClick={() => setToggle(!toggle)}
+              className="comment fa-regular fa-comment"
+            ></i>
           </div>
-          {sessionUser.id === post.user.id ? (
-            <OpenModalButton buttonText="Delete" modalComponent={<DeletePostModal post={post} />} />
-          ) : (
-            ""
-          )}
+          {sessionUser && post.user?.id === sessionUser?.id ? (
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeletePostModal post={post} />}
+            />
+          ) : null}
         </div>
       </div>
       {toggle && (
@@ -125,7 +141,7 @@ function Post({ post }) {
             <div
               className="profile-pic"
               style={{
-                backgroundImage: `url(${sessionUser.profile_pic})`,
+                backgroundImage: `url(${post.user?.profile_pic})`,
                 backgroundSize: "40px",
                 backgroundPosition: "center",
               }}
@@ -147,26 +163,26 @@ function Post({ post }) {
                     <div
                       className="profile-pic"
                       style={{
-                        backgroundImage: `url(${e.user.profile_pic})`,
+                        backgroundImage: `url(${e.user?.profile_pic})`,
                         backgroundSize: "40px",
                         backgroundPosition: "center",
                         marginRight: "1em",
                       }}
                     ></div>
                     <div style={{ marginTop: "-0.25em", width: "100%" }}>
-                      <p style={{ fontWeight: "bold", marginBottom: "0.2em" }}>{e.user.username}</p>
+                      <p style={{ fontWeight: "bold", marginBottom: "0.2em" }}>{e.user?.username}</p>
                       <div>{e.comment}</div>
                     </div>
                   </div>
                   <div className="edit-question-container" style={{ marginBottom: "0.1em" }}>
-                    {sessionUser.id === e.user.id ? (
+                    {sessionUser && post.user?.id === e.user?.id ? (
                       <OpenModalButton
                         buttonText="Delete"
-                        modalComponent={<DeleteCommentModal commentId={e.id} postId={e.post_id} />}
+                        modalComponent={
+                          <DeleteCommentModal commentId={e.id} postId={e.post_id} />
+                        }
                       />
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </div>
                 </li>
               ))}
