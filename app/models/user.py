@@ -52,6 +52,8 @@ class User(db.Model, UserMixin):
 
         # Retrieve the user's upvoted post IDs and add them to the dictionary
         upvoted_posts = [upvote.post_id for upvote in self.upvotes]
+        downvoted_posts = [downvote.post_id for downvote in self.downvotes]
+
         return {
             'id': self.id,
             'username': self.username,
@@ -61,5 +63,6 @@ class User(db.Model, UserMixin):
             'questions': [ {'id': question.id, 'title' : question.title, 'answers': [answer.answer for answer in question.answers], 'question.created_at': question.created_at} for question in self.questions],
             'posts': [ {'id': post.id, 'content' : post.content, 'comments': [comment.comment for comment in post.comments], 'created_at': post.created_at} for post in self.posts],
             'upvoted_posts': upvoted_posts,  # Add upvoted_posts to the dictionary
+            'downvotes_posts': downvoted_posts,
             'combined_array': combined_array
         }

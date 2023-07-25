@@ -26,7 +26,7 @@ class Post(db.Model):
             'user': self.user.to_dict(),
             'content': self.content,
             'comments': [{'id': comment.id, 'comment': comment.comment, 'user': comment.user.to_dict(), 'post_id': comment.post_id} for comment in self.comments],
-            'upvotes': [{'count': upvotes_count, 'user_id': upvote.user_id} for upvote in self.upvotes],
-            'downvotes': downvotes_count,
+            'upvotes': [{'user_id': upvote.user_id} for upvote in self.upvotes],
+            'downvotes': [{'user_id': downvote.user_id} for downvote in self.downvotes],
             'created_at': self.created_at
         }

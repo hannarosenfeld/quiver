@@ -2,6 +2,7 @@ const GET_ALL_POSTS = "post/GET_ALL_POSTS";
 const DELETE_POST = "post/DELETE_POST";
 const ADD_NEW_POST = "post/ADD_NEW_POST";
 const UPVOTE_POST = "post/UPVOTE_POST";
+const DOWNVOTE_POST = "post/DOWNVOTE_POST"
 
 const upvotePostAction = (post, isUpvoting) => ({
   type: UPVOTE_POST,
@@ -9,9 +10,15 @@ const upvotePostAction = (post, isUpvoting) => ({
   isUpvoting,
 });
 
+const downvotePostAction = (post, isDownvoting) => ({
+  type: DOWNVOTE_POST,
+  post,
+  isDownvoting,
+});
+
 const getAllPostsAction = (posts) => ({
   type: GET_ALL_POSTS,
-  posts, // Return the array of posts directly without wrapping in an object
+  posts, 
 });
 
 const deletePostAction = (postId) => ({
@@ -42,6 +49,29 @@ export const upvotePostThunk = (postId, isUpvoting) => async (dispatch) => {
     const updatedPost = await res.json();
     dispatch(upvotePostAction(updatedPost, isUpvoting));
     return updatedPost;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
+
+export const downvotePostThunk = (postId, isDownvoting) => async (dispatch) => {
+  const method = isDownvoting ? "PUT" : "DELETE";
+
+  const options = {
+    method,
+  };
+
+  if (method === "PUT") {
+    options.headers = { "Content-Type": "application/json" };
+  }
+
+  const res = await fetch(`/api/posts/${postId}/downvotes/`, options);
+
+  if (res.ok) {
+    const downdatedPost = await res.json();
+    dispatch(downvotePostAction(downdatedPost, isDownvoting));
+    return downdatedPost;
   } else {
     const err = await res.json();
     return err;
@@ -128,6 +158,21 @@ const postReducer = (state = initialState, action) => {
           return post;
         }),
       };
+      case DOWNVOTE_POST:
+        return {
+          ...state,
+          allPosts: state.allPosts.map((post) => {
+            if (post.id === action.post.id) {
+              return {
+                ...post,
+                downvotes: action.isDownvoting
+                  ? [...post.downvotes, { user_id: action.post.user.id }]
+                  : post.downvotes.filter((downvote) => downvote.user_id !== action.post.user.id),
+              };
+            }
+            return post;
+          }),
+        };
     case DELETE_POST:
       return {
         ...state,

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 
-import { getAllPostsThunk, upvotePostThunk } from "../../../store/post";
+import { getAllPostsThunk, upvotePostThunk, downvotePostThunk } from "../../../store/post";
 import { addNewCommentThunk } from "../../../store/comment";
 
 import OpenModalButton from "../../OpenModalButton";
@@ -22,6 +22,7 @@ function Post({ post }) {
   const [comment, setComment] = useState("");
   const [isTruncated, setIsTruncated] = useState(true);
   const [upvoted, setUpvoted] = useState(post.upvotes.some((upvote) => upvote.user_id === sessionUser?.id))
+  const [downvoted, setDownvoted] = useState(post.downvotes.some((downvote) => downvote.user_id === sessionUser?.id))
 
   // Function to toggle the truncation state
   const toggleTruncation = () => {
@@ -53,11 +54,40 @@ function Post({ post }) {
       const updatedPost = await dispatch(upvotePostThunk(post.id, false)); // Change the second argument to `false`
       await dispatch(getAllPostsThunk())
       setUpvoted(false)
+    } else if (downvoted && !hasUpvoted) {
+      const updatedUpvote = await dispatch(upvotePostThunk(post.id, true)); // add upvote
+      const updatedDownvote = await dispatch(downvotePostThunk(post.id, false)); // remove downvote
+      await dispatch(getAllPostsThunk())
+      setDownvoted(false)
+      setUpvoted(true)
     } else {
       // Add upvote
       const updatedPost = await dispatch(upvotePostThunk(post.id, true)); // Change the second argument to `true`
       await dispatch(getAllPostsThunk())
       setUpvoted(true)
+    }
+  };
+
+  const handleDownvote = async () => {
+    const hasDownvoted = post.downvotes.some((downvote) => downvote.user_id === sessionUser?.id);
+    console.log(hasDownvoted)
+    // Toggle downvoting/undo downvoting by clicking on downvote
+    if (hasDownvoted) {
+      // Remove downvote (undo downvoting)
+      const updatedPost = await dispatch(downvotePostThunk(post.id, false)); // Change the second argument to `false`
+      await dispatch(getAllPostsThunk())
+      setDownvoted(false)
+    } else if (upvoted && !hasDownvoted) {
+      const updatedUpvote = await dispatch(upvotePostThunk(post.id, false)); // undo upvote
+      const updatedDownvote = await dispatch(downvotePostThunk(post.id, true)); // add downvote
+      await dispatch(getAllPostsThunk())
+      setDownvoted(true)
+      setUpvoted(false)
+    } else {
+      // Add downvote
+      const updatedPost = await dispatch(downvotePostThunk(post.id, true)); // Change the second argument to `true`
+      await dispatch(getAllPostsThunk())
+      setDownvoted(true)
     }
   };
 
@@ -120,7 +150,7 @@ function Post({ post }) {
                 <i className="fa-solid fa-arrow-up"></i>
                 <span>Upvote</span>
               </div>
-              <div style={{ cursor: "pointer" }}>
+              <div onClick={handleDownvote} className={downvoted ? "downvoted" : ""} style={{ cursor: "pointer" }}>
                 <i className="fa-solid fa-arrow-down"></i>
               </div>
             </div>

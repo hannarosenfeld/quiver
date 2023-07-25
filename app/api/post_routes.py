@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Post, Comment, db, Upvote
+from app.models import Post, Comment, db, Upvote, Downvote
 
 from app.forms.post_form import PostForm
 from app.forms.comment_form import CommentForm
@@ -119,5 +119,36 @@ def handle_upvote(id):
                 return jsonify({'message': 'Upvote removed successfully'}), 200
             else:
                 return jsonify({'message': 'You have not upvoted this post'}), 400
+
+    return jsonify({'message': 'Post not found'}), 404
+
+@post_routes.route('/<int:id>/downvotes/', methods=["PUT", "DELETE"])
+@login_required
+def handle_downvote(id):
+    post = Post.query.get(id)
+
+    if post:
+        if request.method == "PUT":
+            print("🐳 request.method is put", post)
+            # Check if the user has already downvoted the post
+            if any(downvote.user_id == current_user.id for downvote in post.downvotes):
+                return jsonify({'message': 'You have already downvoted this post'}), 400
+
+            new_downvote = Downvote(user_id=current_user.id, post_id=post.id)
+            db.session.add(new_downvote)
+            db.session.commit()
+
+            return jsonify({'message': 'downvote added successfully'}), 201
+
+        elif request.method == "DELETE":
+            # Find the downvote associated with the current user and remove it
+            downvote_to_remove = next((downvote for downvote in post.downvotes if downvote.user_id == current_user.id), None)
+
+            if downvote_to_remove:
+                db.session.delete(downvote_to_remove)
+                db.session.commit()
+                return jsonify({'message': 'downvote removed successfully'}), 200
+            else:
+                return jsonify({'message': 'You have not downvoted this post'}), 400
 
     return jsonify({'message': 'Post not found'}), 404

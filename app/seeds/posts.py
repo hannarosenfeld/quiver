@@ -56,7 +56,8 @@ Noise music is not simply a wall of random noise; it is a carefully crafted soun
 
 The allure of noise music lies in its ability to defy traditional boundaries and expectations, pushing the boundaries of what is considered music. It invites us to question our preconceptions, to challenge our comfort zones, and to embrace the unexpected. Noise music is not for everyone, but for those who dare to delve into its enigmatic realm, it offers a captivating and transformative journey into the uncharted territories of sound.""",
         user_id=2,
-        created_at=day3.date()
+        created_at=day3.date(),
+        # upvotes=[{"user_id": 1}, {"user_id": 3}]
     )
     db.session.add(p1)
     db.session.add(p2)
