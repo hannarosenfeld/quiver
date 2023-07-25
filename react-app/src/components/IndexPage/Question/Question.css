@@ -1,16 +1,11 @@
-.homepage-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.question-wrapper {
+    padding: 10px;
+    min-height: 110px;
 }
 
-.question-wrapper {
-    padding: 1em;
-}
 .question-list-wrapper {
     width: 100%;
-    margin: 0auto;
+    margin: 0 auto;
     display: flex;
     align-items: center;
 }
@@ -32,7 +27,7 @@
     font-size: 0.8em;
     display: flex;
     gap: 0.5em;
-    margin-bottom: 1em;
+    margin-bottom: 10px;
 }
 
 .question-user-info .username {
@@ -47,7 +42,6 @@
 }
 
 .edit-question-container {
-    height: 2.5em;
     width: 100%;
 }
 

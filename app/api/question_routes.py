@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Question, Answer, db
+from app.models import Question, Answer, Upvote, Downvote, db
 from app.forms.question_form import QuestionForm
 from app.forms.answer_form import AnswerForm
 
@@ -123,3 +123,40 @@ def delete_answer(id, answer_id):
     db.session.delete(answer)
     db.session.commit()
     return {"message": "successful"}
+
+@question_routes.route('/<int:id>/upvotes/', methods=["GET"])
+def get_upvotes_for_answer(id):
+    answer = Answer.query.get(id)
+    if answer:
+        return jsonify({'upvotes': [upvote.to_dict() for upvote in answer.upvotes]})
+    return jsonify({'message': 'answer not found'}), 404
+
+@question_routes.route('/<int:id>/upvotes/', methods=["PUT", "DELETE"])
+@login_required
+def handle_upvote(id):
+    answer = Answer.query.get(id)
+
+    if answer:
+        if request.method == "PUT":
+            # Check if the user has already upvoted the answer
+            if any(upvote.user_id == current_user.id for upvote in answer.upvotes):
+                return jsonify({'message': 'You have already upvoted this answer'}), 400
+
+            new_upvote = Upvote(user_id=current_user.id, answer_id=answer.id)
+            db.session.add(new_upvote)
+            db.session.commit()
+
+            return jsonify({'message': 'Upvote added successfully'}), 201
+
+        elif request.method == "DELETE":
+            # Find the upvote associated with the current user and remove it
+            upvote_to_remove = next((upvote for upvote in answer.upvotes if upvote.user_id == current_user.id), None)
+
+            if upvote_to_remove:
+                db.session.delete(upvote_to_remove)
+                db.session.commit()
+                return jsonify({'message': 'Upvote removed successfully'}), 200
+            else:
+                return jsonify({'message': 'You have not upvoted this answer'}), 400
+
+    return jsonify({'message': 'answer not found'}), 404

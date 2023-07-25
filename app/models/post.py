@@ -18,8 +18,8 @@ class Post(db.Model):
     downvotes = db.relationship('Downvote', back_populates='post', cascade='all, delete-orphan')
 
     def to_dict(self):
-        upvotes_count = len(self.upvotes)
-        downvotes_count = len(self.downvotes)
+        # upvotes_count = len(self.upvotes)
+        # downvotes_count = len(self.downvotes)
 
         return {
             'id': self.id,

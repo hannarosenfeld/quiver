@@ -89,10 +89,12 @@ button {
     border: 1px solid var(--qwhite);
     display: flex;
     width: 133px;
+    height: 35px;
     border-radius: 1000px;
     padding: 0 10px;
     align-items: center;
     justify-content: space-between;
+    margin: 10px 0;
 }
 
 .upvotes-length {
@@ -111,6 +113,15 @@ button {
 
 .upvote {
     width: 80%;
+    font-size: 13px;
+}
+
+.upvoted {
+    color: rgb(86, 147, 214);
+}
+
+.downvoted {
+color: rgb(206, 128, 93);
 }
 
 .comment {

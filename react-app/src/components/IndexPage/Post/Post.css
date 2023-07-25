@@ -82,10 +82,3 @@
     max-height: none;
   }
   
-  .upvoted {
-    color: rgb(86, 147, 214);
-  }
-
-  .downvoted {
-    color: rgb(206, 128, 93);
-  }

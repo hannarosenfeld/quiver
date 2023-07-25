@@ -125,7 +125,7 @@ const initialState = {
   currentPost: {
     upvotes: [],
     downvotes: [],
-    posts: [], // Set the initial value of posts to an empty array
+    posts: [],
   },
   upvotedPosts: [],
   downvotedPosts: [],

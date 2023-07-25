@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import OpenModalButton from "../OpenModalButton";
-import EditQuestionModal from "../EditQuestionModal";
-import DeleteQuestionModal from "../DeleteQuestionModal";
+import OpenModalButton from "../../OpenModalButton";
+import EditQuestionModal from "../../EditQuestionModal";
+import DeleteQuestionModal from "../../DeleteQuestionModal";
 
 import "./Question.css";
 
@@ -29,7 +29,7 @@ function Question({ question }) {
   return (
     <div className="question-wrapper">
       {question.answer.length ? (
-        <div style={{ display: "flex", gap: "0.5em", marginBottom: "1em" }}>
+        <div style={{ display: "flex", gap: "10px", marginBottom: "15px"}}>
           <div
             className="profile-pic"
             style={{
@@ -72,6 +72,22 @@ function Question({ question }) {
       )}
 
       <div className="edit-question-container">
+          {/* UP AND DOWN VOTE */}
+          <div style={{ display: "flex", gap: "10px", alignItems: "center", justifyContent: "space-between"}}>
+            {question.answer.length > 0 && (
+            <div className="updown-vote">
+              <div className="upvote">
+                <i style={{fontSize: "initial"}}className="fa-solid fa-arrow-up"></i>
+                <span className="upvotes-text ">Upvote</span>
+              </div>
+              <div>
+                <i className="fa-solid fa-arrow-down"></i>
+              </div>
+            </div>
+            )}
+
+            {/* <i onClick={() => setToggle(!toggle)} className="comment fa-regular fa-comment"></i> */}
+              <div>
         {sessionUser.id === question.user.id ? (
           <OpenModalButton
             buttonText="Delete"
@@ -88,6 +104,8 @@ function Question({ question }) {
         ) : (
           ""
         )}
+          </div>
+      </div>
       </div>
     </div>
   );

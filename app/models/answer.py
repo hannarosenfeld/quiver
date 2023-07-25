@@ -25,5 +25,7 @@ class Answer(db.Model):
             'user': self.user.to_dict(),
             'question': self.question.to_dict(),
             'question_id': self.question_id,
+            'upvotes': [{'user_id': upvote.user_id} for upvote in self.upvotes],
+            'downvotes': [{'user_id': downvote.user_id} for downvote in self.downvotes],
             'created_at': self.created_at            
         }

@@ -98,7 +98,6 @@ def handle_upvote(id):
 
     if post:
         if request.method == "PUT":
-            print("🐳 request.method is put", post)
             # Check if the user has already upvoted the post
             if any(upvote.user_id == current_user.id for upvote in post.upvotes):
                 return jsonify({'message': 'You have already upvoted this post'}), 400
