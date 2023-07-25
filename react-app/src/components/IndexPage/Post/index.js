@@ -144,11 +144,13 @@ function Post({ post }) {
           }}
         >
           {/* UP AND DOWN VOTE */}
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "15px",alignItems: "center" }}>
             <div className="updown-vote">
               <div onClick={handleUpvote} className={upvoted ? "upvoted" : ''} style={{ cursor: "pointer" }}>
                 <i className="fa-solid fa-arrow-up"></i>
-                <span>Upvote</span>
+                <span className="upvotes-text">Upvote</span>
+                <span style={{margin: "0 -15px"}}>・</span>
+                <span className="upvotes-length">{post.upvotes.length}</span>
               </div>
               <div onClick={handleDownvote} className={downvoted ? "downvoted" : ""} style={{ cursor: "pointer" }}>
                 <i className="fa-solid fa-arrow-down"></i>

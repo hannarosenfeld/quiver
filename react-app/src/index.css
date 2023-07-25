@@ -88,18 +88,20 @@ button {
 .updown-vote {
     border: 1px solid var(--qwhite);
     display: flex;
-    gap: 5px;
-    width: 113px;
+    width: 133px;
     border-radius: 1000px;
     padding: 0 10px;
     align-items: center;
     justify-content: space-between;
 }
 
-.updown-vote span {
-    font-size: 13px;
+.upvotes-length {
     border-right: 1px solid var(--qwhite);
     padding-right: 9px;
+}
+
+.upvotes-length, .upvotes-text {
+    font-size: 13px;
 }
 
 .updown-vote div {
