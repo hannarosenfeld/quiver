@@ -27,9 +27,16 @@ const addNewPostAction = (post) => ({
 export const upvotePostThunk = (postId, isUpvoting) => async (dispatch) => {
   const method = isUpvoting ? "PUT" : "DELETE";
 
-  const res = await fetch(`/api/posts/${postId}/upvotes/`, {
+  const options = {
     method,
-  });
+  };
+
+  // Remove the "Content-Type" header for the DELETE request
+  if (method === "PUT") {
+    options.headers = { "Content-Type": "application/json" };
+  }
+
+  const res = await fetch(`/api/posts/${postId}/upvotes/`, options);
 
   if (res.ok) {
     const updatedPost = await res.json();

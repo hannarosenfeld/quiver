@@ -21,6 +21,7 @@ function Post({ post }) {
   const [toggle, setToggle] = useState(false);
   const [comment, setComment] = useState("");
   const [isTruncated, setIsTruncated] = useState(true);
+  const [upvoted, setUpvoted] = useState(post.upvotes.some((upvote) => upvote.user_id === sessionUser?.id))
 
   useEffect(() => {
     console.log("🐡 post: ", post);
@@ -49,13 +50,18 @@ function Post({ post }) {
 
   const handleUpvote = async () => {
     const hasUpvoted = post.upvotes.some((upvote) => upvote.user_id === sessionUser?.id);
+    console.log(hasUpvoted)
     // Toggle upvoting/undo upvoting by clicking on Upvote
     if (hasUpvoted) {
       // Remove upvote (undo upvoting)
       const updatedPost = await dispatch(upvotePostThunk(post.id, false)); // Change the second argument to `false`
+      await dispatch(getAllPostsThunk())
+      setUpvoted(false)
     } else {
       // Add upvote
       const updatedPost = await dispatch(upvotePostThunk(post.id, true)); // Change the second argument to `true`
+      await dispatch(getAllPostsThunk())
+      setUpvoted(true)
     }
   };
 
@@ -114,7 +120,7 @@ function Post({ post }) {
           {/* UP AND DOWN VOTE */}
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <div className="updown-vote">
-              <div onClick={handleUpvote} className="upvote" style={{ cursor: "pointer" }}>
+              <div onClick={handleUpvote} className={upvoted ? "upvoted" : ''} style={{ cursor: "pointer" }}>
                 <i className="fa-solid fa-arrow-up"></i>
                 <span>Upvote</span>
               </div>

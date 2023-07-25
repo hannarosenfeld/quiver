@@ -82,3 +82,6 @@
     max-height: none;
   }
   
+  .upvoted {
+    color: rgb(86, 147, 214);
+  }
