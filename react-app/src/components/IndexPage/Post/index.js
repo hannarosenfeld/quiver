@@ -47,7 +47,7 @@ function Post({ post }) {
 
   const handleUpvote = async () => {
     const hasUpvoted = post.upvotes.some((upvote) => upvote.user_id === sessionUser?.id);
-    console.log(hasUpvoted)
+
     // Toggle upvoting/undo upvoting by clicking on Upvote
     if (hasUpvoted) {
       // Remove upvote (undo upvoting)
@@ -70,7 +70,7 @@ function Post({ post }) {
 
   const handleDownvote = async () => {
     const hasDownvoted = post.downvotes.some((downvote) => downvote.user_id === sessionUser?.id);
-    console.log(hasDownvoted)
+
     // Toggle downvoting/undo downvoting by clicking on downvote
     if (hasDownvoted) {
       // Remove downvote (undo downvoting)

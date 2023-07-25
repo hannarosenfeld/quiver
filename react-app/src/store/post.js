@@ -106,12 +106,10 @@ export const deletePostThunk = (postId) => async (dispatch) => {
 };
 
 export const getAllPostsThunk = () => async (dispatch) => {
-  console.log("in thunk")
   const res = await fetch("/api/posts/");
 
   if (res.ok) {
     const data = await res.json();
-    // Assuming your response data is in the correct format { posts: [ ... ] }
     await dispatch(getAllPostsAction(data.posts));
     return data;
   } else {

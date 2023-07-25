@@ -46,8 +46,6 @@ function IndexPage() {
     sortedPostsAndQuestions[i].unique_id = i;
   }
 
-  console.log("questions", questions);
-
   return (
     <div className="index-page-wrapper">
       <div className="index-page">

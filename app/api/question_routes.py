@@ -84,6 +84,15 @@ def allAnswers(id):
 
     return answer_dict
 
+print("🐋 in router")
+@question_routes.route('/<int:id>/answers/<int:answerId>')
+def oneAnswer(id, answerId):
+    print("🌵 in route")
+    answer = Answer.query.filter(Answer.question_id == answerId).all()
+    print("🇬🇧 answer: ", answer)
+    return answer
+
+
 @question_routes.route('/<int:id>/answers/', methods=["POST"])
 def add_answer(id):
     form = AnswerForm()

@@ -1,4 +1,5 @@
 const GET_ALL_ANSWERS = "answer/GET_ALL_ANSWERS";
+const GET_ONE_ANSWER = "answer/GET_ONE_ANSWER";
 const ADD_NEW_ANSWER = "answer/ADD_NEW_ANSWER";
 const UPDATE_ANSWER = "answer/UPDATE_ANSWER";
 const DELETE_ANSWER = "answer/DELETE_ANSWER";
@@ -8,6 +9,11 @@ const DOWNVOTE_ANSWER = "answer/DOWNVOTE_ANSWER";
 const getAllAnswersAction = (answers) => ({
   type: GET_ALL_ANSWERS,
   answers,
+});
+
+const getOneAnswerAction = (answer) => ({
+  type: GET_ONE_ANSWER,
+  answer,
 });
 
 const addNewAnswerAction = (answer) => ({
@@ -36,6 +42,20 @@ const downvoteAnswerAction = (answer, isDownvoting) => ({
   answer,
   isDownvoting,
 });
+
+export const getOneAnswerThunk = (questionId, answerId) => async (dispatch) => {
+    const res = await fetch(`/api/questions/${questionId}/answers/${answerId}`);
+    console.log("👛 in thunk... question and answerids: ", questionId, answerId )
+    console.log("👛 in thunk...", res)
+    if (res.ok) {
+      const data = await res.json();
+      await dispatch(getOneAnswerAction(data));
+      return data;
+    } else {
+      const err = await res.json();
+      return err;
+    }
+  };
 
 export const deleteAnswerThunk = (questionId, answerId) => async (dispatch) => {
   const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/`, { method: "DELETE" });
@@ -160,6 +180,14 @@ const answerReducer = (state = initialState, action) => {
       return {
         ...state,
         answers: action.answers,
+      };
+    case GET_ONE_ANSWER:
+      return {
+        ...state,
+        currentAnswer: {
+          ...state.currentAnswer,
+          answer: action.answer,
+        },
       };
     case ADD_NEW_ANSWER:
       return {
