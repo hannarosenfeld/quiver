@@ -95,7 +95,6 @@ def get_upvotes_for_post(id):
 @login_required
 def handle_upvote(id):
     post = Post.query.get(id)
-    print("🦚 in post route", post)
 
     if post:
         if request.method == "PUT":
@@ -111,9 +110,6 @@ def handle_upvote(id):
             return jsonify({'message': 'Upvote added successfully'}), 201
 
         elif request.method == "DELETE":
-            print("🌸 in delete router")
-            print("🌸 post.upvotes", post.upvotes)
-
             # Find the upvote associated with the current user and remove it
             upvote_to_remove = next((upvote for upvote in post.upvotes if upvote.user_id == current_user.id), None)
 

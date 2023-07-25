@@ -15,7 +15,6 @@ function IndexPage() {
   const questions = Object.values(questionsObj);
   const posts = useSelector((state) => state.post.allPosts); // Use 'state.post.allPosts' directly
 
-  console.log("🐓 posts", posts);
   const postsAndQuestions = [...(posts || []), ...questions]; // Add a conditional check for posts
   const [loading, setLoading] = useState(true);
 

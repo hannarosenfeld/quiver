@@ -114,7 +114,6 @@ const postReducer = (state = initialState, action) => {
         allPosts: [...state.allPosts, action.post],
       };
     case UPVOTE_POST:
-      console.log("🐕 in reducer: ", state.allPosts)
       return {
         ...state,
         allPosts: state.allPosts.map((post) => {

@@ -23,10 +23,6 @@ function Post({ post }) {
   const [isTruncated, setIsTruncated] = useState(true);
   const [upvoted, setUpvoted] = useState(post.upvotes.some((upvote) => upvote.user_id === sessionUser?.id))
 
-  useEffect(() => {
-    console.log("🐡 post: ", post);
-  }, [post]);
-
   // Function to toggle the truncation state
   const toggleTruncation = () => {
     setIsTruncated(!isTruncated);
