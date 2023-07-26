@@ -31,11 +31,16 @@ const deleteAnswerAction = (answerId) => ({
   answerId,
 });
 
-const upvoteAnswerAction = (answer, isUpvoting) => ({
-  type: UPVOTE_ANSWER,
-  answer,
-  isUpvoting,
-});
+const upvoteAnswerAction = (answer, isUpvoting) => {
+  return {
+    type: UPVOTE_ANSWER,
+    payload: {
+      answer,
+      isUpvoting,
+    },
+  };
+};
+
 
 const downvoteAnswerAction = (answer, isDownvoting) => ({
   type: DOWNVOTE_ANSWER,
@@ -117,6 +122,7 @@ export const getAllAnswersThunk = (questionId) => async (dispatch) => {
   }
 };
 
+
 export const upvoteAnswerThunk = (questionId, answerId, isUpvoting) => async (dispatch) => {
   console.log("🌳 in upvote thunk")
   console.log("🌳 questionId", questionId)
@@ -173,14 +179,9 @@ export const downvoteAnswerThunk = (questionId, answerId, isDownvoting) => async
 };
 
 const initialState = {
-  answers: {},
-  currentAnswer: {
-    upvotes: [],
-    downvotes: [],
-    answer: {},
-  },
-  upvotedAnswers: [],
-  downvotedAnswers: [],
+  answers: [],
+  currentAnswer: null
+
 };
 
 const answerReducer = (state = initialState, action) => {
@@ -221,16 +222,21 @@ const answerReducer = (state = initialState, action) => {
         ...state,
         answers: updatedAnswers,
       };
-    case UPVOTE_ANSWER:
-      return {
-        ...state,
-        currentAnswer: {
-          ...state.currentAnswer,
-          upvotes: action.isUpvoting
-            ? [...state.currentAnswer?.upvotes, { user_id: action.answer.user.id }]
-            : state.currentAnswer.upvotes.filter((upvote) => upvote.user_id !== action.answer.user.id),
-        },
-      };
+      case UPVOTE_ANSWER:
+        // Make sure currentAnswer is set before accessing its properties
+        if (!state.currentAnswer) {
+          return state;
+        }
+  
+        return {
+          ...state,
+          currentAnswer: {
+            ...state.currentAnswer,
+            upvotes: action.isUpvoting
+              ? [...state.currentAnswer.upvotes, { user_id: action.answer?.user?.id }]
+              : state.currentAnswer.upvotes.filter((upvote) => upvote.user_id !== action.answer?.user?.id),
+          },
+        };
     case DOWNVOTE_ANSWER:
       return {
         ...state,

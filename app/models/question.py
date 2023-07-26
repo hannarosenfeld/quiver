@@ -19,6 +19,6 @@ class Question(db.Model):
             'id': self.id,
             'title': self.title,
             'user': self.user.to_dict(),
-            'answer': [{'id': answer.id, 'answer': answer.answer, 'user': answer.user.to_dict(), 'created_at': answer.created_at, } for answer in self.answers],
+            'answers': [{'id': answer.id, 'answer': answer.answer, 'user': answer.user.to_dict(), 'created_at': answer.created_at, 'upvotes': [{'user_id': upvote.user_id} for upvote in answer.upvotes]} for answer in self.answers],
             'created_at': self.created_at
         }

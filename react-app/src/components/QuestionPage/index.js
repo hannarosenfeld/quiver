@@ -60,7 +60,7 @@ function QuestionPage() {
 
                 <div>
                     <ul style={{display: "flex", flexDirection: "column-reverse"}}>
-                        {currentQ.answer.map(a => (
+                        {currentQ.answers.map(a => (
                             <li key={a.id} style={{
                                 marginTop: "1em",
                                 border: "1px solid var(--qborder)",

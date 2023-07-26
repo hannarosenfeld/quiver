@@ -27,9 +27,9 @@ def allQuestions():
     return {'questions': [question.to_dict() for question in questions]}
 
 
-@question_routes.route("/<string:title>", methods=["GET"])
-def get_question(title):
-    question = Question.query.get(title)
+@question_routes.route("/<int:id>", methods=["GET"])
+def get_question(id):
+    question = Question.query.get(id)
 
     return {'question': question.to_dict()}
 
