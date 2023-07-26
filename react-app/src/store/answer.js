@@ -118,6 +118,11 @@ export const getAllAnswersThunk = (questionId) => async (dispatch) => {
 };
 
 export const upvoteAnswerThunk = (questionId, answerId, isUpvoting) => async (dispatch) => {
+  console.log("🌳 in upvote thunk")
+  console.log("🌳 questionId", questionId)
+  console.log("🌳 answerId", answerId)
+  console.log("🌳 isUpVoting", isUpvoting)
+
   const method = isUpvoting ? "PUT" : "DELETE";
 
   const options = {
@@ -130,12 +135,16 @@ export const upvoteAnswerThunk = (questionId, answerId, isUpvoting) => async (di
 
   const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/upvotes/`, options);
 
+  console.log(res)
+
   if (res.ok) {
+    console.log("res: ", res)
     const updatedAnswer = await res.json();
     dispatch(upvoteAnswerAction(updatedAnswer, isUpvoting));
     return updatedAnswer;
   } else {
     const err = await res.json();
+    console.log("⛑️ error: ", err)
     return err;
   }
 };
@@ -218,7 +227,7 @@ const answerReducer = (state = initialState, action) => {
         currentAnswer: {
           ...state.currentAnswer,
           upvotes: action.isUpvoting
-            ? [...state.currentAnswer.upvotes, { user_id: action.answer.user.id }]
+            ? [...state.currentAnswer?.upvotes, { user_id: action.answer.user.id }]
             : state.currentAnswer.upvotes.filter((upvote) => upvote.user_id !== action.answer.user.id),
         },
       };

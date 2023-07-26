@@ -133,17 +133,18 @@ def delete_answer(id, answer_id):
     db.session.commit()
     return {"message": "successful"}
 
-@question_routes.route('/<int:id>/upvotes/', methods=["GET"])
-def get_upvotes_for_answer(id):
-    answer = Answer.query.get(id)
+@question_routes.route('/<int:id>/answers/<int:answerId>/upvotes/', methods=["GET"])
+def get_upvotes_for_answer(id, answerId):
+    answer = Answer.query.get(answerId)
     if answer:
-        return jsonify({'upvotes': [upvote.to_dict() for upvote in answer.upvotes]})
+        upvotes = [upvote.to_dict() for upvote in answer.upvotes]
+        return jsonify({'upvotes': upvotes})
     return jsonify({'message': 'answer not found'}), 404
 
-@question_routes.route('/<int:id>/upvotes/', methods=["PUT", "DELETE"])
+@question_routes.route('/<int:id>/answers/<int:answerId>/upvotes/', methods=["PUT", "DELETE"])
 @login_required
-def handle_upvote(id):
-    answer = Answer.query.get(id)
+def handle_upvote(id, answerId):
+    answer = Answer.query.get(answerId)
 
     if answer:
         if request.method == "PUT":
@@ -151,7 +152,7 @@ def handle_upvote(id):
             if any(upvote.user_id == current_user.id for upvote in answer.upvotes):
                 return jsonify({'message': 'You have already upvoted this answer'}), 400
 
-            new_upvote = Upvote(user_id=current_user.id, answer_id=answer.id)
+            new_upvote = Upvote(user_id=current_user.id, answer_id=answerId)
             db.session.add(new_upvote)
             db.session.commit()
 

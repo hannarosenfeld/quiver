@@ -15,20 +15,19 @@ function Question({ question }) {
   const contentRef = useRef(null);
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const answer = useSelector((state) => state.answer.currentAnswer);
+  const answer = dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id));
   const [isTruncated, setIsTruncated] = useState(true);
   const [toggle, setToggle] = useState(false);
-  // console.log("🐩 answer", answer)
-  const [upvoted, setUpvoted] = useState(answer.upvotes.some((upvote) => upvote.user_id === sessionUser?.id))
-  const [downvoted, setDownvoted] = useState(answer.downvotes.some((downvote) => downvote.user_id === sessionUser?.id))
+  console.log("🐩 answer", answer)
+  const [upvoted, setUpvoted] = useState(answer.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id))
+  const [downvoted, setDownvoted] = useState(answer.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id))
 
   console.log("🐳 question: ", question)
   useEffect(() => {
     if (question?.answer[0]?.id) {
-      dispatch(getOneAnswerThunk(question.id, answer.id));
+      dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id));
     } 
   }, [question])
-
 
   useEffect(() => {
     // Check if the contentRef is available
@@ -44,24 +43,27 @@ function Question({ question }) {
   };
 
   const handleUpvote = async () => {
-    const hasUpvoted = answer.upvotes.some((upvote) => upvote.user_id === sessionUser?.id);
+    const hasUpvoted = answer.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id);
     console.log(hasUpvoted)
     // Toggle upvoting/undo upvoting by clicking on Upvote
     if (hasUpvoted) {
       // Remove upvote (undo upvoting)
-      const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, answer.id, false));
-      // await dispatch(getAllAnswersThunk())
+      const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, question.answer[0]?.id, false));
+      console.log(updatedAnswer)
+       await dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id))
       setUpvoted(false)
     } else if (downvoted && !hasUpvoted) {
-      const updatedUpvote = await dispatch(upvoteAnswerThunk(question.id, answer.id, true)); // add upvote
+      const updatedUpvote = await dispatch(upvoteAnswerThunk(question.id, question.answer[0]?.id, true)); // add upvote
       // const updatedDownvote = await dispatch(downvoteAnswerThunk(answer.id, false)); // remove downvote
       // await dispatch(getAllPostsThunk())
       setDownvoted(false)
       setUpvoted(true)
     } else {
       // Add upvote
-      const updatedPost = await dispatch(upvoteAnswerThunk(question.id, answer?.id, true)); // Change the second argument to `true`
-      // await dispatch(getAllAnswersThunk())
+      const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, question.answer[0]?.id, true)); // Change the second argument to `true`
+      console.log(updatedAnswer)
+
+      await dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id))
       setUpvoted(true)
     }
   };

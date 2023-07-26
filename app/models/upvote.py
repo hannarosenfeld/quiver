@@ -21,5 +21,8 @@ class Upvote(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'post_id': self.post_id,
+            'comment_id': self.comment_id,
+            'answer_id': self.answer_id,
         }
