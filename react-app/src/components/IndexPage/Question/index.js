@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { upvoteAnswerAction, upvoteAnswerThunk, downvoteAnswerThunk, getOneAnswerThunk } from "../../../store/answer";
 import { getOneQuestionThunk } from "../../../store/question";
+import { getAllQuestionsThunk } from "../../../store/question";
 
 import OpenModalButton from "../../OpenModalButton";
 import EditQuestionModal from "../../EditQuestionModal";
@@ -25,24 +26,6 @@ function Question({ question }) {
   const [toggle, setToggle] = useState(false);
   const [upvoted, setUpvoted] = useState(question.answers[0]?.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id))
   const [downvoted, setDownvoted] = useState(question.answers[0]?.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id))
-  const [numUpvotes, setNumUpvotes] = useState(question.answers[0]?.upvotes?.length);
-
-  useEffect(() => {
-    // Check if the contentRef is available
-    if (contentRef.current) {
-      const contentElement = contentRef.current;
-      setIsTruncated(contentElement.scrollHeight > contentElement.clientHeight);
-    }
-  }, [contentRef]);
-
-  useEffect(() => {
-    // Update the numUpvotes state whenever upvoted changes
-    dispatch(getOneQuestionThunk(question.id));
-  }, [upvoted]);
-
-  useEffect(() => {
-    setNumUpvotes(question.answers[0]?.upvotes?.length);
-  }, [question])
 
   console.log("🐳 question: ", question)
   console.log("🌵 question.answers: ", question.answers)
@@ -64,11 +47,6 @@ function Question({ question }) {
     try {
       const answerId = question.answers[0]?.id;
 
-      if (!answerId) {
-        console.log("No answers available to upvote.");
-        return;
-      }
-
       if (upvoted) {
         // Remove upvote
         const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, answerId, !upvoted));
@@ -76,7 +54,9 @@ function Question({ question }) {
         // Update the upvoted state and numUpvotes based on the updatedAnswer received from the server
         if (updatedAnswer) {
           setUpvoted(!upvoted);
-          setNumUpvotes(updatedAnswer.upvotes.length);
+          dispatch(getAllQuestionsThunk())
+          dispatch(getOneQuestionThunk(question.id))
+
         }
       } else {
         // Add upvote
@@ -85,7 +65,8 @@ function Question({ question }) {
         // Update the upvoted state and numUpvotes based on the updatedAnswer received from the server
         if (updatedAnswer) {
           setUpvoted(!upvoted);
-          setNumUpvotes(updatedAnswer.upvotes.length);
+          dispatch(getAllQuestionsThunk())
+          dispatch(getOneQuestionThunk(question.id))
         }
       }
 
@@ -95,88 +76,6 @@ function Question({ question }) {
     }
   };
 
-  // const handleUpvote = async () => {
-  //   const hasUpvoted = question.answers[0]?.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id);
-  
-  //   console.log("🐡 hasUpvotes", hasUpvoted);
-    
-  //   // Toggle upvoting/undo upvoting by clicking on Upvote
-  //   if (hasUpvoted) {
-  //     // Remove upvote (undo upvoting)
-  //     const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, question.answers[0]?.id, false));
-  //     console.log(updatedAnswer);
-  //     await dispatch(getOneQuestionThunk(question.id))
-  //     // await dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id));
-  //     setUpvoted(false);
-  //   } else {
-  //     // Add upvote
-  //     // Add upvote
-  //     const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, question.answers[0]?.id, true));
-  //     console.log("🐖 updatedAnswer", updatedAnswer);
-
-  //     // Get the current answer data from the Redux store and include it in the action dispatch
-  //     const currentAnswer = getState().answer.currentAnswer;
-
-  //     // Dispatch the action with the currentAnswer data
-  //     await dispatch(upvoteAnswerAction(updatedAnswer, true, currentAnswer));
-
-  //     // await dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id));
-  //     setUpvoted(true);
-  //   }
-  // };
-  
-
-  // const handleUpvote = async () => {
-  //   const hasUpvoted = question.answers[0]?.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id);
-
-  //   console.log("🐡 hasUpvotes",hasUpvoted)
-  //   // Toggle upvoting/undo upvoting by clicking on Upvote
-  //   if (hasUpvoted) {
-  //     // Remove upvote (undo upvoting)
-  //     const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, question.answers[0]?.id, false));
-  //     console.log(updatedAnswer)
-  //     // await dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id))
-  //     setUpvoted(false)
-  //   } 
-  //   //else if (downvoted && !hasUpvoted) {
-  //   //   const updatedUpvote = await dispatch(upvoteAnswerThunk(question.id, question.answer[0]?.id, true)); // add upvote
-  //   //   // const updatedDownvote = await dispatch(downvoteAnswerThunk(answer.id, false)); // remove downvote
-  //   //   // await dispatch(getAllPostsThunk())
-  //   //   setDownvoted(false)
-  //   //   setUpvoted(true)
-  //   // } 
-  //   else {
-  //     // Add upvote
-  //     const updatedAnswer = await dispatch(upvoteAnswerThunk(question.id, question.answers[0]?.id, true)); // Change the second argument to `true`
-  //     console.log("🐖 updatedAnswer",updatedAnswer)
-
-  //    // await dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id))
-  //     setUpvoted(true)
-  //   }
-  // };
-
-  // const handleDownvote = async () => {
-  //   const hasDownvoted = question.answer[0].downvotes.some((upvote) => upvote.user_id === sessionUser?.id);
-  //   console.log(hasDownvoted)
-  //   // Toggle downvoting/undo downvoting by clicking on downvote
-  //   if (hasDownvoted) {
-  //     // Remove downvote (undo downvoting)
-  //     const updatedPost = await dispatch(downvotePostThunk(post.id, false)); // Change the second argument to `false`
-  //     await dispatch(getAllPostsThunk())
-  //     setDownvoted(false)
-  //   } else if (upvoted && !hasDownvoted) {
-  //     const updatedUpvote = await dispatch(upvotePostThunk(post.id, false)); // undo upvote
-  //     const updatedDownvote = await dispatch(downvotePostThunk(post.id, true)); // add downvote
-  //     await dispatch(getAllPostsThunk())
-  //     setDownvoted(true)
-  //     setUpvoted(false)
-  //   } else {
-  //     // Add downvote
-  //     const updatedPost = await dispatch(downvotePostThunk(post.id, true)); // Change the second argument to `true`
-  //     await dispatch(getAllPostsThunk())
-  //     setDownvoted(true)
-  //   }
-  // };
 
   return (
     <div className="question-wrapper">
@@ -232,7 +131,7 @@ function Question({ question }) {
                 <i style={{fontSize: "initial"}}className="fa-solid fa-arrow-up"></i>
                 <span className="upvotes-text ">Upvote</span>
                 <span style={{margin: "0 -15px"}}>・</span>
-                <span className="upvotes-length">{numUpvotes}</span>
+                <span className="upvotes-length">{question.answers[0].upvotes.length}</span>
               </div>
               <div>
                 <i className="fa-solid fa-arrow-down"></i>
