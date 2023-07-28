@@ -146,7 +146,7 @@ function Post({ post }) {
           {/* UP AND DOWN VOTE */}
           <div style={{ display: "flex", gap: "15px",alignItems: "center" }}>
             <div className="updown-vote">
-              <div onClick={handleUpvote} className={upvoted ? "upvoted" : ''} style={{ cursor: "pointer" }}>
+              <div onClick={handleUpvote} className={upvoted ? "upvoted" : ''} style={{ cursor: "pointer"}}>
                 <i className="fa-solid fa-arrow-up"></i>
                 <span className="upvotes-text">Upvote</span>
                 <span style={{margin: "0 -15px"}}>・</span>

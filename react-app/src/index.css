@@ -88,8 +88,8 @@ button {
 .updown-vote {
     border: 1px solid var(--qwhite);
     display: flex;
-    width: 133px;
-    height: 35px;
+    min-width: 133px;
+    height: 31px;
     border-radius: 1000px;
     padding: 0 10px;
     align-items: center;
@@ -128,3 +128,8 @@ color: rgb(206, 128, 93);
     cursor: pointer;
     margin: auto;
 }
+
+.updown-vote .fa-arrow-down {
+    padding-left: 10px;
+}
+
