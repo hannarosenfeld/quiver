@@ -222,31 +222,37 @@ const answerReducer = (state = initialState, action) => {
         ...state,
         answers: updatedAnswers,
       };
-      case UPVOTE_ANSWER:
-        // Make sure currentAnswer is set before accessing its properties
-        if (!state.currentAnswer) {
-          return state;
-        }
-  
-        return {
-          ...state,
-          currentAnswer: {
-            ...state.currentAnswer,
-            upvotes: action.isUpvoting
-              ? [...state.currentAnswer.upvotes, { user_id: action.answer?.user?.id }]
-              : state.currentAnswer.upvotes.filter((upvote) => upvote.user_id !== action.answer?.user?.id),
-          },
-        };
+    case UPVOTE_ANSWER:
+      // Make sure currentAnswer is set before accessing its properties
+      if (!state.currentAnswer) {
+        return state;
+      }
+
+      return {
+        ...state,
+        currentAnswer: {
+          ...state.currentAnswer,
+          upvotes: action.isUpvoting
+            ? [...state.currentAnswer.upvotes, { user_id: action.answer?.user?.id }]
+            : state.currentAnswer.upvotes.filter((upvote) => upvote.user_id !== action.answer?.user?.id),
+        },
+      };
     case DOWNVOTE_ANSWER:
+      // Make sure currentAnswer is set before accessing its properties
+      if (!state.currentAnswer) {
+        return state;
+      }
+    
       return {
         ...state,
         currentAnswer: {
           ...state.currentAnswer,
           downvotes: action.isDownvoting
-            ? [...state.currentAnswer.downvotes, { user_id: action.answer.user.id }]
-            : state.currentAnswer.downvotes.filter((downvote) => downvote.user_id !== action.answer.user.id),
+            ? [...state.currentAnswer.downvotes, { user_id: action.answer?.user?.id }]
+            : state.currentAnswer.downvotes.filter((downvote) => downvote.user_id !== action.answer?.user?.id),
         },
       };
+      
     default:
       return state;
   }

@@ -91,6 +91,7 @@ def get_upvotes_for_post(id):
         return jsonify({'upvotes': [upvote.to_dict() for upvote in post.upvotes]})
     return jsonify({'message': 'Post not found'}), 404
 
+
 @post_routes.route('/<int:id>/upvotes/', methods=["PUT", "DELETE"])
 @login_required
 def handle_upvote(id):
@@ -121,6 +122,7 @@ def handle_upvote(id):
 
     return jsonify({'message': 'Post not found'}), 404
 
+
 @post_routes.route('/<int:id>/downvotes/', methods=["PUT", "DELETE"])
 @login_required
 def handle_downvote(id):
@@ -128,7 +130,6 @@ def handle_downvote(id):
 
     if post:
         if request.method == "PUT":
-            print("🐳 request.method is put", post)
             # Check if the user has already downvoted the post
             if any(downvote.user_id == current_user.id for downvote in post.downvotes):
                 return jsonify({'message': 'You have already downvoted this post'}), 400

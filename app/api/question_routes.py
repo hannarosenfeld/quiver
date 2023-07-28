@@ -170,3 +170,34 @@ def handle_upvote(id, answerId):
                 return jsonify({'message': 'You have not upvoted this answer'}), 400
 
     return jsonify({'message': 'answer not found'}), 404
+
+
+@question_routes.route('/<int:id>/answers/<int:answerId>/downvotes/', methods=["PUT", "DELETE"])
+@login_required
+def handle_downvote(id, answerId):
+    answer = Answer.query.get(answerId)
+
+    if answer:
+        if request.method == "PUT":
+            # Check if the user has already downvoted the answer
+            if any(downvote.user_id == current_user.id for downvote in answer.downvotes):
+                return jsonify({'message': 'You have already downvoted this answer'}), 400
+
+            new_downvote = Downvote(user_id=current_user.id, answer_id=answerId)
+            db.session.add(new_downvote)
+            db.session.commit()
+
+            return jsonify({'message': 'Downvote added successfully'}), 201
+
+        elif request.method == "DELETE":
+            # Find the downvote associated with the current user and remove it
+            downvote_to_remove = next((downvote for downvote in answer.downvotes if downvote.user_id == current_user.id), None)
+
+            if downvote_to_remove:
+                db.session.delete(downvote_to_remove)
+                db.session.commit()
+                return jsonify({'message': 'Downvote removed successfully'}), 200
+            else:
+                return jsonify({'message': 'You have not downvoted this answer'}), 400
+
+    return jsonify({'message': 'Answer not found'}), 404
