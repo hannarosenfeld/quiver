@@ -177,7 +177,7 @@ function Question({ question }) {
                 <span style={{margin: "0 -15px"}}>・</span>
                 <span className="upvotes-length">{question.answers[0].upvotes.length}</span>
               </div>
-              <div onClick={handleDownvote} className={downvoted ? "downvoted" : ""}>
+              <div style={{cursor: "pointer"}} onClick={handleDownvote} className={downvoted ? "downvoted" : ""}>
                 <i className="fa-solid fa-arrow-down"></i>
               </div>
             </div>
