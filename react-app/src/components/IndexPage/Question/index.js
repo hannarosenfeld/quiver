@@ -124,7 +124,7 @@ function Question({ question }) {
   return (
     <div className="question-wrapper">
       {question.answers?.length ? (
-        <div style={{ display: "flex", gap: "10px", marginBottom: "15px"}}>
+        <NavLink to={`/profile/${question?.answers[0].user?.id}`} style={{ display: "flex", gap: "10px", marginBottom: "15px"}}>
           <div
             className="profile-pic"
             style={{
@@ -141,7 +141,7 @@ function Question({ question }) {
               ""
             )}
           </div>
-        </div>
+        </NavLink>
       ) : (
         ""
       )}
