@@ -3,6 +3,12 @@ const DELETE_POST = "post/DELETE_POST";
 const ADD_NEW_POST = "post/ADD_NEW_POST";
 const UPVOTE_POST = "post/UPVOTE_POST";
 const DOWNVOTE_POST = "post/DOWNVOTE_POST"
+const GET_ONE_POST = "post/GET_ONE_POST";
+
+const getOnePostAction = (post) => ({
+  type: GET_ONE_POST,
+  post,
+});
 
 const upvotePostAction = (post, isUpvoting) => ({
   type: UPVOTE_POST,
@@ -30,6 +36,21 @@ const addNewPostAction = (post) => ({
   type: ADD_NEW_POST,
   post,
 });
+
+
+export const getOnePostThunk = (postId) => async (dispatch) => {
+  const res = await fetch(`/api/posts/${postId}`);
+
+  if (res.ok) {
+    const data = await res.json();
+    await dispatch(getOnePostAction(data.post));
+    return data;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
+
 
 export const upvotePostThunk = (postId, isUpvoting) => async (dispatch) => {
   const method = isUpvoting ? "PUT" : "DELETE";
@@ -125,6 +146,7 @@ const initialState = {
     downvotes: [],
     posts: [],
   },
+  currentPost: null, // Add currentPost to hold the selected post
   upvotedPosts: [],
   downvotedPosts: [],
 };
@@ -135,6 +157,11 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         allPosts: action.posts,
+      };
+    case GET_ONE_POST:
+      return {
+        ...state,
+        currentPost: action.post,
       };
     case ADD_NEW_POST:
       return {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllPostsThunk, upvotePostThunk, downvotePostThunk } from "../../store/post"
+import { getAllPostsThunk, getOnePostThunk, upvotePostThunk, downvotePostThunk } from "../../store/post"
 
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
@@ -15,6 +15,7 @@ function UserPosts({ userPost, user }) {
     const [upvoted, setUpvoted] = useState(userPost?.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id))
     const [downvoted, setDownvoted] = useState(userPost?.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id))
     const [isTruncated, setIsTruncated] = useState(true);
+    const post = useSelector((state) => state.post.currentPost)
 
     // Function to toggle the truncation state
     const toggleTruncation = () => {
@@ -22,8 +23,9 @@ function UserPosts({ userPost, user }) {
     };
 
     useEffect(() => {
-        dispatch(getAllPostsThunk());
-      }, [dispatch]);
+        dispatch(getOnePostThunk(userPost.id))
+        console.log("🥯 post", post)
+      }, [post]);
 
 
     console.log("🍊 posts: ", userPost)
@@ -112,7 +114,7 @@ function UserPosts({ userPost, user }) {
                             <i className="fa-solid fa-arrow-up"></i>
                             <span className="upvotes-text">Upvote</span>
                             <span style={{margin: "0 -15px"}}>・</span>
-                            <span className="upvotes-length">{userPost?.upvotes?.length}</span>
+                            <span className="upvotes-length">{post?.upvotes?.length}</span>
                         </div>
                         <div onClick={handleDownvote} className={downvoted ? "downvoted" : ""} style={{ cursor: "pointer" }}>
                             <i className="fa-solid fa-arrow-down"></i>

@@ -25,6 +25,15 @@ def allPosts():
     posts = Post.query.all()
     return {'posts': [post.to_dict() for post in posts]}
 
+# Get ONE post
+@post_routes.route('/<int:id>', methods=["GET"])
+def get_one_post(id):
+    post = Post.query.get(id)
+    if post:
+        return jsonify({'post': post.to_dict()})
+    return jsonify({'message': 'Post not found'}), 404
+
+
 @post_routes.route("/<int:id>", methods=["DELETE"])
 @login_required
 def delete_post(id):

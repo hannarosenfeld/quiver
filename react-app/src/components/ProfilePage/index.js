@@ -16,6 +16,8 @@ function ProfilePage() {
     userId = parseInt(userId)
     const user = useSelector((state) => state.user.users.currentUser); // Access the user data using the userId
 
+    console.log("🥒", user)
+
     const [profileActive, setProfileActive] = useState(true);
     const [questionsActive, setQuestionsActive] = useState(false);
     const [answersActive, setAnswersActive] = useState(false);
