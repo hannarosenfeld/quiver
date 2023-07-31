@@ -50,8 +50,7 @@ const downvoteAnswerAction = (answer, isDownvoting) => ({
 
 export const getOneAnswerThunk = (questionId, answerId) => async (dispatch) => {
     const res = await fetch(`/api/questions/${questionId}/answers/${answerId}`);
-    console.log("👛 in thunk... question and answerids: ", questionId, answerId )
-    console.log("👛 in thunk...", res)
+
     if (res.ok) {
       const data = await res.json();
       await dispatch(getOneAnswerAction(data));
@@ -124,11 +123,6 @@ export const getAllAnswersThunk = (questionId) => async (dispatch) => {
 
 
 export const upvoteAnswerThunk = (questionId, answerId, isUpvoting) => async (dispatch) => {
-  console.log("🌳 in upvote thunk")
-  console.log("🌳 questionId", questionId)
-  console.log("🌳 answerId", answerId)
-  console.log("🌳 isUpVoting", isUpvoting)
-
   const method = isUpvoting ? "PUT" : "DELETE";
 
   const options = {
@@ -141,16 +135,12 @@ export const upvoteAnswerThunk = (questionId, answerId, isUpvoting) => async (di
 
   const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/upvotes/`, options);
 
-  console.log(res)
-
   if (res.ok) {
-    console.log("res: ", res)
     const updatedAnswer = await res.json();
     dispatch(upvoteAnswerAction(updatedAnswer, isUpvoting));
     return updatedAnswer;
   } else {
     const err = await res.json();
-    console.log("⛑️ error: ", err)
     return err;
   }
 };

@@ -96,7 +96,7 @@ function Post({ post }) {
       <div className="post-wrapper">
         {post.content && post.content.length > 0 ? (
           <div style={{ display: "flex", gap: "0.5em", marginBottom: "1em" }}>
-            {/* NavLink to user profile */}
+            {/* NavLink to user */}
             <NavLink to={`/profile/${post.user?.id}`}>
               <div
                 className="profile-pic"

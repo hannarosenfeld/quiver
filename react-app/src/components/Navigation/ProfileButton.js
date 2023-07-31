@@ -13,7 +13,6 @@ function ProfileButton({ user }) {
   const ulRef = useRef();
   const history = useHistory();
 
-  console.log("💥 user", user.id)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -33,13 +32,6 @@ function ProfileButton({ user }) {
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
-
-
-  // const visitUserProfile = (user) => {
-  //   history.push(`/profile/${user?.id}`)
-  //   console.log("⭐️", user?.id)
-  //   setShowMenu(false)
-  // }
 
   const handleLogout = (e) => {
     e.preventDefault();

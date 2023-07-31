@@ -133,3 +133,20 @@ color: rgb(206, 128, 93);
     padding-left: 10px;
 }
 
+.user-profile-more-link {
+    background: var(--qblack);
+    color: rgb(86, 147, 214);
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: var(--qblack) -16px 0px 14px 6px !important;
+    float: right;
+    opacity: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 2px 3.3px 0;
+}
+
+.post-content {
+
+}

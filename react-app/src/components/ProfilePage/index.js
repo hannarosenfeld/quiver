@@ -8,13 +8,13 @@ import UserQuestions from "./UserQuestions";
 import UserAnswers from "./UserAnswers"
 import UserPosts from "./UserPosts"
 
+
 function ProfilePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     let { userId } = useParams(); // Get the userId from the URL
     userId = parseInt(userId)
-    console.log("userId", userId) // returns undefined
-    const user = useSelector((state) => state.user.users.currentUser); // Access the user data using the userId\
+    const user = useSelector((state) => state.user.users.currentUser); // Access the user data using the userId
 
     const [profileActive, setProfileActive] = useState(true);
     const [questionsActive, setQuestionsActive] = useState(false);
@@ -24,6 +24,7 @@ function ProfilePage() {
     const [active, setActive] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     let activityArray = [];
+
     useEffect(() => {
         if (profilePic) {
             const formData = new FormData();
@@ -56,15 +57,6 @@ function ProfilePage() {
       return <div>Loading...</div>;
     }
 
-    // useEffect(() => {
-    //     const x = dispatch(getUserThunk(userId))
-    //     console.log(x)
-    // }, [])
-
-    // useEffect(()=>{
-    //     console.log("🌧️ user", user, userId)
-    // },[user])
-
     const handleMouseOver = (e) => {
     setActive(true);
     };
@@ -73,12 +65,7 @@ function ProfilePage() {
     setActive(false);
     };
 
-    // useEffect(() => {
-    //     dispatch(getUserThunk(sessionUser?.id));
-    // }, [dispatch, sessionUser.id]);
-
-    return (
-        
+    return (    
     <div className="wrapper">
         <div className="user-profile-container">
         {/* left section */}
@@ -165,6 +152,7 @@ function ProfilePage() {
                             setAnswersActive(false)
                             setProfileActive(true)
                         }}
+                        key="profile"
                     >Profile</li>
                     <li 
                         className={answersActive ? "panel-item-active" : ''}
@@ -174,6 +162,7 @@ function ProfilePage() {
                             setPostsActive(false)
                             setAnswersActive(true)
                         }}
+                        key="answers"
                     ><span>{user?.answers.length}</span> Answers</li>
                     <li 
                         className={questionsActive ? "panel-item-active" : ''}
@@ -183,6 +172,7 @@ function ProfilePage() {
                             setPostsActive(false)
                             setQuestionsActive(true)}
                         }
+                        key="questions"
                     ><span>{user?.questions.length}</span> Questions</li>
                     <li 
                         className={postsActive ? "panel-item-active" : ''}
@@ -192,6 +182,7 @@ function ProfilePage() {
                             setQuestionsActive(false)
                             setPostsActive(true)
                             }}
+                        key="posts"
                     ><span>{user?.posts.length}</span> Posts</li>
                 </ul>
                 </div>
@@ -214,7 +205,8 @@ function ProfilePage() {
                                 )}
                                 {element.type === "post" && (
                                     <li key={element.unique_id}>
-                                    <UserPosts post={element} user={user} />
+                                        {console.log("🍐", element)}
+                                    <UserPosts userPost={element} user={user} />
                                     </li>
                                 )}
                                 </div>
@@ -247,7 +239,7 @@ function ProfilePage() {
                         {user?.posts.length > 0 && postsActive && (
                             <ul>
                                 {user.posts.map(post => (
-                                    <li key={post.id}><UserPosts post={post} user={user} /></li>
+                                    <li key={post.id}><UserPosts userPost={post} user={user} /></li>
                                 ))}
                             </ul>
                         )}

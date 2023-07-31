@@ -80,7 +80,6 @@ function Question({ question }) {
   };
 
   const handleDownvote = async () => {
-    console.log("⛑️")
     try {
       const answerId = question.answers[0]?.id;
 
