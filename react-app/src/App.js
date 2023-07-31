@@ -6,7 +6,6 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import IndexPage from "./components/IndexPage";
-// import AskQuestion from "./components/IndexPage/AskQuestion"
 import QuestionPage from "./components/QuestionPage"
 import ProfilePage from "./components/ProfilePage";
 import Footer from "./components/Footer"
@@ -26,27 +25,25 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/">
-              {sessionUser ? (
-                <>
+            {sessionUser ? (
+              <>
                 <Navigation isLoaded={isLoaded} />
-                {/* <AskQuestion user={sessionUser} /> */}
                 <IndexPage />
-                <Footer/>
-                </>
-               ) : (
-                  <Redirect to="/login" />
-                )
-              }
+                <Footer />
+              </>
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
           <Route path="/questions/:questionId">
-              <Navigation isLoaded={isLoaded} />
-              <QuestionPage />
+            <Navigation isLoaded={isLoaded} />
+            <QuestionPage />
           </Route>
-          <Route path="/profile/:userName">
-              <Navigation isLoaded={isLoaded} />
-              <ProfilePage />
+          <Route path="/profile/:userId">
+            <Navigation isLoaded={isLoaded} />
+            <ProfilePage />
           </Route>
-          <Route path="/login" >
+          <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">

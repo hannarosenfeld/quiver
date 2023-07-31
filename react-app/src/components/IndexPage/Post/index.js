@@ -96,14 +96,17 @@ function Post({ post }) {
       <div className="post-wrapper">
         {post.content && post.content.length > 0 ? (
           <div style={{ display: "flex", gap: "0.5em", marginBottom: "1em" }}>
-            <div
-              className="profile-pic"
-              style={{
-                backgroundImage: `url(${post.user?.profile_pic})`,
-                backgroundSize: "40px",
-                backgroundPosition: "center",
-              }}
-            ></div>
+            {/* NavLink to user profile */}
+            <NavLink to={`/profile/${post.user?.id}`}>
+              <div
+                className="profile-pic"
+                style={{
+                  backgroundImage: `url(${post.user?.profile_pic})`,
+                  backgroundSize: "40px",
+                  backgroundPosition: "center",
+                }}
+              ></div>
+            </NavLink>
             <div style={{ fontSize: "0.8em", display: "flex", flexDirection: "column" }}>
               <span style={{ fontWeight: "bold" }}>{post.user?.username}</span>
               <span>{postDate}</span>

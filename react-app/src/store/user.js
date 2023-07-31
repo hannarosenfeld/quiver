@@ -15,6 +15,7 @@ export const getUserThunk = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}`)
     if (res.ok) {
         const data = await res.json()
+        console.log("🌕 res in thunk", data)
         await dispatch(getUserAction(data))
         return data
     } else {
@@ -45,17 +46,20 @@ const initialState = {
       userId: null,
       profilePicture: '',
     },
+    currentUser: {}
   };
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_USER:
         // Handle the GET_USER action to update the user profile in state
+        console.log("🌈 In Reducer ", action.user.userId )
             return {
                 ...state,
                 users: {
                 ...state.users,
                 [action.user.userId]: action.user, // Assuming the user object contains userId and other profile data
+                currentUser: action.user
             },
         };
         case CHANGE_PROFILE_PIC:

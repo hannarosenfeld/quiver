@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfilePicThunk, getUserThunk } from "../../store/user";
+import { useParams } from "react-router-dom"; // Import useParams
 
 import "./ProfilePage.css";
 import UserQuestions from "./UserQuestions";
@@ -10,14 +11,59 @@ import UserPosts from "./UserPosts"
 function ProfilePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    const user = useSelector((state) => state.user.users.undefined);
+    let { userId } = useParams(); // Get the userId from the URL
+    userId = parseInt(userId)
+    console.log("userId", userId) // returns undefined
+    const user = useSelector((state) => state.user.users.currentUser); // Access the user data using the userId\
+
     const [profileActive, setProfileActive] = useState(true);
     const [questionsActive, setQuestionsActive] = useState(false);
     const [answersActive, setAnswersActive] = useState(false);
     const [postsActive, setPostsActive] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [active, setActive] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     let activityArray = [];
+    useEffect(() => {
+        if (profilePic) {
+            const formData = new FormData();
+            formData.append("profile_pic", profilePic);
+    
+            dispatch(changeProfilePicThunk(userId, formData))
+            .then((updatedProfilePic) => {
+                setProfilePic(null);
+                dispatch(getUserThunk(userId)); // Re-fetch user data to get updated profile picture
+            })
+            .catch((error) => {
+                // Handle any error from the API call if needed
+                console.error("Error updating profile picture:", error);
+            });
+        }
+        }, [dispatch, profilePic, sessionUser.id]);
+
+    useEffect(() => {
+      dispatch(getUserThunk(userId))
+        .then((data) => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.error("Error fetching user data:", error);
+        });
+    }, [dispatch, userId]);
+  
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    // useEffect(() => {
+    //     const x = dispatch(getUserThunk(userId))
+    //     console.log(x)
+    // }, [])
+
+    // useEffect(()=>{
+    //     console.log("🌧️ user", user, userId)
+    // },[user])
 
     const handleMouseOver = (e) => {
     setActive(true);
@@ -27,26 +73,9 @@ function ProfilePage() {
     setActive(false);
     };
 
-    useEffect(() => {
-        dispatch(getUserThunk(sessionUser?.id));
-    }, [dispatch, sessionUser.id]);
-
-    useEffect(() => {
-    if (profilePic) {
-        const formData = new FormData();
-        formData.append("profile_pic", profilePic);
-
-        dispatch(changeProfilePicThunk(sessionUser.id, formData))
-        .then((updatedProfilePic) => {
-            setProfilePic(null);
-            dispatch(getUserThunk(sessionUser.id)); // Re-fetch user data to get updated profile picture
-        })
-        .catch((error) => {
-            // Handle any error from the API call if needed
-            console.error("Error updating profile picture:", error);
-        });
-    }
-    }, [dispatch, profilePic, sessionUser.id]);
+    // useEffect(() => {
+    //     dispatch(getUserThunk(sessionUser?.id));
+    // }, [dispatch, sessionUser.id]);
 
     return (
         
@@ -62,7 +91,7 @@ function ProfilePage() {
                     onMouseOut={handleMouseOut}
                     style={{
                         backgroundImage: user?.profile_pic
-                        ? `url(${user.profile_pic})`
+                        ? `url(${user?.profile_pic})`
                         : "initial",
                         backgroundSize: "150px",
                         backgroundPosition: "center",
