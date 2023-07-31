@@ -39,7 +39,7 @@ function ProfilePage() {
                 console.error("Error updating profile picture:", error);
             });
         }
-        }, [dispatch, profilePic, sessionUser.id]);
+        }, [dispatch, profilePic, userId]);
 
     useEffect(() => {
       dispatch(getUserThunk(userId))
