@@ -24,57 +24,54 @@ function UserPosts({ userPost, user }) {
 
     useEffect(() => {
         dispatch(getOnePostThunk(userPost.id))
-        console.log("🥯 post", post)
-      }, [post]);
+      }, []);
 
 
     console.log("🍊 posts: ", userPost)
 
     const handleUpvote = async () => {
-        const hasUpvoted = userPost?.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id);
-    
-        // Toggle upvoting/undo upvoting by clicking on Upvote
-        if (hasUpvoted) {
-          // Remove upvote (undo upvoting)
-          const updatedPost = await dispatch(upvotePostThunk(userPost.id, false)); // Change the second argument to `false`
-          await dispatch(getAllPostsThunk())
-          setUpvoted(false)
-        } else if (downvoted && !hasUpvoted) {
-          const updatedUpvote = await dispatch(upvotePostThunk(userPost.id, true)); // add upvote
-          const updatedDownvote = await dispatch(downvotePostThunk(userPost.id, false)); // remove downvote
-          await dispatch(getAllPostsThunk())
-          setDownvoted(false)
-          setUpvoted(true)
-        } else {
-          // Add upvote
-          const updatedPost = await dispatch(upvotePostThunk(userPost.id, true)); // Change the second argument to `true`
-          await dispatch(getAllPostsThunk())
-          setUpvoted(true)
-        }
-      };
-    
-      const handleDownvote = async () => {
-        const hasDownvoted = userPost?.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id);
-    
-        // Toggle downvoting/undo downvoting by clicking on downvote
-        if (hasDownvoted) {
-          // Remove downvote (undo downvoting)
-          const updatedPost = await dispatch(downvotePostThunk(userPost.id, false)); // Change the second argument to `false`
-          await dispatch(getAllPostsThunk())
-          setDownvoted(false)
-        } else if (upvoted && !hasDownvoted) {
-          const updatedUpvote = await dispatch(upvotePostThunk(userPost.id, false)); // undo upvote
-          const updatedDownvote = await dispatch(downvotePostThunk(userPost.id, true)); // add downvote
-          await dispatch(getAllPostsThunk())
-          setDownvoted(true)
-          setUpvoted(false)
-        } else {
-          // Add downvote
-          const updatedPost = await dispatch(downvotePostThunk(userPost.id, true)); // Change the second argument to `true`
-          await dispatch(getAllPostsThunk())
-          setDownvoted(true)
-        }
-      };
+      const hasUpvoted = userPost?.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id);
+  
+      if (hasUpvoted) {
+        // Remove upvote (undo upvoting)
+        const updatedPost = await dispatch(upvotePostThunk(userPost.id, false));
+        dispatch(getOnePostThunk(userPost.id)); // Fetch updated post data
+        setUpvoted(false);
+      } else if (downvoted && !hasUpvoted) {
+        const updatedUpvote = await dispatch(upvotePostThunk(userPost.id, true));
+        const updatedDownvote = await dispatch(downvotePostThunk(userPost.id, false));
+        dispatch(getOnePostThunk(userPost.id)); // Fetch updated post data
+        setDownvoted(false);
+        setUpvoted(true);
+      } else {
+        // Add upvote
+        const updatedPost = await dispatch(upvotePostThunk(userPost.id, true));
+        dispatch(getOnePostThunk(userPost.id)); // Fetch updated post data
+        setUpvoted(true);
+      }
+    };
+  
+    const handleDownvote = async () => {
+      const hasDownvoted = userPost?.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id);
+  
+      if (hasDownvoted) {
+        // Remove downvote (undo downvoting)
+        const updatedPost = await dispatch(downvotePostThunk(userPost.id, false));
+        dispatch(getOnePostThunk(userPost.id)); // Fetch updated post data
+        setDownvoted(false);
+      } else if (upvoted && !hasDownvoted) {
+        const updatedUpvote = await dispatch(upvotePostThunk(userPost.id, false));
+        const updatedDownvote = await dispatch(downvotePostThunk(userPost.id, true));
+        dispatch(getOnePostThunk(userPost.id)); // Fetch updated post data
+        setDownvoted(true);
+        setUpvoted(false);
+      } else {
+        // Add downvote
+        const updatedPost = await dispatch(downvotePostThunk(userPost.id, true));
+        dispatch(getOnePostThunk(userPost.id)); // Fetch updated post data
+        setDownvoted(true);
+      }
+    };
 
     return (
         <div className="user-post">
