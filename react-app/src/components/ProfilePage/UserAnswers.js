@@ -38,6 +38,7 @@ function UserAnswers({ answer, user }) {
     const a = useSelector((state) => state.answer)
     console.log("🍇 answer", answer)
     const antwort = useSelector(state => state.answer)
+    const sessionUser = useSelector((state) => state.session.user);
 
 
     return (
@@ -58,10 +59,12 @@ function UserAnswers({ answer, user }) {
             <h4><NavLink to={`/questions/${answer.question_id}`}>{answer.question.title}</NavLink></h4>
             <div style={{padding: "10px 0", fontSize: "14px"}}>{answer.answer}</div>
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                { answer.user.id !== sessionUser.id && (
                 <div className="updown-vote" style={{height: "30px"}}>
                     <div className="upvote"><i class="fa-solid fa-arrow-up"></i><span style={{marginLeft: "5px"}}>Upvote</span></div>
                     <div><i class="fa-solid fa-arrow-down"></i></div>
                 </div>
+                )}
                 <div style={{display: "flex", gap: "10px"}}>
                     <OpenModalButton 
                         buttonText="Edit"

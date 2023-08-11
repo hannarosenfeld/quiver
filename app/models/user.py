@@ -45,12 +45,16 @@ class User(db.Model, UserMixin):
                 'title': answer.question.title,
                 'created_at': answer.question.created_at
             }
+            user_info = {
+                'id': answer.user.id
+            }
             answers.append({
                 'type': 'answer',
                 'id': answer.id,
                 'answer': answer.answer,
                 'created_at': answer.created_at,
-                'question': question_info
+                'question': question_info,
+                'user': user_info
             })
 
         # Combine posts, questions, and answers into a single list
