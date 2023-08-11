@@ -16,7 +16,7 @@ def seed_users():
     user4 = User(
         username='ColinRobinson', email='jane.smith@example.com', password='password', profile_pic='https://static.wikia.nocookie.net/whatwedointheshadows/images/8/86/Colin_Robinson_Profile_S1.jpg')
     user5 = User(
-        username='MichaelJohnson', email='michael.johnson@example.com', password='password', profile_pic='https://as1.ftcdn.net/v2/jpg/04/08/88/76/1000_F_408887642_kFN8YIqu8AjlRx3bRgvoGvlUGOVF6y0h.jpg')
+        username='ZakBagans', email='michael.johnson@example.com', password='password', profile_pic='https://us1-prod-images.disco-api.com/2021/10/29/b09e6c01-b043-32f5-b51d-fdbadf1cc902.jpeg')
     user6 = User(
         username='Laszlo', email='emily.brown@example.com', password='password', profile_pic='https://static.wikia.nocookie.net/whatwedointheshadows/images/3/38/Laszlo_Profile_S3.jpg')
     user7 = User(

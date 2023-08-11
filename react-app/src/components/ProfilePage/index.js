@@ -12,11 +12,9 @@ import UserPosts from "./UserPosts"
 function ProfilePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    let { userId } = useParams(); // Get the userId from the URL
+    let { userId } = useParams();
     userId = parseInt(userId)
-    const user = useSelector((state) => state.user.users.currentUser); // Access the user data using the userId
-
-    console.log("🥒", user)
+    const user = useSelector((state) => state.user.users.currentUser);
 
     const [profileActive, setProfileActive] = useState(true);
     const [questionsActive, setQuestionsActive] = useState(false);
@@ -26,6 +24,7 @@ function ProfilePage() {
     const [active, setActive] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     let activityArray = [];
+
 
     useEffect(() => {
         if (profilePic) {
@@ -70,7 +69,6 @@ function ProfilePage() {
     return (    
     <div className="wrapper">
         <div className="user-profile-container">
-        {/* left section */}
             <div className="profile-activity-section">
                 {/* profile picture, user info */}
                 <div className="user-profile-header">
@@ -207,7 +205,6 @@ function ProfilePage() {
                                 )}
                                 {element.type === "post" && (
                                     <li key={element.unique_id}>
-                                        {console.log("🍐", element)}
                                     <UserPosts userPost={element} user={user} />
                                     </li>
                                 )}

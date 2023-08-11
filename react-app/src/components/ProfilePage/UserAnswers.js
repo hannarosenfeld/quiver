@@ -1,18 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import OpenModalButton from "../OpenModalButton";
 import EditAnswerModal from "../EditAnswerModal";
 import { getAllQuestionsThunk } from "../../store/question"
-import { deleteAnswerThunk, getAllAnswersThunk } from "../../store/answer"
-
+import { deleteAnswerThunk, getAllAnswersThunk, getOneAnswerThunk } from "../../store/answer"
 
 
 function DeleteUserAnswerModal({ answerId, questionId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-
+    
     useEffect(() => {
         dispatch(getAllAnswersThunk(questionId))
     }, [dispatch])
@@ -33,9 +32,13 @@ function DeleteUserAnswerModal({ answerId, questionId }) {
     )
 }
 
-
 function UserAnswers({ answer, user }) {
+    const dispatch = useDispatch();
     const answerDate = answer.created_at.split(' ').slice(0,4).join(' ');
+    const a = useSelector((state) => state.answer)
+    console.log("🍇 answer", answer)
+    const antwort = useSelector(state => state.answer)
+
 
     return (
         <div className="user-answer">
@@ -52,7 +55,7 @@ function UserAnswers({ answer, user }) {
                     <span>{answerDate}</span>
                 </div>
             </div>
-            <h4><NavLink to={`/questions/${answer.question_id}`}>{answer.question_title}</NavLink></h4>
+            <h4><NavLink to={`/questions/${answer.question_id}`}>{answer.question.title}</NavLink></h4>
             <div style={{padding: "10px 0", fontSize: "14px"}}>{answer.answer}</div>
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
                 <div className="updown-vote" style={{height: "30px"}}>

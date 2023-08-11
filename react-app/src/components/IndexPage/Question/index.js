@@ -18,8 +18,6 @@ function Question({ question }) {
   const contentRef = useRef(null);
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  // TODO: debug this:
-  // const answer = dispatch(getOneAnswerThunk(question.id, question.answer[0]?.id)); // this won't work yet
 
   const [isTruncated, setIsTruncated] = useState(true);
   const [toggle, setToggle] = useState(false);

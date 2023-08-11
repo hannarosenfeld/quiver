@@ -38,7 +38,20 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         posts = [{'type': 'post','id': post.id, 'content': post.content, 'created_at': post.created_at} for post in self.posts]
         questions = [{'type': 'question','id': question.id, 'title': question.title, 'created_at': question.created_at} for question in self.questions]
-        answers = [{'type': 'answer','id': answer.id, 'answer': answer.answer, 'created_at': answer.created_at} for answer in self.answers]
+        answers = []
+        for answer in self.answers:
+            question_info = {
+                'id': answer.question.id,
+                'title': answer.question.title,
+                'created_at': answer.question.created_at
+            }
+            answers.append({
+                'type': 'answer',
+                'id': answer.id,
+                'answer': answer.answer,
+                'created_at': answer.created_at,
+                'question': question_info
+            })
 
         # Combine posts, questions, and answers into a single list
         combined_array = list(chain(posts, questions, answers))
