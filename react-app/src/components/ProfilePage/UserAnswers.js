@@ -56,10 +56,10 @@ function UserAnswers({ answer, user }) {
                     <span>{answerDate}</span>
                 </div>
             </div>
-            <h4><NavLink to={`/questions/${answer.question_id}`}>{answer.question.title}</NavLink></h4>
+            <h4><NavLink to={`/questions/${answer.question_id}`}>{answer.question?.title}</NavLink></h4>
             <div style={{padding: "10px 0", fontSize: "14px"}}>{answer.answer}</div>
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                { answer.user.id !== sessionUser.id && (
+                { answer.user?.id !== sessionUser.id && (
                 <div className="updown-vote" style={{height: "30px"}}>
                     <div className="upvote"><i class="fa-solid fa-arrow-up"></i><span style={{marginLeft: "5px"}}>Upvote</span></div>
                     <div><i class="fa-solid fa-arrow-down"></i></div>

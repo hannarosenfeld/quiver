@@ -106,7 +106,7 @@ function UserPosts({ userPost, user }) {
             <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
                 {/* UP AND DOWN VOTE */}
                 <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
-                  {userPost.user.id !== sessionUser.id &&(
+                  {userPost?.user?.id !== sessionUser.id &&(
                     <div className="updown-vote">
                         <div onClick={handleUpvote} className={upvoted ? "upvoted" : ''} style={{ cursor: "pointer"}}>
                             <i className="fa-solid fa-arrow-up"></i>
