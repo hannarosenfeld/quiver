@@ -6,12 +6,13 @@ import OpenModalButton from "../OpenModalButton";
 import EditAnswerModal from "../EditAnswerModal";
 import { getAllQuestionsThunk } from "../../store/question"
 import { deleteAnswerThunk, getAllAnswersThunk, getOneAnswerThunk } from "../../store/answer"
+import { upvoteAnswerThunk, downvoteAnswerThunk } from "../../store/answer";
 
 
 function DeleteUserAnswerModal({ answerId, questionId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    
+
     useEffect(() => {
         dispatch(getAllAnswersThunk(questionId))
     }, [dispatch])
@@ -36,10 +37,59 @@ function UserAnswers({ answer, user }) {
     const dispatch = useDispatch();
     const answerDate = answer.created_at.split(' ').slice(0,4).join(' ');
     const a = useSelector((state) => state.answer)
-    console.log("🍇 answer", answer)
     const antwort = useSelector(state => state.answer)
     const sessionUser = useSelector((state) => state.session.user);
+    const [upvoted, setUpvoted] = useState(answer.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id))
+    const [downvoted, setDownvoted] = useState(answer.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id))
 
+
+    console.log("🍇 answer", answer)
+
+    const handleUpvote = async () => {
+        const hasUpvoted = answer.upvotes?.some((upvote) => upvote.user_id === sessionUser?.id);
+    
+        // Toggle upvoting/undo upvoting by clicking on Upvote
+        if (hasUpvoted) {
+          // Remove upvote (undo upvoting)
+          const updatedAnswer = await dispatch(upvoteAnswerThunk(answer.id, false)); // Change the second argument to `false`
+          await dispatch(getAllAnswersThunk())
+          setUpvoted(false)
+        } else if (downvoted && !hasUpvoted) {
+          const updatedUpvote = await dispatch(upvoteAnswerThunk(answer.id, true)); // add upvote
+          const updatedDownvote = await dispatch(downvoteAnswerThunk(answer.id, false)); // remove downvote
+          await dispatch(getAllAnswersThunk())
+          setDownvoted(false)
+          setUpvoted(true)
+        } else {
+          // Add upvote
+          const updatedAnswer = await dispatch(upvoteAnswerThunk(answer.id, true)); // Change the second argument to `true`
+          await dispatch(getAllAnswersThunk())
+          setUpvoted(true)
+        }
+      };
+    
+      const handleDownvote = async () => {
+        const hasDownvoted = answer.downvotes?.some((downvote) => downvote.user_id === sessionUser?.id);
+    
+        // Toggle downvoting/undo downvoting by clicking on downvote
+        if (hasDownvoted) {
+          // Remove downvote (undo downvoting)
+          const updatedAnswer= await dispatch(downvoteAnswerThunk(answer.id, false)); // Change the second argument to `false`
+          await dispatch(getAllAnswersThunk())
+          setDownvoted(false)
+        } else if (upvoted && !hasDownvoted) {
+          const updatedUpvote = await dispatch(upvoteAnswerThunk(answer.id, false)); // undo upvote
+          const updatedDownvote = await dispatch(downvoteAnswerThunk(answer.id, true)); // add downvote
+          await dispatch(getAllAnswersThunk())
+          setDownvoted(true)
+          setUpvoted(false)
+        } else {
+          // Add downvote
+          const updatedAnswer= await dispatch(downvoteAnswerThunk(answer.id, true)); // Change the second argument to `true`
+          await dispatch(getAllAnswersThunk())
+          setDownvoted(true)
+        }
+      };
 
     return (
         <div className="user-answer">
@@ -60,9 +110,19 @@ function UserAnswers({ answer, user }) {
             <div style={{padding: "10px 0", fontSize: "14px"}}>{answer.answer}</div>
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
                 { answer.user?.id !== sessionUser.id && (
-                <div className="updown-vote" style={{height: "30px"}}>
-                    <div className="upvote"><i class="fa-solid fa-arrow-up"></i><span style={{marginLeft: "5px"}}>Upvote</span></div>
-                    <div><i class="fa-solid fa-arrow-down"></i></div>
+                <div className="updown-vote">
+                    <div onClick={handleUpvote} className={upvoted ? "upvoted" : ""} style={{cursor: "pointer"}}>
+                        <i class="fa-solid fa-arrow-up"></i>
+                        <span style={{marginLeft: "5px", fontSize: "12px"}}>Upvote</span>
+                        <span>・</span>
+                        <span className="upvotes-length">{answer.upvotes.length}</span>
+                    </div>
+                    <div 
+                        onClick={handleDownvote} className={downvoted ? "downvoted" : ""}
+                        style={{cursor: "pointer"}}
+                    >
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </div>
                 </div>
                 )}
                 <div style={{display: "flex", gap: "10px"}}>

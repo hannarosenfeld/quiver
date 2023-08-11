@@ -38,16 +38,20 @@ function App() {
           <Route path="/questions/:questionId">
             <Navigation isLoaded={isLoaded} />
             <QuestionPage />
+            <Footer />
           </Route>
           <Route path="/profile/:userId">
             <Navigation isLoaded={isLoaded} />
             <ProfilePage />
+            <Footer />
           </Route>
           <Route path="/login">
             <LoginFormPage />
+            <Footer />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+            <Footer />
           </Route>
         </Switch>
       )}

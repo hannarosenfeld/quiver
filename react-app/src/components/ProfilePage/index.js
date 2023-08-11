@@ -67,7 +67,7 @@ function ProfilePage() {
     };
 
     return (    
-    <div className="wrapper">
+    <div className="wrapper" style={{minHeight: "77vh"}}>
         <div className="user-profile-container">
             <div className="profile-activity-section">
                 {/* profile picture, user info */}

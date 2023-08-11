@@ -5,7 +5,7 @@ import EditQuestionModal from "../EditQuestionModal";
 import DeleteQuestionModal from "../DeleteQuestionModal"
 
 function UserQuestions({ question }) {
-
+        
     return (
         <div className="user-question">
             <h4><NavLink to={`/questions/${question.id}`}>{question.title}</NavLink></h4>

@@ -61,13 +61,15 @@ class User(db.Model, UserMixin):
             user_info = {
                 'id': answer.user.id
             }
+            upvote_info = [{'user_id': upvote.user_id} for upvote in answer.upvotes]
             answers.append({
                 'type': 'answer',
                 'id': answer.id,
                 'answer': answer.answer,
                 'created_at': answer.created_at,
                 'question': question_info,
-                'user': user_info
+                'user': user_info,
+                'upvotes': upvote_info
             })
 
         # Combine posts, questions, and answers into a single list
