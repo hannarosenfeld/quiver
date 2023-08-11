@@ -36,8 +36,21 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
     
     def to_dict(self):
-        posts = [{'type': 'post','id': post.id, 'content': post.content, 'created_at': post.created_at} for post in self.posts]
         questions = [{'type': 'question','id': question.id, 'title': question.title, 'created_at': question.created_at} for question in self.questions]
+        posts = []
+        for post in self.posts:
+            user_info = {
+                'id': post.user.id,
+                'username': post.user.username,
+                'email': post.user.email
+            }
+            posts.append({
+                'type': 'post',
+                'id': post.id,
+                'content': post.content,
+                'created_at': post.created_at,
+                'user': user_info
+            })
         answers = []
         for answer in self.answers:
             question_info = {

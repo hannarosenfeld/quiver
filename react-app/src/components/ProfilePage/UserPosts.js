@@ -106,6 +106,7 @@ function UserPosts({ userPost, user }) {
             <div className="edit-question-container" style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1em"}}>
                 {/* UP AND DOWN VOTE */}
                 <div style={{display: "flex", gap: "10px", alignItems: "center"}}>
+                  {userPost.user.id !== sessionUser.id &&(
                     <div className="updown-vote">
                         <div onClick={handleUpvote} className={upvoted ? "upvoted" : ''} style={{ cursor: "pointer"}}>
                             <i className="fa-solid fa-arrow-up"></i>
@@ -117,6 +118,7 @@ function UserPosts({ userPost, user }) {
                             <i className="fa-solid fa-arrow-down"></i>
                         </div>
                     </div>
+                    )}
                 <i onClick={() => setToggle(!toggle)} className="comment fa-regular fa-comment"></i>
                 </div> <OpenModalButton
                     buttonText="Delete"
