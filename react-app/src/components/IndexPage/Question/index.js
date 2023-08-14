@@ -181,23 +181,23 @@ function Question({ question }) {
             )}
 
             {/* <i onClick={() => setToggle(!toggle)} className="comment fa-regular fa-comment"></i> */}
-              <div>
-        {sessionUser.id === question.user.id ? (
-          <OpenModalButton
-            buttonText="Delete"
-            modalComponent={<DeleteQuestionModal question={question} />}
-          />
-        ) : (
-          ""
-        )}
-        {sessionUser.id === question.user.id ? (
-          <OpenModalButton
-            buttonText="Edit"
-            modalComponent={<EditQuestionModal question={question} />}
-          />
-        ) : (
-          ""
-        )}
+          <div>
+              {sessionUser.id === question.user.id ? (
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={<DeleteQuestionModal question={question} />}
+                />
+              ) : (
+                ""
+              )}
+              {sessionUser.id === question.user.id ? (
+                <OpenModalButton
+                  buttonText="Edit"
+                  modalComponent={<EditQuestionModal question={question} />}
+                />
+              ) : (
+                ""
+              )}
           </div>
       </div>
       </div>
