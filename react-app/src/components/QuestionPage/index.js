@@ -60,7 +60,7 @@ function QuestionPage() {
 
                 <div>
                     <ul style={{display: "flex", flexDirection: "column-reverse"}}>
-                        {currentQ.answer.map(a => (
+                        {currentQ.answers.map(a => (
                             <li key={a.id} style={{
                                 marginTop: "1em",
                                 border: "1px solid var(--qborder)",
@@ -74,9 +74,9 @@ function QuestionPage() {
                                             backgroundPosition: "center"
                                         }}>
                                     </div>
-                                    <div style={{fontSize: "0.8em", fontWeight: "600"}}>
-                                        <span>{a.user.username}</span>
-                                        <span>{a.created_at}</span>
+                                    <div style={{fontSize: "13px", display: "flex", flexDirection: "column"}}>
+                                        <span style={{fontWeight: "600"}}>{a.user.username}</span>
+                                        <span>{a.created_at.split(" ").slice(0, 4).join(" ")}</span>
                                     </div>
                                 </div>
                                 <div style={{marginTop: "0.5em",fontSize: "0.9em", whiteSpace: "pre-wrap"}}>{a.answer}</div>

@@ -29,8 +29,8 @@ const getOneQuestionAction = question => ({
     question
 })
 
-export const getOneQuestionThunk = (questionTitle) => async (dispatch) => {
-    const res = await fetch(`/api/questions/${questionTitle}`)
+export const getOneQuestionThunk = (questionId) => async (dispatch) => {
+    const res = await fetch(`/api/questions/${questionId}`)
 
     if (res.ok) {
         const data = await res.json()
@@ -41,6 +41,7 @@ export const getOneQuestionThunk = (questionTitle) => async (dispatch) => {
         return err
     }
 }
+
 
 export const getAllQuestionsThunk = () => async (dispatch) => {
     const res = await fetch("/api/questions/")

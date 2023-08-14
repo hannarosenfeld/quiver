@@ -14,12 +14,19 @@ class Post(db.Model):
 
     user = db.relationship('User', back_populates='posts')
     comments = db.relationship('Comment', back_populates='post', cascade="all, delete-orphan")
+    upvotes = db.relationship('Upvote', back_populates='post', cascade='all, delete-orphan')
+    downvotes = db.relationship('Downvote', back_populates='post', cascade='all, delete-orphan')
 
     def to_dict(self):
+        # upvotes_count = len(self.upvotes)
+        # downvotes_count = len(self.downvotes)
+
         return {
             'id': self.id,
             'user': self.user.to_dict(),
             'content': self.content,
             'comments': [{'id': comment.id, 'comment': comment.comment, 'user': comment.user.to_dict(), 'post_id': comment.post_id} for comment in self.comments],
+            'upvotes': [{'user_id': upvote.user_id} for upvote in self.upvotes],
+            'downvotes': [{'user_id': downvote.user_id} for downvote in self.downvotes],
             'created_at': self.created_at
         }

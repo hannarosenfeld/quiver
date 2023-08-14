@@ -1,4 +1,4 @@
-from app.models import db, Answer, environment, SCHEMA
+from app.models import db, Answer, environment, SCHEMA, Upvote
 from sqlalchemy.sql import text
 from datetime import datetime
 
@@ -8,6 +8,11 @@ day3 = datetime.strptime('2023-06-20', '%Y-%m-%d')
 day4 = datetime.strptime('2023-07-28', '%Y-%m-%d')
 day5 = datetime.strptime('2023-08-11', '%Y-%m-%d')
 day6 = datetime.strptime('2023-07-10', '%Y-%m-%d')
+
+def add_upvotes(answer, user_ids):
+    upvotes = [Upvote(user_id=user_id, answer=answer) for user_id in user_ids]
+    db.session.bulk_save_objects(upvotes)
+    db.session.commit()
 
 # Adds a demo user, you can add other users here if you want
 def seed_answers():
@@ -74,6 +79,14 @@ So, dim the lights, put on your headphones, and prepare for a rollercoaster of f
     db.session.add(a8)
     db.session.add(a9)
     db.session.commit()
+
+    add_upvotes(a1, [1, 3, 5, 7, 9]) 
+    add_upvotes(a3, [2, 4, 6, 8]) 
+    add_upvotes(a5, [1, 3, 5, 7, 9, 11, 13, 15]) 
+    add_upvotes(a6, [2, 4, 6, 8, 10, 12, 14, 16]) 
+    add_upvotes(a7, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) 
+    add_upvotes(a8, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) 
+    add_upvotes(a9, [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) 
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't

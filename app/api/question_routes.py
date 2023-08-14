@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Question, Answer, db
+from app.models import Question, Answer, Upvote, Downvote, db
 from app.forms.question_form import QuestionForm
 from app.forms.answer_form import AnswerForm
 
@@ -27,9 +27,9 @@ def allQuestions():
     return {'questions': [question.to_dict() for question in questions]}
 
 
-@question_routes.route("/<string:title>", methods=["GET"])
-def get_question(title):
-    question = Question.query.get(title)
+@question_routes.route("/<int:id>", methods=["GET"])
+def get_question(id):
+    question = Question.query.get(id)
 
     return {'question': question.to_dict()}
 
@@ -84,6 +84,15 @@ def allAnswers(id):
 
     return answer_dict
 
+print("🐋 in router")
+@question_routes.route('/<int:id>/answers/<int:answerId>')
+def oneAnswer(id, answerId):
+    print("🌵 in route")
+    answer = Answer.query.filter(Answer.question_id == answerId).all()
+    print("🇬🇧 answer: ", answer)
+    return answer
+
+
 @question_routes.route('/<int:id>/answers/', methods=["POST"])
 def add_answer(id):
     form = AnswerForm()
@@ -123,3 +132,72 @@ def delete_answer(id, answer_id):
     db.session.delete(answer)
     db.session.commit()
     return {"message": "successful"}
+
+@question_routes.route('/<int:id>/answers/<int:answerId>/upvotes/', methods=["GET"])
+def get_upvotes_for_answer(id, answerId):
+    answer = Answer.query.get(answerId)
+    if answer:
+        upvotes = [upvote.to_dict() for upvote in answer.upvotes]
+        return jsonify({'upvotes': upvotes})
+    return jsonify({'message': 'answer not found'}), 404
+
+@question_routes.route('/<int:id>/answers/<int:answerId>/upvotes/', methods=["PUT", "DELETE"])
+@login_required
+def handle_upvote(id, answerId):
+    answer = Answer.query.get(answerId)
+
+    if answer:
+        if request.method == "PUT":
+            # Check if the user has already upvoted the answer
+            if any(upvote.user_id == current_user.id for upvote in answer.upvotes):
+                return jsonify({'message': 'You have already upvoted this answer'}), 400
+
+            new_upvote = Upvote(user_id=current_user.id, answer_id=answerId)
+            db.session.add(new_upvote)
+            db.session.commit()
+
+            return jsonify({'message': 'Upvote added successfully'}), 201
+
+        elif request.method == "DELETE":
+            # Find the upvote associated with the current user and remove it
+            upvote_to_remove = next((upvote for upvote in answer.upvotes if upvote.user_id == current_user.id), None)
+
+            if upvote_to_remove:
+                db.session.delete(upvote_to_remove)
+                db.session.commit()
+                return jsonify({'message': 'Upvote removed successfully'}), 200
+            else:
+                return jsonify({'message': 'You have not upvoted this answer'}), 400
+
+    return jsonify({'message': 'answer not found'}), 404
+
+
+@question_routes.route('/<int:id>/answers/<int:answerId>/downvotes/', methods=["PUT", "DELETE"])
+@login_required
+def handle_downvote(id, answerId):
+    answer = Answer.query.get(answerId)
+
+    if answer:
+        if request.method == "PUT":
+            # Check if the user has already downvoted the answer
+            if any(downvote.user_id == current_user.id for downvote in answer.downvotes):
+                return jsonify({'message': 'You have already downvoted this answer'}), 400
+
+            new_downvote = Downvote(user_id=current_user.id, answer_id=answerId)
+            db.session.add(new_downvote)
+            db.session.commit()
+
+            return jsonify({'message': 'Downvote added successfully'}), 201
+
+        elif request.method == "DELETE":
+            # Find the downvote associated with the current user and remove it
+            downvote_to_remove = next((downvote for downvote in answer.downvotes if downvote.user_id == current_user.id), None)
+
+            if downvote_to_remove:
+                db.session.delete(downvote_to_remove)
+                db.session.commit()
+                return jsonify({'message': 'Downvote removed successfully'}), 200
+            else:
+                return jsonify({'message': 'You have not downvoted this answer'}), 400
+
+    return jsonify({'message': 'Answer not found'}), 404

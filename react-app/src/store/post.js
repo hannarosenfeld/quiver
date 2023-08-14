@@ -1,79 +1,212 @@
-const GET_ALL_POSTS = "post/GET_ALL_POSTS"
-const DELETE_POST = "post/DELETE_POST"
-const ADD_NEW_POST = "post/ADD_NEW_POST"
+const GET_ALL_POSTS = "post/GET_ALL_POSTS";
+const DELETE_POST = "post/DELETE_POST";
+const ADD_NEW_POST = "post/ADD_NEW_POST";
+const UPVOTE_POST = "post/UPVOTE_POST";
+const DOWNVOTE_POST = "post/DOWNVOTE_POST"
+const GET_ONE_POST = "post/GET_ONE_POST";
+
+const getOnePostAction = (post) => ({
+  type: GET_ONE_POST,
+  post,
+});
+
+const upvotePostAction = (post, isUpvoting) => ({
+  type: UPVOTE_POST,
+  post,
+  isUpvoting,
+});
+
+const downvotePostAction = (post, isDownvoting) => ({
+  type: DOWNVOTE_POST,
+  post,
+  isDownvoting,
+});
 
 const getAllPostsAction = (posts) => ({
-    type: GET_ALL_POSTS,
-    posts
-})
+  type: GET_ALL_POSTS,
+  posts, 
+});
 
-const deletePostAction = postId => ({
-    type: DELETE_POST,
-    postId
-})
+const deletePostAction = (postId) => ({
+  type: DELETE_POST,
+  postId,
+});
 
 const addNewPostAction = (post) => ({
-    type: ADD_NEW_POST,
-    post
-})
+  type: ADD_NEW_POST,
+  post,
+});
+
+
+export const getOnePostThunk = (postId) => async (dispatch) => {
+  const res = await fetch(`/api/posts/${postId}`);
+
+  if (res.ok) {
+    const data = await res.json();
+    await dispatch(getOnePostAction(data.post));
+    return data;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
+
+
+export const upvotePostThunk = (postId, isUpvoting) => async (dispatch) => {
+  const method = isUpvoting ? "PUT" : "DELETE";
+
+  const options = {
+    method,
+  };
+
+  // Remove the "Content-Type" header for the DELETE request
+  if (method === "PUT") {
+    options.headers = { "Content-Type": "application/json" };
+  }
+
+  const res = await fetch(`/api/posts/${postId}/upvotes/`, options);
+
+  if (res.ok) {
+    const updatedPost = await res.json();
+    dispatch(upvotePostAction(updatedPost, isUpvoting));
+    return updatedPost;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
+
+export const downvotePostThunk = (postId, isDownvoting) => async (dispatch) => {
+  const method = isDownvoting ? "PUT" : "DELETE";
+
+  const options = {
+    method,
+  };
+
+  if (method === "PUT") {
+    options.headers = { "Content-Type": "application/json" };
+  }
+
+  const res = await fetch(`/api/posts/${postId}/downvotes/`, options);
+
+  if (res.ok) {
+    const downdatedPost = await res.json();
+    dispatch(downvotePostAction(downdatedPost, isDownvoting));
+    return downdatedPost;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
 
 export const addNewPostThunk = (post) => async (dispatch) => {
-    const res = await fetch("/api/posts/", {
-        method: "POST",
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify(post)
-    })
-    if (res.ok) {
-        const newPost = await res.json()
-        dispatch(addNewPostAction(newPost))
-        return newPost
-    } else {
-        const err = await res.json()
+  const res = await fetch("/api/posts/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(post),
+  });
+  if (res.ok) {
+    const newPost = await res.json();
+    dispatch(addNewPostAction(newPost));
+    return newPost;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
 
-        return err
-    }
-}
-
-export const deletePostThunk = (postId) => async dispatch => {
-    const res = await fetch(`/api/posts/${postId}`, {method: "DELETE"})
-    if (res.ok) {
-        const successMessage = await res.json();
-        dispatch(deletePostAction(postId))
-        return successMessage;
-    } else {
-        const err = await res.json();
-        return err;
-    }
-}
+export const deletePostThunk = (postId) => async (dispatch) => {
+  const res = await fetch(`/api/posts/${postId}`, { method: "DELETE" });
+  if (res.ok) {
+    await res.json(); // Don't need to return anything here since we're just dispatching an action
+    dispatch(deletePostAction(postId));
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
 
 export const getAllPostsThunk = () => async (dispatch) => {
-    const res = await fetch("/api/posts/")
+  const res = await fetch("/api/posts/");
 
-    if (res.ok) {
-        const data = await res.json()
-        await dispatch(getAllPostsAction(data))
-        return data
-    } else {
-        const err = await res.json()
-        return err
-    }
-}
+  if (res.ok) {
+    const data = await res.json();
+    await dispatch(getAllPostsAction(data.posts));
+    return data;
+  } else {
+    const err = await res.json();
+    return err;
+  }
+};
 
-const initialState = { allPosts: {}, post: { posts: [] }, currentPost: {}};
+const initialState = {
+  allPosts: [],
+  currentPost: {
+    upvotes: [],
+    downvotes: [],
+    posts: [],
+  },
+  currentPost: null, // Add currentPost to hold the selected post
+  upvotedPosts: [],
+  downvotedPosts: [],
+};
 
 const postReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case GET_ALL_POSTS:
-            const postState = {...state, allPosts: {...state.allPosts}}
-            postState.post = action.posts
-            return postState;
-        case ADD_NEW_POST:
-            const createState = {...state, allPosts: {...state.allPosts}, currentPost: {} }
-            createState.currentPost = action.post
-            return createState            
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case GET_ALL_POSTS:
+      return {
+        ...state,
+        allPosts: action.posts,
+      };
+    case GET_ONE_POST:
+      return {
+        ...state,
+        currentPost: action.post,
+      };
+    case ADD_NEW_POST:
+      return {
+        ...state,
+        allPosts: [...state.allPosts, action.post],
+      };
+    case UPVOTE_POST:
+      return {
+        ...state,
+        allPosts: state.allPosts.map((post) => {
+          if (post.id === action.post.id) {
+            return {
+              ...post,
+              upvotes: action.isUpvoting
+                ? [...post.upvotes, { user_id: action.post.user.id }]
+                : post.upvotes.filter((upvote) => upvote.user_id !== action.post.user.id),
+            };
+          }
+          return post;
+        }),
+      };
+      case DOWNVOTE_POST:
+        return {
+          ...state,
+          allPosts: state.allPosts.map((post) => {
+            if (post.id === action.post.id) {
+              return {
+                ...post,
+                downvotes: action.isDownvoting
+                  ? [...post.downvotes, { user_id: action.post.user.id }]
+                  : post.downvotes.filter((downvote) => downvote.user_id !== action.post.user.id),
+              };
+            }
+            return post;
+          }),
+        };
+    case DELETE_POST:
+      return {
+        ...state,
+        allPosts: state.allPosts.filter((post) => post.id !== action.postId),
+      };
+    default:
+      return state;
+  }
+};
+
 
 export default postReducer;

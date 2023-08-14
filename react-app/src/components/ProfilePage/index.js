@@ -1,23 +1,62 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfilePicThunk, getUserThunk } from "../../store/user";
+import { useParams } from "react-router-dom"; // Import useParams
 
 import "./ProfilePage.css";
 import UserQuestions from "./UserQuestions";
 import UserAnswers from "./UserAnswers"
 import UserPosts from "./UserPosts"
 
+
 function ProfilePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    const user = useSelector((state) => state.user.users.undefined);
+    let { userId } = useParams();
+    userId = parseInt(userId)
+    const user = useSelector((state) => state.user.users.currentUser);
+
     const [profileActive, setProfileActive] = useState(true);
     const [questionsActive, setQuestionsActive] = useState(false);
     const [answersActive, setAnswersActive] = useState(false);
     const [postsActive, setPostsActive] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [active, setActive] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     let activityArray = [];
+
+
+    useEffect(() => {
+        if (profilePic) {
+            const formData = new FormData();
+            formData.append("profile_pic", profilePic);
+    
+            dispatch(changeProfilePicThunk(userId, formData))
+            .then((updatedProfilePic) => {
+                setProfilePic(null);
+                dispatch(getUserThunk(userId)); // Re-fetch user data to get updated profile picture
+            })
+            .catch((error) => {
+                // Handle any error from the API call if needed
+                console.error("Error updating profile picture:", error);
+            });
+        }
+        }, [dispatch, profilePic, userId]);
+
+    useEffect(() => {
+      dispatch(getUserThunk(userId))
+        .then((data) => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.error("Error fetching user data:", error);
+        });
+    }, [dispatch, userId]);
+  
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
 
     const handleMouseOver = (e) => {
     setActive(true);
@@ -27,32 +66,9 @@ function ProfilePage() {
     setActive(false);
     };
 
-    useEffect(() => {
-        dispatch(getUserThunk(sessionUser?.id));
-    }, [dispatch, sessionUser.id]);
-
-    useEffect(() => {
-    if (profilePic) {
-        const formData = new FormData();
-        formData.append("profile_pic", profilePic);
-
-        dispatch(changeProfilePicThunk(sessionUser.id, formData))
-        .then((updatedProfilePic) => {
-            setProfilePic(null);
-            dispatch(getUserThunk(sessionUser.id)); // Re-fetch user data to get updated profile picture
-        })
-        .catch((error) => {
-            // Handle any error from the API call if needed
-            console.error("Error updating profile picture:", error);
-        });
-    }
-    }, [dispatch, profilePic, sessionUser.id]);
-
-    return (
-        
-    <div className="wrapper">
+    return (    
+    <div className="wrapper" style={{minHeight: "77vh"}}>
         <div className="user-profile-container">
-        {/* left section */}
             <div className="profile-activity-section">
                 {/* profile picture, user info */}
                 <div className="user-profile-header">
@@ -62,7 +78,7 @@ function ProfilePage() {
                     onMouseOut={handleMouseOut}
                     style={{
                         backgroundImage: user?.profile_pic
-                        ? `url(${user.profile_pic})`
+                        ? `url(${user?.profile_pic})`
                         : "initial",
                         backgroundSize: "150px",
                         backgroundPosition: "center",
@@ -136,6 +152,7 @@ function ProfilePage() {
                             setAnswersActive(false)
                             setProfileActive(true)
                         }}
+                        key="profile"
                     >Profile</li>
                     <li 
                         className={answersActive ? "panel-item-active" : ''}
@@ -145,6 +162,7 @@ function ProfilePage() {
                             setPostsActive(false)
                             setAnswersActive(true)
                         }}
+                        key="answers"
                     ><span>{user?.answers.length}</span> Answers</li>
                     <li 
                         className={questionsActive ? "panel-item-active" : ''}
@@ -154,6 +172,7 @@ function ProfilePage() {
                             setPostsActive(false)
                             setQuestionsActive(true)}
                         }
+                        key="questions"
                     ><span>{user?.questions.length}</span> Questions</li>
                     <li 
                         className={postsActive ? "panel-item-active" : ''}
@@ -163,6 +182,7 @@ function ProfilePage() {
                             setQuestionsActive(false)
                             setPostsActive(true)
                             }}
+                        key="posts"
                     ><span>{user?.posts.length}</span> Posts</li>
                 </ul>
                 </div>
@@ -185,7 +205,7 @@ function ProfilePage() {
                                 )}
                                 {element.type === "post" && (
                                     <li key={element.unique_id}>
-                                    <UserPosts post={element} user={user} />
+                                    <UserPosts userPost={element} user={user} />
                                     </li>
                                 )}
                                 </div>
@@ -218,7 +238,7 @@ function ProfilePage() {
                         {user?.posts.length > 0 && postsActive && (
                             <ul>
                                 {user.posts.map(post => (
-                                    <li key={post.id}><UserPosts post={post} user={user} /></li>
+                                    <li key={post.id}><UserPosts userPost={post} user={user} /></li>
                                 ))}
                             </ul>
                         )}

@@ -15,6 +15,8 @@ class Answer(db.Model):
 
     user = db.relationship('User', back_populates='answers')
     question = db.relationship('Question', back_populates='answers')
+    upvotes = db.relationship('Upvote', back_populates='answer', lazy=True)
+    downvotes = db.relationship('Downvote', back_populates='answer', lazy=True)
 
     def to_dict(self):
         return {
@@ -23,5 +25,7 @@ class Answer(db.Model):
             'user': self.user.to_dict(),
             'question': self.question.to_dict(),
             'question_id': self.question_id,
+            'upvotes': [{'user_id': upvote.user_id} for upvote in self.upvotes],
+            'downvotes': [{'user_id': downvote.user_id} for downvote in self.downvotes],
             'created_at': self.created_at            
         }

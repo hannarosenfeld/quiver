@@ -45,6 +45,7 @@ const initialState = {
       userId: null,
       profilePicture: '',
     },
+    currentUser: {}
   };
 
 const userReducer = (state = initialState, action) => {
@@ -56,6 +57,7 @@ const userReducer = (state = initialState, action) => {
                 users: {
                 ...state.users,
                 [action.user.userId]: action.user, // Assuming the user object contains userId and other profile data
+                currentUser: action.user
             },
         };
         case CHANGE_PROFILE_PIC:
