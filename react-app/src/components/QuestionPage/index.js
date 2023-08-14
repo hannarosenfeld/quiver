@@ -39,6 +39,7 @@ function QuestionPage() {
             <div style={{
                 width: "656px", 
                 margin: "0 auto",
+                minHeight: "78vh"
                 }}>
                 <div style={{
                     margin: "0 auto",
