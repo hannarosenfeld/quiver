@@ -55,7 +55,7 @@ function ProfilePage() {
     }, [dispatch, userId]);
   
     if (isLoading) {
-      return <div>Loading...</div>;
+      return <div style={{minHeight: "77vh"}}>Loading...</div>;
     }
 
     const handleMouseOver = (e) => {
