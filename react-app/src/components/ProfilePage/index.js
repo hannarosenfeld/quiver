@@ -7,6 +7,7 @@ import "./ProfilePage.css";
 import UserQuestions from "./UserQuestions";
 import UserAnswers from "./UserAnswers"
 import UserPosts from "./UserPosts"
+import LoadingSpinner from "../LoadingSpinner";
 
 
 function ProfilePage() {
@@ -55,7 +56,7 @@ function ProfilePage() {
     }, [dispatch, userId]);
   
     if (isLoading) {
-      return <div style={{minHeight: "77vh"}}>Loading...</div>;
+      return <LoadingSpinner />
     }
 
     const handleMouseOver = (e) => {

@@ -7,6 +7,7 @@ import AskQuestion from "./AskQuestion";
 import Question from "./Question";
 import Post from "./Post";
 import "./IndexPage.css";
+import LoadingSpinner from "../LoadingSpinner";
 
 function IndexPage() {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ function IndexPage() {
 
   if (loading) {
     // Show a loading message or spinner while waiting for data
-    return <div style={{minHeight: "77vh"}}>Loading...</div>;
+    // return <div style={{minHeight: "77vh"}}>Loading...</div>;
+    return <LoadingSpinner />
   }
 
   const sortedPostsAndQuestions = postsAndQuestions?.sort(function (a, b) {
