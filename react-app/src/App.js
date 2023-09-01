@@ -10,6 +10,8 @@ import QuestionPage from "./components/QuestionPage"
 import ProfilePage from "./components/ProfilePage";
 import Footer from "./components/Footer"
 
+
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);

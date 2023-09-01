@@ -16,6 +16,9 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+body {
+    min-height: 100vh;
+}
 
 body, form {
     background-color: #191A1B;

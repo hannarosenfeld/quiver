@@ -115,7 +115,7 @@ function UserAnswers({ answer, user }) {
                         <i class="fa-solid fa-arrow-up"></i>
                         <span style={{marginLeft: "5px", fontSize: "12px"}}>Upvote</span>
                         <span>・</span>
-                        <span className="upvotes-length">{answer.upvotes.length}</span>
+                        <span className="upvotes-length">{answer.upvotes?.length}</span>
                     </div>
                     <div 
                         onClick={handleDownvote} className={downvoted ? "downvoted" : ""}

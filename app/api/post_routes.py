@@ -63,6 +63,8 @@ def add_post():
 
     return jsonify({'errors': validation_errors_to_error_messages(form.errors)}), 400
 
+
+
 @post_routes.route('/<int:id>/comments/', methods=["POST"])
 def add_comment(id):
     form = CommentForm()
