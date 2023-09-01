@@ -32,7 +32,7 @@ function IndexPage() {
 
   if (loading) {
     // Show a loading message or spinner while waiting for data
-    return <div>Loading...</div>;
+    return <div style={{minHeight: "77vh"}}>Loading...</div>;
   }
 
   const sortedPostsAndQuestions = postsAndQuestions?.sort(function (a, b) {
